@@ -1,0 +1,9 @@
+
+@charset "utf-8";
+
+/* 로그인 */
+body {background:#fff;}
+#login {width:758px; height:241px; text-align:left; margin:auto; margin-top:240px;background-image:url(../images/bg_login.gif);background-repeat:no-repeat;background-position:center center; }
+#login ul {margin:108px 0 0 245px;}
+#login li{margin:13px 0;}
+#login a {margin:110px 169px 0 0;}

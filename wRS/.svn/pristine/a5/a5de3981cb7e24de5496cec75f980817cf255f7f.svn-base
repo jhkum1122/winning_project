@@ -1,0 +1,42 @@
+package roadshop.web.mypage.svc;
+
+
+
+
+import java.sql.*;
+
+import java.util.ArrayList;
+
+
+
+
+import roadshop.web.item.vo.ItemInfo;
+import roadshop.web.mypage.dao.MypageDao;
+
+
+import static roadshop.db.jdbcUtil.*;
+
+
+
+
+public class FavoriteService {
+
+	public ArrayList<ItemInfo> getItem(String[] split){
+		// TODO Auto-generated method stub
+		Connection con = con();
+		
+		MypageDao mypageDAO = new MypageDao(con);
+	
+		ArrayList<ItemInfo>  item= mypageDAO.getItem(split);//아이디,비번을 매개변수로 전달
+
+		   close(con);
+
+		  
+
+		   return item;
+
+
+
+	}
+	
+}

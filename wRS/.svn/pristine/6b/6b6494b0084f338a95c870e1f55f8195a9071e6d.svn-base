@@ -1,0 +1,31 @@
+$(document).ready(function(){
+	$('#subMenu>a').mouseover(function(){
+		var subMenu = $(this).next("ul");
+		if(!subMenu.is(":visible"))
+			subMenu.slideDown();
+	});
+});
+$(document).ready(function(){
+	$('#subMenu>#hide').mouseleave(function(){
+		var subMenu = $('#subMenu>a').next("ul");
+		if(subMenu.is(":visible"))
+			subMenu.slideUp();
+	});
+});
+
+/*$(document).ready(function(){
+	$('#subMenu').mouseover(function(){
+		var subMenu=$(this).next("ul");
+		subMenu.slideDown();
+	});
+	
+});
+*/
+/*$(document).ready(function(){
+	$('#hide','#subMenu').mouseout(function(){
+		var subMenu=$(this).next("ul");
+		subMenu.slideUp();
+	});
+	
+});*/
+

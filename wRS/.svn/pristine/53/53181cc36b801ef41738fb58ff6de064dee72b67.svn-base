@@ -1,0 +1,25 @@
+package roadshop.web.manager.svc.shop;
+
+import java.sql.Connection;
+
+import roadshop.web.shop.dao.ShopDao;
+import roadshop.web.shop.vo.ShopInfo;
+import static roadshop.db.jdbcUtil.*;
+
+public class MShopModifyService {
+	Connection con = con();
+	ShopDao shopDao = new ShopDao(con);
+	
+	public boolean mshopGetModify(ShopInfo shopInfo) {
+		// TODO Auto-generated method stub
+		boolean check = shopDao.mUpdateShop(shopInfo);
+		if(check){
+			commit(con);
+		}else{
+			rollback(con);
+		}
+		close(con);
+		return check;
+	}
+
+}

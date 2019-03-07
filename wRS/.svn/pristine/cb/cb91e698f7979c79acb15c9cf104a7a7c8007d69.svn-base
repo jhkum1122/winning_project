@@ -1,0 +1,44 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<script language='JavaScript'
+	src='<%=request.getContextPath()%>/js/user/login.js'></script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<center>
+<img src="../image/web/login.jpg">
+</center>
+</head>
+
+<body>
+			<form class='loginform' name="loginform" action='userLogin.us' method='post' onsubmit='return check_loginform()'>
+					<table width=195 border=0 cellspacing=3 cellpadding=0 align=center>
+							<tr>
+								<td height=2></td>
+							</tr>
+							<tr>
+							<td>
+							<img
+							src="../image/member/id.jpg" width="60" height="20" /></td>
+								<td><input type='text' name="u_id"style="font-size:14px; float:left; background:#FFFFFF; height:20px; width:115px; border:1px solid #c8c6c6;" style="ime-mode:disabled;" value="" maxlength="12" tabindex=1 onfocus="this.value=''"/></td>
+								<td rowspan="3" align=center><input type="image" src="../image/web/login_btn01.jpg" width="66px" height="55px" name="submit" style="float:left; margin-left:5px;margin-top:0px;"></td>
+							</tr>
+							<tr><td height=1></td></tr>
+							<tr>
+							<td>
+							<img
+							src="../image/member/pass.jpg" width="60" height="20" /></td>
+								<td><input type='password' name="u_pwd" style="font-size:14px; float:left; background:#FFFFFF; height:20px; width:115px; border:1px solid #c8c6c6;" maxlength="17" tabindex=2 onfocus="this.value=''"/></td>
+							</tr>
+							<tr><td height="2spx"></td></tr>
+							<tr><td colspan="3" align=center>
+								<a href="<%=request.getContextPath()%>/main/memberRule.mem" class="gray"><img src="../image/web/login_btn03.jpg" style="cursor:pointer;" alt="회원가입"></a>
+								<a href="<%=request.getContextPath()%>/user/idsearchform.us" class="gray">아이디찾기</a>
+								<a href="<%=request.getContextPath()%>/user/pwdsearchform.us" class="gray">비밀번호찾기</a>
+								</td>
+							</tr>
+					</table>
+			 </form>
+</body>
+</html>

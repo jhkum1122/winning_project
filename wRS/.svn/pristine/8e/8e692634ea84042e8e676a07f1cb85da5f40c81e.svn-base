@@ -1,0 +1,26 @@
+package roadshop.web.manager.svc.item;
+
+import java.sql.Connection;
+
+import roadshop.web.item.dao.ItemDAO;
+import roadshop.web.item.vo.ItemInfo;
+import static roadshop.db.jdbcUtil.*;
+public class ItemRegistService {
+
+	
+	public boolean itemGetInsert(ItemInfo itemInfo) {
+		Connection con = con();
+		ItemDAO itemDAO = new ItemDAO(con);
+		boolean check = itemDAO.insertItem(itemInfo);
+		
+		if(check){
+			commit(con);
+		}
+		else {
+			rollback(con);
+		}
+		close(con);
+		return check;
+	}
+
+}

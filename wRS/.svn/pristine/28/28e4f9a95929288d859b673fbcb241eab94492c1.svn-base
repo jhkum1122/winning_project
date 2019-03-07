@@ -1,0 +1,29 @@
+package roadshop.web.mypage.action;
+
+import javax.servlet.http.HttpServletRequest;
+
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+
+@Controller
+
+public class ShopRegiFormAction {
+@RequestMapping("/mypage/shopRegist.my")
+	public ModelAndView mShopRegiFormAction(HttpServletRequest request
+			) throws Exception {
+		ModelAndView mav =  new ModelAndView();
+		
+		
+		mav.addObject("load","../mypage/shopRegist.jsp");
+		mav.setViewName("/main/beforeMain.jsp");
+		
+		return mav;
+		
+	
+		
+	}
+
+}

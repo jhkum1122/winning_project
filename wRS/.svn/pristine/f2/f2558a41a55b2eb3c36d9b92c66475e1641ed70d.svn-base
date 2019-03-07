@@ -1,0 +1,36 @@
+package roadshop.web.item.action;
+
+import java.util.ArrayList;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import roadshop.actionforward.ActionForward;
+import roadshop.web.item.svc.ItemListService;
+import roadshop.web.item.vo.ItemInfo;
+
+public class BrandListAction implements ItemAction {
+
+	@Override
+	public ActionForward execute(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		// TODO Auto-generated method stub
+		
+		String brand = request.getParameter("brand");
+		ItemListService il = new ItemListService();
+		ArrayList<ItemInfo> brandList = il.getBrandList(brand);
+		
+		request.setAttribute("brandList", brandList);
+		request.setAttribute("brand" , brand);
+		
+		ActionForward forward = new ActionForward();
+		String load = "../product/brandList.jsp";
+		request.setAttribute("load", load);
+		forward.setUrl("/main/beforeMain.jsp");	
+		
+		
+		return forward;
+	}
+
+}

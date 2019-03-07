@@ -1,0 +1,24 @@
+package roadshop.web.manager.action.shop;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import roadshop.web.manager.svc.shop.ShopRegistService;
+import roadshop.web.shop.vo.ShopInfo;
+
+@Controller
+public class ShopRegistAction{
+@Autowired
+ShopRegistService srs;
+	@RequestMapping("/manager/shop/shopRegist.ms")
+	public String shopRegist(ShopInfo shopInfo){
+
+		  if(srs.shopGetInsert(shopInfo))
+			  return "/manager/shop/shopAllList.ms";
+		  else
+			  return "/manager/shop/shopAllList.ms";
+			
+	}
+
+}

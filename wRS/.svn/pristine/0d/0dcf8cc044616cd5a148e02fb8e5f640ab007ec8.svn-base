@@ -1,0 +1,160 @@
+package roadshop.web.mypage.action;
+import java.util.ArrayList;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import roadshop.web.item.vo.ItemInfo;
+import roadshop.web.mypage.svc.FavoriteService;
+
+@Controller
+public class FavoriteRemoveAction{
+	@RequestMapping("/mypage/favoriteDelete.my")
+	public ModelAndView favoriteRegist(@RequestParam("i_id") String i_id, @RequestParam("m_id") String m_id,
+			  HttpServletResponse response, HttpServletRequest request){
+		ModelAndView mav = new ModelAndView();
+		Cookie[] cookies = request.getCookies();
+		boolean flag = false;
+		String favoriteList=null;
+		String[] split=null;
+		String updateFavoriteList = null;
+		int j;
+		FavoriteService fs = new FavoriteService();
+		ArrayList<ItemInfo> fItemList = new ArrayList<ItemInfo>(); 
+		System.out.println("µé¾î¿È");
+		if(cookies.length>=1){
+			for(int i=cookies.length-1; i>=0; i--){
+				if(cookies[i].getName().startsWith(m_id)){
+					favoriteList = cookies[i].getValue();
+					split = favoriteList.split("&");
+					
+					for(j=0;j<split.length;j++){
+						if(!split[j].equals(i_id)){
+							updateFavoriteList += split[j] + "&";
+						}
+					}
+					cookies[i].setValue(updateFavoriteList);
+					cookies[i].setPath("/");
+					response.addCookie(cookies[i]);
+					
+					split = updateFavoriteList.split("&");
+					fItemList = fs.getItem(split);
+					mav.addObject("fItemList", fItemList);
+					
+				
+					flag=true;
+					
+					
+				}
+				}
+		}else{
+			
+		}
+		mav.addObject("load", "../mypage/favoriteList2.jsp");
+		mav.setViewName("../main/beforeMain.jsp");
+		return mav;
+	}
+}
+
+/*package roadshop.web.mypage.action;
+
+import java.util.ArrayList;
+
+
+
+
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import roadshop.web.item.vo.ItemInfo;
+import roadshop.web.member.vo.MemberInfo;
+import roadshop.web.mypage.action.MypageAction;
+import roadshop.web.mypage.svc.FavoriteService;
+import roadshop.actionforward.ActionForward;
+import roadshop.web.shop.vo.ShopInfo;
+
+
+
+
+
+public class FavoriteRemoveAction implements MypageAction{
+
+	@Override
+	public ActionForward execute(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		boolean flag = false;
+		response.setContentType("text/html;charset=euc-kr");
+		
+		HttpSession session = request.getSession();
+		String m_id = (String)session.getAttribute("id");
+		
+		Cookie[] cookies = request.getCookies();
+		
+		ArrayList<ItemInfo> fItemList = new ArrayList<ItemInfo>(); 
+		String updateFavoriteList = null;
+		String[] idCheck = request.getParameterValues("chDel");
+		
+		int j;
+		ActionForward forward = null;
+		System.out.println("¾È³ç");
+		if(idCheck != null) {
+			System.out.println("¾È³ç");
+			
+			if(idCheck != null) {
+				for(int i=0; i<list.size(); i++) {
+					for(int j=0; j<idCheck.length; j++) {
+						DogVO d = list.get(i);
+						if(Integer.parseInt(idCheck[j])==d.getId()) {
+							list.remove(i);
+						}
+					}
+				}
+			}
+			
+			
+			
+			for(int i=0; i<cookies.length; i++){
+				if(cookies[i].getName().startsWith(m_id)){
+					String favoriteList = cookies[i].getValue();
+					
+					String[] split = favoriteList.split("&");
+					
+					for(j=0;j<split.length;j++){
+						for(int k=0; k<idCheck.length; k++) {
+							if(!split[j].equals(idCheck[k])){
+								updateFavoriteList += split[k] + "&";
+							}
+						}
+					}
+					
+					updateFavoriteList.substring(0, updateFavoriteList.length()-1);
+					cookies[i].setValue(updateFavoriteList);
+					
+					request.setAttribute("fItemList", fItemList);
+					flag = true;
+					}
+							
+				}
+		}
+		if(!flag){
+			forward = new ActionForward();
+			forward.setUrl("/index.jsp");
+			}
+			
+	
+		forward = new ActionForward();
+		forward.setUrl("../mypage/favoriteList2.jsp");
+		 
+		return forward;
+	}
+}
+*/

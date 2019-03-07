@@ -1,0 +1,59 @@
+package roadshop.web.mypage.dao;
+
+import static roadshop.db.jdbcUtil.close;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+
+import roadshop.web.item.vo.ItemInfo;
+import roadshop.web.shop.vo.ShopInfo;
+
+public class MypageDao {
+	Connection con;
+	
+	public MypageDao(Connection con){
+		this.con=con;
+	}
+
+	public boolean InsertShop(ShopInfo shopinfo) {
+		// TODO Auto-generated method stub
+		String sql="insert into shop(s_num,m_id,s_brand,s_zipcode,s_brn1"
+				+",s_brn2,s_brn3,s_tel1,s_tel2,s_tel3,s_addr1,s_addr2,s_grade"
+				+",s_lat,s_lon)"
+				+"values(shop_seq.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		
+		PreparedStatement pstmt= null;
+		try{
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, shopinfo.getM_id());
+			pstmt.setString(2, shopinfo.getS_brand());
+			pstmt.setString(3, shopinfo.getS_zipcode());
+			pstmt.setString(4, shopinfo.getS_brn1());
+			pstmt.setString(5, shopinfo.getS_brn2());
+			pstmt.setString(6, shopinfo.getS_brn3());
+			pstmt.setString(7, shopinfo.getS_tel1());
+			pstmt.setString(8, shopinfo.getS_tel2());
+			pstmt.setString(9, shopinfo.getS_tel3());
+			pstmt.setString(10, shopinfo.getS_addr1());
+			pstmt.setString(11, shopinfo.getS_addr2());
+			pstmt.setInt(12, shopinfo.getS_grade());
+			pstmt.setInt(13, 1);
+			pstmt.setInt(14, 1);
+			pstmt.executeUpdate();
+		}catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}finally{
+			close(pstmt);
+		}
+		return true;
+	}
+	
+	
+}
+		
+	
+

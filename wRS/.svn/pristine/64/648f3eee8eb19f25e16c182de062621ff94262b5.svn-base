@@ -1,0 +1,103 @@
+<%@page import="roadshop.web.member.dao.MemberDao"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+
+<style type="text/css">
+body {
+	font-family: '맑은 고딕';
+	font-size: 14px
+}
+
+#font2 {
+	font-family: '맑은 고딕';
+	font-size: 13px
+}
+</style>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>어딨니로드샵 오신걸 환영합니다</title>
+
+<script>
+	function sentID() {
+		opener.document.memberRegist.chkUserid.value = "Y";
+		window.close();
+	}
+</script>
+
+<body class="layerWrap">
+
+	<fieldset class="searchForm">
+
+
+		<%
+			String checkId = (String) request.getAttribute("id");
+			boolean searchId = "true".equals(request.getAttribute("searchId")
+					.toString());
+		%>
+
+		<ul class="tableTit"
+			style="background: #f13d74; margin: 0; height: 45px;">
+			<li style="height: 40px; float: left;"><img
+				src="<%=request.getContextPath()%>/image/member/id_check_tit.jpg"></li>
+			<li style="width: 40px; float: right;"><img
+				src="<%=request.getContextPath()%>/image/member/pop_close1.jpg" onClick="window.close();"
+				class="hand vm fr" /></li>
+		</ul>
+		<div
+			style="width: 85%; margin: 15px auto; padding: 8px; border: 1px #f13d74 solid;">
+			<div class="decoLeaf">
+				<div class="decoBg"></div>
+			</div>
+
+			<%
+				if (searchId == false) {
+			%>
+			<div class="inCont idAlert">
+				<div class="inc" id="idOutput">
+					<p style="text-align: center;">
+						<strong> <%=checkId%>
+						</strong>는 사용할 수 있는 아이디입니다.
+					</p>
+					<p style="text-align: center;">
+						<button type="button" class="btn btnUse" onclick="sentID();">
+
+							<span>사용하기</span>
+						</button>
+					</p>
+
+					<%
+						} else {
+					%>
+					<div class="inCont idAlert">
+						<div class="inc" id="idOutput">
+							<p style="text-align: center;">
+								<strong> <%=checkId%>
+								</strong>는 사용할 수 없는 아이디입니다.
+
+							</p>
+							<p style="text-align: center;">
+								<button type="button" class="btn btnUse"
+									onclick="window.close();">
+									<span>다시 검색하기</span>
+								</button>
+								<%
+									}
+								%>
+							</p>
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</fieldset>
+</body>
+</form>
+
+</body>
+</html>

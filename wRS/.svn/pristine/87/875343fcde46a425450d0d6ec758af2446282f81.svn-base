@@ -1,0 +1,73 @@
+package roadshop.web.board.action;
+import java.sql.Timestamp;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+import roadshop.web.board.svc.BoardUpdateService;
+import roadshop.web.board.vo.BoardInfo;
+
+@Controller
+public class BoardUpdateAction {
+
+	@RequestMapping("/main/boardUpdate.bo")
+	public ModelAndView boardUpdate(@RequestParam(value="pageNum",defaultValue="1") String pageNum,
+			//@RequestParam(value="num") int num
+			@ModelAttribute("boardInfo") BoardInfo article
+		/*	,
+			@RequestParam(value="b_content") String b_content,
+			@RequestParam(value="b_writer") String b_writer,
+			@RequestParam(value="b_subject") String b_subject,
+			@RequestParam(value="b_image") String b_image*/
+			) throws Exception {
+		System.out.println("이 곳은 boardUpdate()입니다.");
+		
+
+		ModelAndView mav = new ModelAndView();
+		article.setB_reg_date(new Timestamp(System.currentTimeMillis()));
+		System.out.println("b_num = " + article.getB_num());
+		//BoardInfo article=new BoardInfo();
+		/*article.setB_content(request.getParameter("b_content"));
+		article.setB_num(Integer.parseInt(request.getParameter("b_num")));
+		article.setB_writer(request.getParameter("b_writer"));
+		article.setB_subject(request.getParameter("b_subject"));
+		article.setB_image(request.getParameter("b_image"));
+		article.setB_reg_date(new Timestamp(System.currentTimeMillis()));
+		article.setReadcount(Integer.parseInt(request.getParameter("readcount")));
+		article.setRef(Integer.parseInt(request.getParameter("ref")));
+		article.setRe_step(Integer.parseInt(request.getParameter("re_step")));
+		article.setRe_level(Integer.parseInt(request.getParameter("re_level")));
+		article.setI_id(request.getParameter("i_id"));
+		article.setM_id(request.getParameter("m_id"));*/
+		
+		System.out.println("Here is BoardUpdateAction========================");
+		System.out.println("==================================================\n" +
+					"값을 제대로 받아왔는지 확인하는 부분임!\n");
+		System.out.println("ReplyVO.num = "+article.getB_num()+", ReplyVO.ref = "+article.getRef()+", ReplyVO.re_step = "+article.getRe_step()
+					+",\n ReplyVO.re_level = "+article.getRe_level()+", boardInfo.m_id = "+article.getM_id()+", boardInfo.i_id = "+article.getI_id()
+					+", boardInfo.b_image = "+article.getB_image());
+		
+		String load = "../main/boardList.bo";
+
+		
+		boolean isSuccess=false;//업데이트 성공여부를 저장할 변수
+		BoardUpdateService bus=new BoardUpdateService();
+		System.out.println("수정 전 isSuccess  = " + isSuccess);
+		isSuccess=bus.modifyArticle(article);
+		System.out.println("수정 후 isSuccess  = " + isSuccess);
+
+		if(isSuccess){
+			mav.addObject("load",load);
+			mav.addObject("pageNum", pageNum);
+			mav.addObject("article",article);
+			//mav.addObject("num",num);
+			mav.setViewName("../main/boardList.bo");		//디스패쳐로 하면 새로고침 시 insert쿼리가 계속 실행
+			//forward.setUrl("../main/boardList.bo");		//디스패쳐로 하면 새로고침 시 insert쿼리가 계속 실행
+		}else{
+			System.out.println("업데이트 실패");
+		}
+		return mav;
+		
+	}
+}

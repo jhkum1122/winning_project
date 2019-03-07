@@ -1,0 +1,257 @@
+/*------------------------- Layout styles ------------------------*/ 
+html{
+	background:url(../../image/web/bg-body-top.jpg) repeat-x;
+}
+body{
+	margin: 0;
+	background:url(../../image/web/bg-body-bottom.jpg) repeat-x left bottom;
+}
+p a{
+	text-decoration:underline;
+	color: #8B8B8B;
+}
+
+/*-------------------------	Header --------------------------*/
+.header{
+	width:auto;
+	margin:0 auto;
+	
+}
+.header div{
+	
+	width:980px;
+	margin:0 auto;
+	overflow:hidden;
+}
+.header div a#logo{
+	display:block;
+	height:110px;
+	width:700px;
+	float:left;
+}
+.header div a#logo img{
+	border:0;
+}
+.header div div.navigation{
+	float:right;
+	overflow:hidden;
+	height:30px;
+	width:auto;
+	margin:0;
+}
+.header div div.navigation ul.first{
+	background:url(../../image/web/bg-top-navigation-left.png) no-repeat;
+	height:30px;
+	padding:0 0 0 21px;
+}
+.header div div.navigation ul.first li{
+	background:url(../../image/web/bg-top-navigation.png);
+}
+.header div div.navigation ul li.first a{
+	border:0;
+}
+.header div div.navigation ul{
+	list-style:none;
+	padding:0;
+	margin:0;
+	float:left;
+}
+.header div div.navigation ul li{
+	float:left;
+	background:url(../../image/web/bg-top-navigation2.png);
+	height:30px;
+}
+.header div div.navigation ul li a:hover,.header div div.navigation ul.first li.selected a,
+.body .content div.blog div.paging ul li a:hover,.header div div.navigation ul li.selected a{
+	color:#ef0288;
+}
+.header div div.navigation ul li a{
+	text-decoration:none;
+	color:#721c49;
+	font-family:arial;
+	font-size:14px;
+	text-shadow: 0 1px 0 #fff;
+	border-width: 1px;
+	border-style: none none none solid;
+	border-color:#fff;
+	height:30px;
+	display:inline-block;
+	line-height:30px;
+	padding: 0 10px;
+}
+
+
+
+.header div.search{
+	position:absolute;
+	top:64px;
+	right:10px;
+	float:right;
+	overflow:hidden;
+	height:60px;
+	width:auto;
+	margin:0;
+}
+.header div.search form.search input{
+	background: url(../../image/web/interface.gif) no-repeat 0 -90px;
+	width:324px;
+	height:auto;
+	border:0;
+	float:left;
+	padding:11px 0 11px 40px;
+	color:#a1a1a1;
+	font-size:15px;
+}
+.header div.search form.search input#submit{
+	background:url(../../image/web/interface.gif) no-repeat 0 -150px;
+	width:auto;
+	height:24px;
+	position:relative;
+	margin:7px 0 0 -355px;
+	font-size:14px;
+	padding:0 0 0 30px;
+}
+
+/* -----------------------------헤더 메뉴 시작 -----------------------------  */
+
+.menuBar div#navigation{
+	height:40px;
+	background:url(../../image/web/bg-navigation.gif) repeat-x;
+	width:auto;
+}
+.menuBar div#navigation div{
+	float:left;
+	width:25%;
+	text-align:center;
+	font-family: arial;
+	color:#fcddf9;
+	text-shadow: 0 -1px 0 #920052;
+	font-size:14px;
+	text-decoration:none;
+	line-height:40px;
+	font-weight: normal;
+}
+.menuBar div#navigation div ul{
+	list-style:none;
+	margin:auto;
+	padding:0 20px;
+	width:auto;
+	overflow:hidden;
+}
+.menuBar div#navigation div ul li{
+	margin:auto;
+	font-family: arial;
+	color:#fcddf9;
+	text-shadow: 0 -1px 0 #920052;
+	font-size:16px;
+	text-decoration:none;
+	line-height:40px;
+	font-weight: normal;
+	cursor:pointer;
+}
+.menuBar div#navigation div ul li.selected a{
+	font-weight:bold;
+	color:#fff;
+	text-shadow:none;
+}
+.menuBar div#navigation div a:hover{
+	font-weight:bold;
+	color:#fff;
+	text-shadow:none;
+}
+.menuBar div#navigation ul li:hover{
+	font-weight:bold;
+	color:#fff;
+	text-shadow:none;
+}
+
+.menuBar div#navigation ul li.selected{
+	background:url(../../image/web/bg-menu-selected.gif) no-repeat center top;
+	width:134px;
+}
+.menuBar div#navigation div a{
+	font-family: arial;
+	color:#fcddf9;
+	text-shadow: 0 -1px 0 #920052;
+	font-size:16px;
+	text-decoration:none;
+	line-height:40px;
+	font-weight: normal;
+}
+.menuBar div#navigation ul li a:hover{
+	color:#fff;
+	font-weight:bold;
+	text-shadow:none;
+}
+.menuBar div#navigation div ul #subMenu #hide{
+	display:none;
+}
+
+/*----------------------- 헤더 메뉴 끝 ------------------------  */
+
+
+/*-------------------------	Body --------------------------*/
+.body{
+	width:95%;
+	margin:0 auto;
+	height:100%;
+	position:relative;
+}
+.body div{
+	overflow:hidden;
+	position:relative;
+}
+.body div.center1{
+	position:absolute;
+	left:0px;
+	margin:auto;
+	width:16%;
+	height:98px;
+	float:left;
+}
+
+.center1 p{
+	font-family:arial;
+	font-size:20px;
+	color:#918889;
+	text-align:center;
+}	
+
+.body div.center2{
+	margin:auto;
+	width:69%;
+	height:80%;
+	float:left;
+	
+}
+
+
+.body div.center3{
+	margin:auto;
+	width:15%;
+	height:80px;
+	float:left;
+}
+
+
+ .fixed-top
+   {position:fixed;bottom:auto; top:25%; margin-left:85%;}
+
+  * html .fixed-top
+  {position:absolute;bottom:auto;top:expression(eval(document.documentElement.scrollTop+50));}
+	
+
+/*-------------------------	Footer --------------------------*/
+.footer{
+	position:relative;
+	padding:37px 0 10px;
+	bottom:0px;
+	clear:left;
+	width:100%;
+}
+.footer p{
+	font-family:arial;
+	font-size:14px;
+	color:#918889;
+	text-align:center;
+}

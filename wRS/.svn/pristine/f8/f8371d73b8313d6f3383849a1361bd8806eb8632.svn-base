@@ -1,0 +1,33 @@
+package roadshop.web.manager.action.item;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import roadshop.web.item.vo.ItemInfo;
+import roadshop.web.manager.svc.item.ItemInfoService;
+
+@Controller
+public class ItemInfoAction{
+@Autowired
+ItemInfoService iis;
+
+	@RequestMapping("/manager/item/itemInfo.mi")
+	public ModelAndView itemInfo(@RequestParam("i_id") String i_id) {				
+		ModelAndView mav = new ModelAndView();
+		ItemInfo isSuccess = iis.memberGetInfo(i_id);
+		
+		if(isSuccess!=null){
+			mav.addObject("itemInfo", isSuccess);
+			mav.addObject("load", "../manager/item/itemModifyForm.jsp");
+			mav.setViewName("/manager/managerMain.jsp");
+		}
+		else{
+			mav.setViewName("/manager/item/itemAllList.mi");
+		}
+		return mav;
+	}
+
+}

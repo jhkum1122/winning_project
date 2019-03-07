@@ -1,0 +1,37 @@
+package roadshop.web.manager.action.shop;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import roadshop.actionforward.ActionForward;
+import roadshop.web.manager.action.ManagerAction;
+import roadshop.web.manager.svc.shop.MShopRemoveService;
+
+public class MShopRemoveAction implements ManagerAction {
+
+	public ActionForward execute(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		// TODO Auto-generated method stub
+		ActionForward forward = null;
+		int s_num = Integer.parseInt(request.getParameter("s_num"));
+				
+		MShopRemoveService msrs = new MShopRemoveService(); 
+		boolean isSuccess=msrs.deleteShop(s_num);
+		
+		
+		if(isSuccess){
+			forward = new ActionForward();
+			forward.setUrl("/manager/shop/shopAllList.ms");
+		}
+		
+		else{
+			System.out.println("<script>");
+			System.out.println("alert('삭제 실패 입니다')");
+			System.out.println("history.back()");
+			System.out.println("</script>");
+		}
+		
+		return forward;
+	}
+
+}

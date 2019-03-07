@@ -1,0 +1,37 @@
+package roadshop.web.board.action;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+import roadshop.web.board.svc.BoardContentService;
+import roadshop.web.board.vo.BoardInfo;
+
+@Controller
+public class BoardContentAction{
+
+	@RequestMapping("/main/boardContent.bo")
+	public ModelAndView boardContent(@RequestParam(value="pageNum",defaultValue="1") String pageNum,
+			@RequestParam(value="num") int num) throws Exception {
+		// TODO Auto-generated method stub
+		//이곳의 request는 "num","pageNum"을 받음
+//		System.out.println("BoardContentAction.execute()실행 바로 전" +
+//				"\n 이 곳에서는 해당 record을 받을 수 있는 num(request.setAttribute('num',ddsf)여기에서 저장한 num을 갖고옴)" +
+//				"\n과 해당page의 pageNum을 받습니다.");
+		//int num=Integer.parseInt(request.getParameter("num"));
+		//String pageNum=request.getParameter("pageNum");
+		ModelAndView mav = new ModelAndView();
+		
+		BoardContentService bcs=new BoardContentService();
+		BoardInfo article=bcs.getArticle(num);
+
+		String load = "../board/content.jsp";
+		mav.addObject("load",load);
+		
+		mav.addObject("article", article);
+		mav.addObject("pageNum", pageNum);
+		
+		mav.setViewName("../main/beforeMain.jsp");
+		
+		return mav;
+	}
+}

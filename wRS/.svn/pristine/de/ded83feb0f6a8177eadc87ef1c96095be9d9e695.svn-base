@@ -1,0 +1,31 @@
+package roadshop.web.shop.action;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import roadshop.web.shop.svc.ShopOneService;
+import roadshop.actionforward.*;
+import roadshop.web.shop.vo.ShopInfo;
+
+@Controller
+public class ShopModifyFromAction{
+
+	@RequestMapping("/mypage/shopModifyForm.sh")
+	public ModelAndView mShopModifyFromAction(HttpServletRequest request,
+			@RequestParam("s_num") int s_num) throws Exception {
+		ModelAndView mav =  new ModelAndView();
+		ShopOneService sol=new ShopOneService();
+		ShopInfo shopinfo=sol.oneShop(s_num);
+		
+		mav.addObject("shopOneList", shopinfo);
+		mav.addObject("load","../shopmanager/shopModifyForm.jsp");
+		mav.setViewName("/main/beforeMain.jsp");
+		return mav;
+	}
+
+}

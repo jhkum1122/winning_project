@@ -1,0 +1,39 @@
+package roadshop.web.shop.action;
+
+import java.util.ArrayList;
+
+
+import javax.servlet.http.HttpServletRequest;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import org.springframework.web.servlet.ModelAndView;
+
+import roadshop.web.shop.svc.ShopListService;
+
+import roadshop.web.shop.vo.ShopInfo;
+
+@Controller
+public class ShopListAction {
+@Autowired
+ShopListService sls;
+	@RequestMapping("/mypage/shopList.sh")
+	public ModelAndView mShopList(HttpServletRequest request) throws Exception{
+		// TODO Auto-generated method stub
+		ModelAndView mav  =  new ModelAndView();
+		HttpSession session = request.getSession();
+		String m_id=(String)session.getAttribute("id");
+		
+		ArrayList<ShopInfo> shopList = sls.shopList(m_id);
+		mav.addObject("shopList",shopList);
+		mav.addObject("load","../shopmanager/shopManagementMain.jsp");
+		mav.setViewName("/main/beforeMain.jsp");
+		return mav;
+		
+	}
+
+}

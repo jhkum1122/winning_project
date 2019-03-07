@@ -1,0 +1,203 @@
+package roadshop.web.shop.vo;
+
+public class ShopInfo {
+
+	private String m_id;
+	private int s_num;
+	private String s_brand;
+	private String s_zipcode;
+	private String s_brn1;
+	private String s_brn2;
+	private String s_brn3;
+	private String s_tel1;
+	private String s_tel2;
+	private String s_tel3;
+	private String s_addr1;
+	private String s_addr2;
+	private double s_lon;
+	private double s_lat;
+	private int s_grade;
+	
+	public ShopInfo(String m_id, String s_brand,String s_zipcode
+			, String s_brn1, String s_brn2, String s_brn3, String s_tel1,
+			String s_tel2, String s_tel3, String s_addr1, String s_addr2, int s_grade) {
+		super();
+		this.m_id = m_id;
+		this.s_brand = s_brand;
+		this.s_zipcode = s_zipcode;
+		this.s_brn1 = s_brn1;
+		this.s_brn2 = s_brn2;
+		this.s_brn3 = s_brn3;
+		this.s_tel1 = s_tel1;
+		this.s_tel2 = s_tel2;
+		this.s_tel3 = s_tel3;
+		this.s_addr1 = s_addr1;
+		this.s_addr2 = s_addr2;
+		this.s_grade = s_grade;
+	}
+
+	public ShopInfo(String m_id,int s_num, String s_brand, String s_zipcode,
+		    String s_brn1, String s_brn2, String s_brn3,
+		    String s_tel1, String s_tel2, String s_tel3 ,String s_addr1, String s_addr2) {
+		super();
+		this.m_id = m_id;
+		this.s_num = s_num;
+		this.s_brand = s_brand;
+		this.s_zipcode= s_zipcode;
+		this.s_brn1 = s_brn1;
+		this.s_brn2 = s_brn2;
+		this.s_brn3 = s_brn3;
+		this.s_tel1 = s_tel1;
+		this.s_tel2 = s_tel2;
+		this.s_tel3 = s_tel3;
+		this.s_addr1=s_addr1;
+		this.s_addr2=s_addr2;
+	}
+
+	
+	public ShopInfo(String m_id, int s_num, String s_brand, String s_zipcode,
+			String s_brn1, String s_brn2, String s_brn3, String s_tel1,
+			String s_tel2, String s_tel3, String s_addr1, String s_addr2,
+			double s_lon, double s_lat) {
+		super();
+		this.m_id = m_id;
+		this.s_num = s_num;
+		this.s_brand = s_brand;
+		this.s_zipcode = s_zipcode;
+		this.s_brn1 = s_brn1;
+		this.s_brn2 = s_brn2;
+		this.s_brn3 = s_brn3;
+		this.s_tel1 = s_tel1;
+		this.s_tel2 = s_tel2;
+		this.s_tel3 = s_tel3;
+		this.s_addr1 = s_addr1;
+		this.s_addr2 = s_addr2;
+		this.s_lon = s_lon;
+		this.s_lat = s_lat;
+	}
+
+	public String getM_id() {
+		return m_id;
+	}
+
+	public void setM_id(String m_id) {
+		this.m_id = m_id;
+	}
+
+	public int getS_num() {
+		return s_num;
+	}
+
+	public void setS_num(int s_num) {
+		this.s_num = s_num;
+	}
+
+	public String getS_brand() {
+		return s_brand;
+	}
+
+	public void setS_brand(String s_brand) {
+		this.s_brand = s_brand;
+	}
+
+	public String getS_zipcode() {
+		return s_zipcode;
+	}
+
+	public void setS_zipcode(String s_zipcode) {
+		this.s_zipcode = s_zipcode;
+	}
+
+	public String getS_brn1() {
+		return s_brn1;
+	}
+
+	public void setS_brn1(String s_brn1) {
+		this.s_brn1 = s_brn1;
+	}
+
+	public String getS_brn2() {
+		return s_brn2;
+	}
+
+	public void setS_brn2(String s_brn2) {
+		this.s_brn2 = s_brn2;
+	}
+
+	public String getS_brn3() {
+		return s_brn3;
+	}
+
+	public void setS_brn3(String s_brn3) {
+		this.s_brn3 = s_brn3;
+	}
+
+	public String getS_tel1() {
+		return s_tel1;
+	}
+
+	public void setS_tel1(String s_tel1) {
+		this.s_tel1 = s_tel1;
+	}
+
+	public String getS_tel2() {
+		return s_tel2;
+	}
+
+	public void setS_tel2(String s_tel2) {
+		this.s_tel2 = s_tel2;
+	}
+
+	public String getS_tel3() {
+		return s_tel3;
+	}
+
+	public void setS_tel3(String s_tel3) {
+		this.s_tel3 = s_tel3;
+	}
+
+	public String getS_addr1() {
+		return s_addr1;
+	}
+
+	public void setS_addr1(String s_addr1) {
+		this.s_addr1 = s_addr1;
+	}
+
+	public String getS_addr2() {
+		return s_addr2;
+	}
+
+	public void setS_addr2(String s_addr2) {
+		this.s_addr2 = s_addr2;
+	}
+
+	public double getS_lon() {
+		return s_lon;
+	}
+
+	public void setS_lon(double s_lon) {
+		this.s_lon = s_lon;
+	}
+
+	public double getS_lat() {
+		return s_lat;
+	}
+
+	public void setS_lat(double s_lat) {
+		this.s_lat = s_lat;
+	}
+
+	public int getS_grade() {
+		return s_grade;
+	}
+
+	public void setS_grade(int s_grade) {
+		this.s_grade = s_grade;
+	}
+
+
+	
+	
+
+}

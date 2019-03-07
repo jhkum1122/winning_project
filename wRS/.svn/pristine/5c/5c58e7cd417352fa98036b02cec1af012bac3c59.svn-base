@@ -1,0 +1,45 @@
+<%@page import="org.w3c.dom.Document"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<%@page import="roadshop.web.member.vo.MemberInfo"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<title>Insert title here</title>
+<%
+	request.setCharacterEncoding("euc-kr");
+	MemberInfo m = (MemberInfo) request.getAttribute("m");
+	
+%>
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script type="text/javascript">
+
+
+</script>
+</head>
+<body>
+	<!-- <form  action='userLogin.us' method='post' > -->
+					<table width=166 border=0 cellspacing=0 cellpadding=0 align="left">
+							<tr>
+								<td height=4></td>
+							</tr>
+							
+							<tr><td height=2></td></tr>
+							<tr>
+								<input id="getId" type="hidden" name="getId" value="<%=session.getAttribute("id")%>"/>
+								<td><%=m.getM_name()%>님 반갑습니다 !</td>
+							</tr>
+							<tr><td height="6px"></td></tr>
+							<tr><td colspan="2" align=center>
+							
+								<a id="shopListLink" href="shopList.sh">샵정보</a>
+								<a id="mypageLink" href="mypage.my">마이페이지</a>
+								<a href="memberSelectModify.mem">회원정보수정</a>
+								<a href="memberRemoveUser.mem">회원탈퇴</a>
+								</td>
+							</tr>
+					</table>
+			 <!-- </form> -->
+</body>
+</html>

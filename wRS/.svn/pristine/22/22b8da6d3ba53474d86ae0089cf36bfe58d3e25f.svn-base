@@ -1,0 +1,57 @@
+package roadshop.web.board.action;
+
+import java.util.ArrayList;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import roadshop.actionforward.ActionForward;
+import roadshop.web.board.svc.BoardSearchService;
+import roadshop.web.board.svc.PagingService;
+import roadshop.web.board.vo.BoardInfo;
+import roadshop.web.board.vo.PagingInfo;
+
+public class BoardSearchKeywordAction implements BoardAction {
+
+	@Override
+	public ActionForward execute(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		
+//		System.out.println("이 곳은 BoardSearchKeywordAction.execute(req,res)입니다.");
+		ActionForward forward = new ActionForward();
+		ArrayList<BoardInfo> selectedList = null;			//결과 값을 리턴 할 ArticleList임!!
+		
+		String category = request.getParameter("category");		//select에서 갖고 온 값을 저장
+		String keyword =request.getParameter("keyword");		//검색한 변수 값을 갖고옴!
+		//String searchPageNum = request.getParameter("searchPageNum");		//검색한 변수 값을 갖고옴!
+		
+		int pageSize = 10;
+		String pageNum = request.getParameter("pageNum");		//현재 pageNum을 받음!!//작성한 모든 글에 대한 paging처리!!
+		PagingService pS=new PagingService();
+		
+		if(pageNum == null){
+			pageNum = "1";
+		}
+		PagingInfo pagingInfo=pS.getPagingInfo(pageNum, pageSize, category, keyword);
+		BoardSearchService bSS = new BoardSearchService();
+		//지금까지는 category별로 몇개의 갯수가 있는 지를 확인함!!
+		//아직 category로 나뉘지 않음!! getCategoryList()에서 category별로 record를 갖고 올 것임!
+		selectedList = bSS.getCategoryList(keyword,category, pagingInfo.getStartRow(),pageSize);
+		
+		if(selectedList.size() > 0){
+			//작성자가 일치하는 부분을 찾음!!
+//			System.out.println("BoardSearchKeywordAction.execute(req,res)이 존재할때임!!!");
+			request.setAttribute("pagingInfo", pagingInfo);
+			//request.setAttribute("searchPageNum", searchPageNum);
+			request.setAttribute("selectedList", selectedList);
+			request.setAttribute("load", "../main/boardList.bo");
+			forward.setUrl("/main/boardList.bo");
+		}else{
+			request.setAttribute("selectedList", null);
+			request.setAttribute("load", "../main/boardList.bo");
+			forward.setUrl("/main/boardList.bo");
+		}
+		return forward;
+	}
+
+}

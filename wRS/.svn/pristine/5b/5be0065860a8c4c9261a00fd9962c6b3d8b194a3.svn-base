@@ -1,0 +1,265 @@
+
+<%@page import="roadshop.web.member.vo.MemberInfo"%>
+<%@page import="java.util.ArrayList"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+
+<style type="text/css">
+body {
+	font-family: '맑은 고딕';
+	font-size: 14px
+}
+
+#font2 {
+	font-family: '맑은 고딕';
+	font-size: 13px
+}
+</style>
+
+<title>어딨니로드샵 오신걸 환영합니다</title>
+<script>
+	function zip() {
+		var url = "memberZipSearch.mem?";
+		window.open(url, '_blank',
+				'width=350,height=250,left=100,top=100,resizable=no');
+	}
+</script>
+<%
+	MemberInfo m = (MemberInfo) request.getAttribute("memberList");
+%>
+<form action="<%=request.getContextPath()%>/main/beforeMain.jsp"
+	method="post">
+
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td align="center">
+
+				<table width="1000" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td height="43px">
+							<table width="1000" border="0" cellspacing="0" cellpadding="0">
+								<tr>
+									<td align="left"></td>
+									<td align="right" valign="bottom"></td>
+									<td width="200" align="right" valign="bottom">HOME &gt; <span
+										class="navi_redtext1">회원정보수정</span></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+
+					<input type="hidden" name="m_grade" value="<%=m.getM_grade()%>">
+					<tr>
+						<td height="45">&nbsp;</td>
+					</tr>
+
+					<tr>
+						<td>
+								<table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+									<tr>
+										<td height="1" align="left"><img
+											src="<%=request.getContextPath()%>/image/member/data_change_stitle01.jpg"
+											width="79" height="26"></td>
+									</tr>
+
+									<tr>
+										<td height="10"></td>
+									</tr>
+									<tr>
+										<td height="1" bgcolor="#ac7549"></td>
+									</tr>
+
+									<tr>
+										<td height="50" class="line1">
+											<table width="100%" border="0" cellspacing="0"
+												cellpadding="0">
+												<tr>
+													<td width="30" align="center" valign="middle" class="line4">&nbsp;</td>
+													<td width="130" align="left" valign="middle" class="line4"><span
+														class="text2"><b>아이디</b></span></td>
+													<td width="17" align="center" valign="middle">&nbsp;</td>
+													<td align="left" valign="middle" class="line4">
+														<table width="100%" border="0" cellspacing="0"
+															cellpadding="0">
+
+															<tr>
+																<td width="172"><%=m.getM_id()%> <input
+																	type="hidden" name="m_id" value="<%=m.getM_id()%>"></input></td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<td height="1" bgcolor="#BDBDBD"></td>
+									<tr>
+										<td height="50" class="line1">
+											<table width="100%" border="0" cellspacing="0"
+												cellpadding="0">
+												<tr>
+													<td width="30" align="center" valign="middle" class="line4">&nbsp;</td>
+													<td width="130" align="left" valign="middle" class="line4"><span
+														class="text2"><b>이름</b></span></td>
+													<td width="17" align="center" valign="middle">&nbsp;</td>
+													<td align="left" valign="middle" class="line4">
+														<table width="100%" border="0" cellspacing="0"
+															cellpadding="0">
+															<tr>
+																<td><%=m.getM_name()%></td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+
+
+									<td height="1" bgcolor="#BDBDBD"></td>
+
+									<tr>
+										<td height="50" class="line1">
+											<table width="100%" border="0" cellspacing="0"
+												cellpadding="0">
+												<tr>
+													<td width="30" align="center" valign="middle" class="line4">&nbsp;</td>
+													<td width="130" align="left" valign="middle" class="line4"><span
+														class="text2"><b>생년월일</b></span></td>
+													<td width="17" align="center" valign="middle">&nbsp;</td>
+													<td align="left" valign="middle" class="line4">
+														<table width="100%" border="0" cellspacing="0"
+															cellpadding="0">
+															<tr>
+																<td width="162">
+																	<!-- <select name="brthyy" id="brthyy"
+																	onChange="setDate1(this.form, this.form.brthyy.value, this.form.brthmm.value, this.form.brthdd.value)"></select>
+																	<select name="brthmm" id="brthmm"
+																	onChange="setDate1(this.form, this.form.brthyy.value, this.form.brthmm.value, this.form.brthdd.value)"></select>
+																	<select name="brthdd" id="brthdd"></select> <input
+																	type="hidden" name="BRTH_YHM" id="BRTH_YHM" value=""> -->
+																	<%=m.getM_ssn1()%>
+
+																</td>
+														</table>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<td height="1" bgcolor="#BDBDBD"></td>
+									<tr>
+										<td class="line1">
+											<table width="100%" border="0" cellspacing="0"
+												cellpadding="0">
+												<tr>
+													<td width="30" align="center" valign="middle" class="line4">&nbsp;</td>
+													<td width="130" align="left" valign="middle" class="line4"><span
+														class="text2"><b>주소</b></span></td>
+													<td width="17" align="center" valign="middle">&nbsp;</td>
+													<td height="122" align="left" valign="middle" class="line4">
+														<table width="100%" border="0" cellspacing="0"
+															cellpadding="0">
+															<tr>
+																<td>
+																	<table width="100%" border="0" cellspacing="0"
+																		cellpadding="0">
+																		<tr>
+																			<td width="52"><%=m.getM_zipcode()%></td>
+
+																		</tr>
+																	</table>
+																</td>
+															</tr>
+															<tr>
+																<td height="5"></td>
+															</tr>
+															<tr>
+																<td><%=m.getM_addr1()%></td>
+															</tr>
+															<tr>
+																<td height="5"></td>
+															</tr>
+															<tr>
+																<td><%=m.getM_addr2()%></td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<td height="1" bgcolor="#BDBDBD"></td>
+									<tr>
+										<td height="50" class="line1">
+											<table width="100%" border="0" cellspacing="0"
+												cellpadding="0">
+												<tr>
+													<td width="30" align="center" valign="middle" class="line4">&nbsp;</td>
+													<td width="130" align="left" valign="middle" class="line4"><span
+														class="text2"><b>휴대폰번호</b></span></td>
+													<td width="17" align="center" valign="middle">&nbsp;</td>
+													<td align="left" valign="middle" class="line4">
+														<table width="100%" border="0" cellspacing="0"
+															cellpadding="0">
+															<tr>
+																<td width="75"></select> <%=m.getM_tel1()%></td>
+																<td width="15" align="center">-</td>
+																<td width="96"><%=m.getM_tel2()%></td>
+																<td width="15" align="center">-</td>
+																<td><%=m.getM_tel3()%></td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<td height="1" bgcolor="#BDBDBD"></td>
+
+									<tr>
+										<td height="50" class="line1">
+											<table width="100%" border="0" cellspacing="0"
+												cellpadding="0">
+
+												<tr>
+													<td width="30" align="center" valign="middle" class="line4">&nbsp;</td>
+													<td width="130" align="left" valign="middle" class="line4"><span
+														class="text2"><b>이메일주소</b></span></td>
+													<td width="17" align="center" valign="middle">&nbsp;</td>
+													<td align="left" valign="middle" class="line4">
+														<table width="100%" border="0" cellspacing="0"
+															cellpadding="0">
+															<tr>
+																<td width="165"><%=m.getM_email1()%></td>
+																<td width="20" align="center">@</td>
+																<td width="130"><%=m.getM_email2()%></td>
+																<td width="120"></td>
+																<td width="25" align="center"></td>
+																<td></td>
+
+															</tr>
+														</table>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<td height="1" bgcolor="#ac7549"></td>
+									</tr>
+
+									<td height="15"></td>
+									</tr>
+									<tr>
+
+										<td align="center"><input type="reset" value="취소"
+											onclick="javascript_:history.back(-1);" /> <input
+											type="submit" value="확인" onclick="javascript:alert('수정완료');" />
+									</tr>
+									<tr>
+										<td height="80">&nbsp;</td>
+									</tr>
+								</table>
+							</form>
+</td></tr></table></td></tr></table></form>

@@ -1,0 +1,43 @@
+package roadshop.web.item.svc;
+
+import static roadshop.db.jdbcUtil.con;
+import static roadshop.db.jdbcUtil.close;
+
+import java.sql.Connection;
+import java.util.ArrayList;
+
+import roadshop.web.item.dao.ItemDAO;
+import roadshop.web.item.vo.ItemInfo;
+public class ItemListService {
+
+	public ArrayList<ItemInfo> getItemList(String brand, String keyword) {
+		// TODO Auto-generated method stub
+		Connection con = con();
+		ItemDAO itemDAO = new ItemDAO(con);
+		ArrayList<ItemInfo> itemList = itemDAO.selectItemList(brand, keyword);
+		close(con);
+		
+		return itemList;
+	}
+
+	public ArrayList<ItemInfo> getBrandList(String brand) {
+		// TODO Auto-generated method stub
+		Connection con = con();
+		ItemDAO itemDAO = new ItemDAO(con);
+		ArrayList<ItemInfo> brandList = itemDAO.selectBrandList(brand);
+		close(con);
+		
+		return brandList;
+	}
+
+	public ArrayList<ItemInfo> getCategoryList(String category) {
+		// TODO Auto-generated method stub
+		Connection con = con();
+		ItemDAO itemDAO = new ItemDAO(con);
+		ArrayList<ItemInfo> categoryList = itemDAO.selectCategoryList(category);
+		close(con);
+		
+		return categoryList;
+	}
+
+}

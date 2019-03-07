@@ -1,0 +1,37 @@
+package roadshop.web.user.action;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+@Controller
+public class LoginFormAction{
+	@RequestMapping("/user/loginform.us")
+	public ModelAndView loginform() {
+		ModelAndView mav = new ModelAndView();
+		
+		mav.addObject("load", "/user/login.jsp");
+		mav.setViewName("/main/beforeMain.jsp");
+		return mav;
+	}
+}
+
+/*
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import roadshop.actionforward.ActionForward;
+public class LoginFormAction implements UserAction {
+	@Override
+	public ActionForward execute(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		// TODO Auto-generated method stub
+
+		ActionForward forward = new ActionForward();
+		String load = "../user/login.jsp";
+
+		request.setAttribute("load", load);
+		forward.setUrl("/main/beforeMain.jsp");
+
+		return forward;
+	}
+
+}*/

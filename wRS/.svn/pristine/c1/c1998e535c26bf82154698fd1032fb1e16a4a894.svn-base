@@ -1,0 +1,75 @@
+<%@page import="roadshop.web.item.vo.ItemInfo"%>
+<%@page import="java.util.ArrayList"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+<%
+
+ArrayList<ItemInfo> fItemList = (ArrayList<ItemInfo>)request.getAttribute("fItemList");
+int num=0;
+%>
+
+    
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Insert title here</title>
+</head>
+
+<body>
+<center>
+<h2>찜한 상품 목록</h2>
+<hr width="650">
+<table border="0" width="660">
+<form name=cartForm action="FavoriteItemDelete.my" method="post">
+<table>
+<tr><td align="right"><input type="submit" value="삭제"></td></tr>
+</table><br>
+<table width="400" border="1" cellspacing="0" cellpadding="0" bordercolor="#000000" style="border-collapse:collapse">
+	<tr bgcolor="skyblue">
+		<td width="40">번호</td><td width="60">이미지</td><td width="120">이름</td><td width="100">가격</td><td width="50">브랜드</td>
+		<td width="30"><input type="checkbox" name="chAll" onclick="chFun();"></td>
+	</tr>
+	<%
+	for(ItemInfo item : fItemList) {
+
+	%>
+	<tr>
+		<td width="40"><%=++num %></td>
+		<td width="60">
+		<img src="<%=item.getI_image()%>" width="60px" height="50px" onclick="test();"></td>
+		<td width="120"><%=item.getI_name() %></td>
+		<td width="100"><%=item.getI_price() %> 원</td>
+		<td width="50">
+			<table align="center">
+				<tr><td>
+					<%-- <a href="dogCart.dog?action=up&cartId=<%=d.getId()%>&cartName=<%=d.getName()%>&cartPrice=<%=d.getPrice() %>"> --%>
+					<img src="img/up.jpg" width="12" height="12" border="0"></a>
+				</td></tr>
+				<tr><td><%-- <a href="dogCart.dog?action=up&cartId=<%=d.getId()%>&cartName=<%=d.getName()%>&cartPrice=<%=d.getPrice() %>"> --%><%=item.getI_name() %></td></tr>
+				<tr><td>
+				
+					<a href="itemAsk.it?i_id=<%=item.getI_id() %>"><%=item.getI_name() %></a>
+				</td></tr>
+				<tr><td>
+					<%=item.getI_price() %>
+				</td></tr>
+				<tr><td>
+					<%=item.getI_brand() %> 원
+				</td></tr>
+			</table>
+		</td>
+		<td width="30"><input type="checkbox" name="chDel" value="<%=item.getI_id() %>"></td>
+	</tr>
+<%
+}
+%>
+
+</table>
+</form>
+<hr>
+<a href="dogList.dog">이전</a>
+</center>
+</body>
+</html>

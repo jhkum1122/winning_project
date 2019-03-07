@@ -1,0 +1,16 @@
+/*-------------------------	Body --------------------------*/
+
+.body div.center2{
+	margin:auto;
+	width:69%;
+	height:80px;
+	float:left;
+	
+}
+
+.body .center2 .i_text{
+	width:240px;
+}
+.body .center2 .#brand{
+	width:240px;
+}

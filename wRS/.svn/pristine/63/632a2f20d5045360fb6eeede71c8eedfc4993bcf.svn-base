@@ -1,0 +1,195 @@
+drop table board;
+CREATE TABLE board
+(
+	b_num NUMBER not null primary key , --게시판 글 번호
+	b_writer varchar2(10) not null, -- 작성자 (회원 아이디)
+	b_subject varchar2(50) not null,-- 글제목
+	b_image varchar2(50),--사용자의 이미지
+	b_content varchar2(4000), -- 글 내용
+	b_reg_date timestamp(6) not null,--작성일
+	readcount NUMBER default 0,--조회수
+	ref NUMBER not null,-- 글 그룹 번호
+	re_step NUMBER not null, -- 같은 그룹에서 글 출력 순서
+	re_level NUMBER not null, -- 답글 레벨
+	i_id varchar2(30), -- item_id
+	m_id varchar2(30) -- member_id
+);
+
+ALTER TABLE board
+	ADD (FOREIGN KEY (m_id) REFERENCES member (m_id) ON DELETE CASCADE);
+
+
+
+
+ALTER TABLE board
+	ADD  PRIMARY KEY (b_num);
+
+CREATE TABLE item
+(
+	i_num                NUMBER NOT NULL ,
+	i_id                 VARCHAR2(30) NOT NULL ,
+	i_name               VARCHAR2(30) NOT NULL ,
+	i_price              NUMBER NOT NULL ,
+	i_brand              VARCHAR2(30) NOT NULL ,
+	i_detail             VARCHAR2(4000) NOT NULL ,
+	i_image              VARCHAR2(1000) NOT NULL 
+);
+
+ALTER TABLE item
+	ADD  PRIMARY KEY (i_id);
+
+CREATE TABLE member
+(
+	m_num                NUMBER NOT NULL ,
+	m_id                 VARCHAR2(30) NOT NULL ,
+	m_name               VARCHAR2(30) NOT NULL ,
+	m_pwd                VARCHAR2(30) NOT NULL ,
+	m_tel1               NUMBER NOT NULL ,
+	m_tel2               NUMBER NOT NULL ,
+	m_tel3               NUMBER NOT NULL ,
+	m_ssn1                NUMBER NOT NULL ,
+	m_zip1               NUMBER NOT NULL ,
+	m_zip2               NUMBER NOT NULL ,
+	m_addr1              VARCHAR2(50) NOT NULL ,
+	m_addr2              VARCHAR2(50) NOT NULL ,
+	m_email1             VARCHAR2(30) NOT NULL ,
+	m_email2             VARCHAR2(30) NOT NULL ,
+	m_grade              NUMBER NOT NULL 
+);
+
+ALTER TABLE member
+	ADD  PRIMARY KEY (m_id);
+
+CREATE TABLE shop
+(
+	s_num                NUMBER NOT NULL ,
+	m_id                 VARCHAR2(30) NOT NULL ,
+	s_brand              VARCHAR2(30) NOT NULL ,
+	s_zip1               NUMBER NOT NULL ,
+	s_zip2               NUMBER NOT NULL ,
+	s_addr1              VARCHAR2(50) NOT NULL ,
+	s_addr2              VARCHAR2(50) NOT NULL ,
+	s_brn1               NUMBER NOT NULL ,
+	s_brn2               NUMBER NOT NULL ,
+	s_brn3               NUMBER NOT NULL ,
+	s_tel1               NUMBER NOT NULL ,
+	s_tel2               NUMBER NOT NULL ,
+	s_tel3               NUMBER NOT NULL ,
+	s_lat                NUMBER NOT NULL ,
+	s_lon                NUMBER NOT NULL 
+);
+
+ALTER TABLE shop
+	ADD  PRIMARY KEY (m_id);
+
+
+ALTER TABLE board
+	ADD (FOREIGN KEY (i_id) REFERENCES item (i_id) ON DELETE SET NULL);
+	
+
+
+ALTER TABLE shop
+	ADD (FOREIGN KEY (m_id) REFERENCES member (m_id) ON DELETE CASCADE);
+
+CREATE SEQUENCE board_seq start with 1 increment by 1 nocache;
+CREATE SEQUENCE member_seq start with 1 increment by 1 nocache;
+CREATE SEQUENCE item_seq start with 1 increment by 1 nocache;
+CREATE SEQUENCE shop_seq start with 1 increment by 1 nocache;
+CREATE SEQUENCE shop_stock_seq start with 1 increment by 1 nocache;
+
+SELECT * FROM MEMBER WHERE M_ssn1 LIKE '%7%';
+ALTER TABLE shop_stock_k ADD (i_name varchar2(30)); 
+ALTER TABLE shop_stock_aaaaaaa ADD (i_name varchar2(30)); 
+
+CREATE TABLE shop_stock_aaaaaaa
+	
+(
+	ss_num                NUMBER NOT NULL ,
+	m_id                 VARCHAR2(30) NOT NULL ,
+	i_stock              NUMBER NOT NULL ,
+	i_id                 VARCHAR2(30) NULL 
+);
+
+ALTER TABLE shop_stock_aaaaaaa
+	ADD  PRIMARY KEY (m_id);
+	
+alter table shop drop primary key;
+
+
+
+ALTER TABLE shop_stock_aaaaaaa
+	ADD (FOREIGN KEY (m_id) REFERENCES member (m_id));
+
+ALTER TABLE shop_stock_aaaaaaa
+	ADD (FOREIGN KEY (i_id) REFERENCES item (i_id) ON DELETE SET NULL);
+	
+CREATE TABLE shopitem
+(
+ s_num                NUMBER NOT NULL ,
+ i_id                 VARCHAR2(30) NOT NULL ,
+ i_name               VARCHAR2(30) NOT NULL ,
+ i_price              NUMBER NOT NULL ,
+ i_brand              VARCHAR2(30) NOT NULL ,
+ i_detail             VARCHAR2(4000) NOT NULL ,
+ i_image              VARCHAR2(1000) NOT NULL ,
+ i_categoty           varchar2(20) not null
+);
+
+ALTER TABLE shopitem
+ ADD  PRIMARY KEY (s_num);
+ 
+ ALTER TABLE MEMBER
+	DROP constraint SYS_C0011229;
+	
+ alter table SHOP add constraint foreign key (m_id)
+    references SHOP(m_id) on delete cascade;
+
+ select * from dba_profiles;
+ 
+ select * from all_constraints where table_name='shop';
+ select constraint from SYS_C0011227 where table_name='shop';
+
+ ALTER TABLE SHOP_STOCK_AAAAAAA
+	ADD (FOREIGN KEY (m_id) REFERENCES member (m_id) ON DELETE CASCADE);
+	
+DELETE  FROM MEMBER WHERE M_ID ='k';
+
+ALTER TABLE TBL_ORDER ADD ( o_state NUMBER not null);
+
+
+=======
+SELECT * FROM TBL_SHOP where s_id='2';>>>>>>> .r261
+
+SELECT * FROM TBL_CUSTOMER WHERE c_tel LIKE ?
+
+
+DELETE TBL_CUSTOMER WHERE c_tel=99;
+
+ALTER TABLE SHOP drop CONSTRAINT SYS_C0011227;
+ALTER TABLE TBL_ORDER drop CONSTRAINT R_17;
+ALTER TABLE TBL_RESERVATION drop CONSTRAINT R_17;
+
+
+
+ALTER TABLE TBL_MILEAGE ADD CONSTRAINT C_TEL
+FOREIGN KEY (C_TEL)
+REFERENCES TBL_CUSTOMER (C_TEL)
+ON DELETE CASCADE;
+ 
+
+ALTER TABLE TBL_ORDER ADD CONSTRAINT C_TEL
+ FOREIGN KEY (C_TEL)
+ REFERENCES TBL_CUSTOMER (C_TEL)
+ ON DELETE CASCADE;
+ 
+ALTER TABLE SHOP ADD CONSTRAINT M_ID
+ FOREIGN KEY (M_ID)
+ REFERENCES MEMBER (M_ID)
+ ON DELETE CASCADE;
+ 
+DELETE TBL_CUSTOMER WHERE c_tel=2;
+ 
+select CONSTRAINT_NAME, TABLE_NAME, R_CONSTRAINT_NAME
+from user_constraints
+where CONSTRAINT_NAME = 'SYS_C0011227';
+

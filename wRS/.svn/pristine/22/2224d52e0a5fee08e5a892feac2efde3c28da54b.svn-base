@@ -1,0 +1,45 @@
+package roadshop.web.member.action;
+
+import java.io.PrintWriter;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import roadshop.actionforward.ActionForward;
+import roadshop.web.member.svc.IdAskService;
+
+public class MemberIdSearchAction implements MemberAction {
+
+	@Override
+	public ActionForward execute(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		// TODO Auto-generated method stub
+
+		String id = request.getParameter("m_id");
+
+		boolean isSuccess=true;
+		
+		IdAskService idAskService = new IdAskService();
+		
+		boolean searchId = idAskService.getId(id);
+		System.out.println(searchId);
+
+		ActionForward forward = null;
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
+
+		if (isSuccess) {
+			forward = new ActionForward();
+			request.setAttribute("id", id);
+			request.setAttribute("searchId", searchId);
+			forward.setUrl("/member/search-id.jsp");
+		} else {
+			out.println("<script>");
+			out.println("alert('중복처리 실패입니다')");
+			out.println("history.back()");
+			out.println("</script>");
+		}
+		return forward;
+
+	}
+}

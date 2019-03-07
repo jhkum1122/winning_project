@@ -1,0 +1,23 @@
+package roadshop.web.manager.action.member;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import roadshop.web.manager.svc.member.MMemberRemoveService;
+
+@Controller
+public class MMemberRemoveAction {
+@Autowired
+MMemberRemoveService mmrs;
+	@RequestMapping("/manager/member/memberRemove.mm")
+	public ModelAndView memberRemove(@RequestParam("m_id") String m_id){
+		mmrs.memberGetRemove(m_id);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("/manager/member/memberAllList.mm");
+		return mav;
+	}
+}

@@ -1,0 +1,51 @@
+package roadshop.web.manager.action.shop;
+
+import java.util.ArrayList;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import roadshop.actionforward.ActionForward;
+import roadshop.web.manager.action.ManagerAction;
+import roadshop.web.manager.svc.shop.PagingService;
+import roadshop.web.manager.svc.shop.ShopAllListService;
+import roadshop.web.manager.vo.PagingInfo;
+import roadshop.web.shop.vo.ShopInfo;
+
+public class ShopAllListAction implements ManagerAction {
+
+	@Override
+	public ActionForward execute(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		ActionForward forward= new ActionForward();
+		ArrayList<ShopInfo> isSuccess =new ArrayList<ShopInfo>();
+		String category=null;
+		String keyword=null;
+		int pageSize = 10;
+		String pageNum = request.getParameter("pageNum");
+		PagingService ps=new PagingService();
+		
+		if(pageNum == null){
+			pageNum = "1";
+		}
+		PagingInfo pagingInfo=ps.getPagingInfo(pageNum, pageSize,category,keyword);
+
+		ShopAllListService sals = new ShopAllListService();
+		
+		if(pagingInfo.getCount()>0)
+		isSuccess = sals.shopGetAllList(pagingInfo.getStartRow(),pageSize);
+		
+		String load="shop/shop.jsp";
+		if(isSuccess!=null){
+		request.setAttribute("pagingInfo", pagingInfo);
+		request.setAttribute("shopList",isSuccess);
+		request.setAttribute("load",load);
+		forward.setUrl("/manager/managerMain.jsp");
+		}else{
+			System.out.println("¾È‰è");
+		}
+		
+		return forward;
+	}
+
+}

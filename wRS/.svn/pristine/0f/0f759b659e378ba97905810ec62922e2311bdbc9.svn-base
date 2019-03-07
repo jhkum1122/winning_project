@@ -1,0 +1,53 @@
+package roadshop.web.manager.action.member;
+
+import java.util.ArrayList;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+import roadshop.web.manager.svc.member.MMemberAllListService;
+import roadshop.web.manager.svc.member.PagingService;
+import roadshop.web.manager.vo.PagingInfo;
+import roadshop.web.member.vo.MemberInfo;
+
+@Controller
+public class MMemberAllListAction {
+
+	@RequestMapping("/manager/member/memberAllList.mm")
+	public ModelAndView memberAllList(@RequestParam("pageNum") String pageNum){
+		ModelAndView mav = new ModelAndView();
+		ArrayList<MemberInfo> isSuccess=new ArrayList<MemberInfo>();
+		String keyword = null;
+		String category = null;
+		int pageSize = 10;
+		PagingService ps=new PagingService();
+		
+		if(pageNum == null){
+			pageNum = "1";
+		}
+		PagingInfo pagingInfo=null;
+		try {
+			pagingInfo = ps.getPagingInfo(pageNum, pageSize,category,keyword);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+				
+		MMemberAllListService mmls = new MMemberAllListService();
+		
+		if(pagingInfo.getCount()>0)
+		isSuccess = mmls.memberGetAllList(pagingInfo.getStartRow(),pageSize);		
+		if(isSuccess!=null){
+			mav.addObject("pagingInfo", pagingInfo);
+			mav.addObject("memberList", isSuccess);
+			mav.addObject("load", "../manager/member/member.jsp");
+			mav.setViewName("managerMain");	
+		}
+		else{
+			mav.setViewName("managerMain");	
+		}
+		return mav;
+	
+	}
+
+}

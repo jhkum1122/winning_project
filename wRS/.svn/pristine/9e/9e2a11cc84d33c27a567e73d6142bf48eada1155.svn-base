@@ -1,0 +1,175 @@
+window.onload = function() {
+	var m_id = document.getElementById("m_id");
+	m_id.onblur = function() { // onblur: 동적으로 데이터 전송
+		validateUserId();
+	};
+
+	var m_pwd1 = document.getElementById("m_pwd1");
+	m_pwd1.onblur = function() {
+		validateUserPwd();
+	};
+
+	var m_name = document.getElementById("m_name");
+	m_name.onblur = function() {
+		validateUserName();
+	};
+
+	var m_year = document.getElementById("m_year");
+	m_year.onblur = function() {
+		validateUserYear();
+	};
+
+	var m_month = document.getElementById("m_month");
+	m_month.onblur = function() {
+		validateUserMonth();
+	};
+
+	var m_date = document.getElementById("m_date");
+	m_date.onblur = function() {
+		validateUserDate();
+	};
+
+}
+
+var xmlHttp;
+
+function createXMLHttpRequest() {
+	if (window.ActiveXObject) {
+		xmlHttp = new ActiveXObject('Microsoft.XMLHttp');
+	} else if (window.XMLHttpRequest) {
+		xmlHttp = new XMLHttpRequest();
+	}
+}
+
+// 아이디 중복체크
+function validateUserId() {
+	var m_id = document.getElementById('m_id');// 아이디 가져오기
+	var url = "../main/memberIdSearch.mem?m_id=" + escape(m_id.value);
+
+	createXMLHttpRequest();
+
+	xmlHttp.open("GET", url, true);
+	xmlHttp.onreadystatechange = userIdCheck;
+	xmlHttp.send(null);
+}
+
+// 아이디중복체크&공백처리
+function userIdCheck() {
+	if (xmlHttp.readyState == 4) {
+		if (xmlHttp.status == 200) {
+			var searchId = xmlHttp.responseText;
+			var out = document.getElementById("results");
+			m_id = document.memberRegist.m_id.value;
+
+			if (m_id != "") { // m_id가 공백이 아니면
+				if (searchId == "true") {
+					out.innerHTML = "이미 사용중인 아이디입니다";
+					out.style.color = "red";
+					document.memberRegist.m_id.value = "";
+					document.memberRegist.m_id.focus();
+				} else {
+					out.innerHTML = "사용 할 수 있는 아이디입니다.";
+					out.style.color = "blue";
+
+				}
+			} else {
+				document.memberRegist.m_id.focus();
+
+			}
+		}
+	}
+
+}
+
+// 이름 공백
+function validateUserName() {
+	var m_name = document.memberRegist.m_name.value;
+	var out = document.getElementById("resultname");
+
+	if (document.memberRegist.m_id.value != null) {
+		if (m_name == "") {
+
+			document.memberRegist.m_id.focus();
+			userIdCheck();
+
+		} else {
+			out.innerHTML = "";
+		}
+	} else {
+		document.memberRegist.m_id.focus();
+
+	}
+}
+
+// 비밀번호 일치성 체크
+function validateUserPwd() {
+	var m_pwd = document.memberRegist.m_pwd.value;// m_pwd 가져오기
+	var m_pwd1 = document.memberRegist.m_pwd1.value;// m_pwd1 가져오기
+	var out = document.getElementById("checkPwd");
+
+	if (m_pwd1 != "") {
+		if (m_pwd != m_pwd1) {
+			out.style.color = "red";
+			out.innerHTML = "비밀번호가 다릅니다. 동일한 암호를 입력하세요";
+			document.memberRegist.m_pwd1.value = "";
+			document.memberRegist.m_pwd1.focus();
+		} else {
+			out.style.color = "blue";
+			out.innerHTML = "암호가 확인 되었습니다";
+		}
+	} else {
+		document.memberRegist.m_pwd = "";
+		document.memberRegist.m_pwd.focus();
+	}
+}
+
+// 생년월일에서 생년!
+function validateUserYear() {
+
+	var m_pwd1 = document.memberRegist.m_pwd1.value;
+	var m_year = document.memberRegist.m_year.value;
+	var out = document.getElementById("resultssn");
+
+	if (m_pwd1 != "") {
+		if (m_year == "") {
+			document.memberRegist.m_year.focus();
+			out.style.color = "red";
+			out.innerHTML = "태어난 해를 선택해주세요";
+		} else {
+			out.innerHTML = "";
+		}
+	}
+}
+
+// 생년월일에서 월!
+function validateUserMonth() {
+	var m_year = document.memberRegist.m_year.value;
+	var m_month = document.memberRegist.m_month.value;
+	var out = document.getElementById("resultssn");
+
+	if (m_year != "") {
+		if (m_month == "") {
+			document.memberRegist.m_month.focus();
+			out.style.color = "red";
+			out.innerHTML = "태어난 월을 선택해주세요";
+		} else {
+			out.innerHTML = "";
+		}
+	}
+}
+
+function validateUserDate() {
+	var m_month = document.memberRegist.m_month.value;
+	var m_date = document.memberRegist.m_date.value;
+	var out = document.getElementById("resultssn");
+
+	if (m_month != "") {
+		if (m_date == "") {
+			document.memberRegist.m_date.focus();
+			out.style.color = "red";
+			out.innerHTML = "태어난 일을 선택해주세요";
+		} else {
+			out.innerHTML = "";
+		}
+	}
+}

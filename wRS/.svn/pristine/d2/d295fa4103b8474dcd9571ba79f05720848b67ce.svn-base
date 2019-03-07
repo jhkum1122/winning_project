@@ -1,0 +1,40 @@
+package roadshop.web.shop.action;
+
+import java.util.ArrayList;
+
+import javax.servlet.http.HttpServletRequest;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+
+
+import roadshop.web.shop.svc.ProductListService;
+import roadshop.web.shop.vo.ProductInfo;
+
+
+@Controller
+
+public class ProductListAction  {
+	@Autowired
+	ProductListService pls;
+	
+	@RequestMapping("/mypage/productList.sh")
+	public ModelAndView productListAction(HttpServletRequest request,
+			@RequestParam("s_num") int s_num) throws Exception {
+		
+		ModelAndView mav = new ModelAndView();
+		
+		ArrayList<ProductInfo> productList = pls.productList(s_num);
+		
+		mav.addObject("load","../shopmanager/productManagementMain.jsp");
+		mav.addObject("productList",productList);
+		mav.setViewName("/main/beforeMain.jsp");
+		return mav;
+	}
+
+}

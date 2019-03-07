@@ -1,0 +1,107 @@
+<%@page import="roadshop.web.manager.vo.PagingInfo"%>
+<%@page import="roadshop.web.item.vo.ItemInfo"%>
+<%@page import="java.util.ArrayList"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%
+	PagingInfo pagingInfo=(PagingInfo)request.getAttribute("pagingInfo");
+	int count=0;
+	int currentPage=0;
+	int pageCount=0;
+	int startPage=0;
+	int endPage=0;
+	int number=0;
+	int pageNum=0;
+	ArrayList<ItemInfo> itemList = (ArrayList<ItemInfo>)request.getAttribute("itemList");
+	if(pagingInfo!=null){
+	 count=pagingInfo.getCount();
+	 currentPage=pagingInfo.getCurrentPage();
+	 pageCount=pagingInfo.getPageCount();
+	 startPage=pagingInfo.getStartPage();
+	 endPage=pagingInfo.getEndPage();
+	 number=pagingInfo.getPagenumber();
+	 pageNum=pagingInfo.getCurrentPage();
+	}
+%>
+	<!-- contents -->
+	<div id="contents">
+		<h2>상품관리</h2>
+		<form name="searchForm" action="itemSearch.mi" method="post">
+		<div class="Search_area">
+			<select name="category">
+			<option value="i_name">상품이름</option>
+			<option value="i_id">상품아이디</option>
+			<option value="i_brand">상품브랜드</option>
+			</select>
+			<input type="text" class="input_search" name="keyword" value="">
+			<span class="btn_pack small"><a onClick="submit_go()">검색하기</a></span>
+		</div>
+		</form>
+		<div class="button_area">
+			<span class="textguide fl">상품 이름을 누르시면 수정하실 수 있습니다.</span>
+			<span class="btn_pack large icon"><span class="add"></span><a href="itemRegistForm.mi">상품 등록</a></span>
+		</div>
+		<table class="tbl_list00" cellpadding="0" cellspacing="0" border="0">
+			<colgroup>
+				<col width="2%" />
+				<col width="5%" />
+				<col width="4%" />
+				<col width="3%" />
+				<col width="5%" />
+				<col width="2%" />
+			</colgroup>
+			<thead>
+				<tr>
+					<th>No.</th>
+					<th>상품 브랜드</th>
+					<th>상품 이름</th>
+					<th>상품 가격</th>
+					<th>상품 아이디</th>
+					<th>상품 삭제</th>
+				</tr>
+			</thead>
+			<tbody>
+ 			
+			<% if(itemList!=null){ 
+			for(int i =0;i<itemList.size();i++){%>
+				<tr>
+					<td><%=itemList.get(i).getI_num() %></td>
+					<td><%=itemList.get(i).getI_brand() %></td>
+					<td><a href="itemInfo.mi?i_id=<%=itemList.get(i).getI_id()%>"><b><%=itemList.get(i).getI_name() %></b></a></td>
+					<td><%=itemList.get(i).getI_price() %></td>
+					<td><%=itemList.get(i).getI_id() %></td>
+					<td><a href="itemRemove.mi?i_id=<%=itemList.get(i).getI_id() %>" onClick="return confirm('삭제하시겠습니까?')" ><img src="<%=request.getContextPath() %>/image/manager/btn_delete.gif" alt="삭제버튼"/></a></td>
+				</tr><%} }
+				else{%>
+				<tr>
+				<td colspan=6><strong>해당 정보 없음</strong></td>
+				</tr>
+				<%} %>		
+			</tbody>
+		</table>
+		<div class="paginate_regular">
+			<div class="pagination">
+<% 
+if(pagingInfo!=null){
+	if(count > 0){
+		
+		if(startPage > 10) {	
+			%>
+			<a href="itemAllList.mi?pageNum=<%=startPage - 10 %>">이전</a>
+			<%
+		}
+		for(int i = startPage; i <= endPage; i++){
+			%>
+			<a href="itemAllList.mi?pageNum=<%=i %>">[<%=i %>]</a>
+			<%
+		}
+		if(endPage < pageCount){	
+			%>
+			<a href="itemAllList.mi?pageNum=<%=startPage + 10 %>">다음</a>
+			<%
+		}
+	}
+}%>		</div>
+		<!--페이지 네비게이션 끝 -->
+	</div>
+	</div>

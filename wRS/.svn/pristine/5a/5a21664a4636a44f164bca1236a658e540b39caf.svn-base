@@ -1,0 +1,86 @@
+package roadshop.web.member.action;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import roadshop.web.member.svc.MemberSelectModifyService;
+import roadshop.web.member.vo.MemberInfo;
+
+@Controller
+public class MemberSelectModifyAction {
+
+	@Autowired
+	MemberSelectModifyService mrs;
+
+	@RequestMapping("/main/memberSelectModify.mem")
+	public ModelAndView memberSelect(HttpSession session) {
+		String m_id = (String) session.getAttribute("id");
+		MemberSelectModifyService mrs = new MemberSelectModifyService();
+
+		MemberInfo memberList = mrs.memberGetInfo(m_id);
+
+		ModelAndView mav = new ModelAndView();
+
+		if (memberList != null) {
+			mav.addObject("memberList", memberList);
+			mav.addObject("load", "../member/memberModify.jsp");
+			mav.setViewName("/main/beforeMain.jsp");
+
+		} else {
+			mav.setViewName("/main/beforeMain.jsp");
+		}
+		return mav;
+
+	}
+
+}
+
+/*
+ * 1. MVC패턴 import java.io.PrintWriter; import java.util.ArrayList;
+ * 
+ * import javax.servlet.http.HttpServletRequest; import
+ * javax.servlet.http.HttpServletResponse; import
+ * javax.servlet.http.HttpSession;
+ * 
+ * import roadshop.actionforward.ActionForward; import
+ * roadshop.web.member.svc.MemberSelectModifyService; import
+ * roadshop.web.member.vo.MemberInfo;
+ * 
+ * public class MemberSelectModifyAction implements MemberAction {
+ * 
+ * @Override public ActionForward execute(HttpServletRequest request,
+ * HttpServletResponse response) throws Exception { // TODO Auto-generated
+ * method stub
+ * 
+ * ActionForward forward = null; String m_id; boolean isSuccess = true;
+ * 
+ * HttpSession session = request.getSession();
+ * 
+ * m_id = (String) session.getAttribute("id"); // action에서 뿌려진 session의 // id값을
+ * 가져왔다.
+ * 
+ * MemberSelectModifyService mrs = new MemberSelectModifyService();
+ * 
+ * MemberInfo memberList = mrs.memberGetInfo(m_id);
+ * 
+ * response.setContentType("text/html;charset=utf-8"); PrintWriter out =
+ * response.getWriter(); forward = new ActionForward();
+ * request.setAttribute("memberList", memberList); String load =
+ * "../member/memberModify.jsp";
+ * 
+ * if (isSuccess) {
+ * 
+ * request.setAttribute("load", load);
+ * 
+ * forward.setUrl("/main/beforeMain.jsp"); } else { out.println("<script>");
+ * out.println("alert('중복처리 실패입니다')"); out.println("history.back()");
+ * out.println("</script>"); } return forward;
+ * 
+ * }
+ * 
+ * }
+ */

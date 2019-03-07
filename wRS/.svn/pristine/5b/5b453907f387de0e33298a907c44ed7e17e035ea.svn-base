@@ -1,0 +1,35 @@
+package roadshop.web.shop.svc;
+
+
+
+import static roadshop.db.jdbcUtil.*;
+
+import java.sql.Connection;
+
+import roadshop.db.*;
+import roadshop.web.shop.dao.ShopDao;
+import roadshop.web.shop.vo.ShopInfo;
+
+
+public class ShopModifyService {
+
+	public boolean modifyshop(ShopInfo shopinfo) {
+		Connection con = con();
+		ShopDao dao = new ShopDao(con);
+		boolean updateState=dao.UpdateShop(shopinfo);
+		if(updateState == true){
+			System.out.println("comi");
+			commit(con);
+		}else{
+			System.out.println("roll");
+			rollback(con);
+		}
+		close(con);
+		return updateState;
+	}
+
+		
+
+
+	}
+

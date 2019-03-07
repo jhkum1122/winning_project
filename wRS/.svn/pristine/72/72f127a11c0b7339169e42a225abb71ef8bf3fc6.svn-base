@@ -1,0 +1,163 @@
+package roadshop.web.shop.dao;
+
+import static roadshop.db.jdbcUtil.*;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+
+import roadshop.web.shop.vo.ProductInfo;
+import roadshop.web.shop.vo.ShopInfo;
+
+public class ProductDao {
+	Connection con;
+
+
+	public ProductDao(Connection con) {
+		// TODO Auto-generated constructor stub
+		this.con=con;
+	}
+
+
+	
+	public ArrayList<ProductInfo> selectAllItem(int s_num) {
+		ResultSet rs=null;
+
+		PreparedStatement pstmt=null;
+
+		ProductInfo productInfo;
+		ArrayList<ProductInfo> itemAllList = new ArrayList<ProductInfo>();
+		int i_num=0;
+		int si_num=0;
+		boolean i_stock=false;
+		try{
+			pstmt=con.prepareStatement("select * from item order by i_num");
+			rs=pstmt.executeQuery();
+			while(rs.next()){
+				i_num=rs.getInt("i_num");
+			}
+			System.out.println(s_num);
+			pstmt=con.prepareStatement("select * from shopitem where s_num=? order by si_num");
+			pstmt.setInt(1, s_num);
+			rs=pstmt.executeQuery();
+			while(rs.next()){
+				si_num=rs.getInt("si_num");
+			}
+			
+			if(i_num !=si_num){
+				System.out.println("i="+i_num+"s="+si_num);
+			while(i_num>si_num){
+				pstmt=con.prepareStatement("select * from item where i_num=?");
+				pstmt.setInt(1, si_num+1);
+				rs=pstmt.executeQuery();
+				while(rs.next()){
+					si_num=rs.getInt("i_num");
+					String i_id=rs.getString("i_id");
+					String i_name=rs.getString("i_name");
+					int i_price=rs.getInt("i_price");
+					String i_brand=rs.getString("i_brand");
+					String i_detail=rs.getString("i_detail");
+					String i_image=rs.getString("i_image");
+					String i_category=rs.getString("i_category");
+					int count = rs.getInt("i_count");
+					productInfo = new ProductInfo(s_num, i_price, i_brand, i_detail, i_image, i_category, i_stock, i_name, si_num, i_id);
+					itemAllList.add(productInfo);
+					}
+			}
+					pstmt=con.prepareStatement("insert into shopitem(s_num,si_num,i_id,i_name," 
+							+ "i_price,i_brand,i_detail,i_image,i_categoty,i_stock)"
+							+ "values(?,?,?,?,?,?,?,?,?,?)");
+					for(int i =0;i<itemAllList.size();i++){
+						ProductInfo productInf = itemAllList.get(i);
+						System.out.println(productInf.getI_brand());
+						pstmt.setInt(1, s_num);
+						pstmt.setInt(2, productInf.getSi_num());
+						pstmt.setString(3,productInf.getI_id());
+						pstmt.setString(4, productInf.getI_name());
+						pstmt.setInt(5, productInf.getI_price());
+						pstmt.setString(6, productInf.getI_brand());
+						pstmt.setString(7, productInf.getI_detail());
+						pstmt.setString(8, productInf.getI_image());
+						pstmt.setString(9, productInf.getI_category());
+						pstmt.setInt(10, 1);
+					
+						
+						pstmt.executeUpdate();
+						commit(con);
+						
+					}
+			}else if(i_num == si_num){
+				pstmt=con.prepareStatement("select * from shopitem where s_num=?");
+				pstmt.setInt(1, s_num);
+				rs=pstmt.executeQuery();
+				while(rs.next()){
+					si_num=rs.getInt("si_num");
+					s_num=rs.getInt("s_num");
+					String i_id=rs.getString("i_id");
+					String i_name=rs.getString("i_name");
+					int i_price=rs.getInt("i_price");
+					String i_brand=rs.getString("i_brand");
+					String i_detail=rs.getString("i_detail");
+					String i_image=rs.getString("i_image");
+					String i_category=rs.getString("i_categoty");
+					int stock=rs.getInt("i_stock");
+					if(stock==1){
+						i_stock=false;
+					}else if(stock==2){
+						i_stock=true;
+					}
+					productInfo = new ProductInfo(s_num, i_price, i_brand, i_detail, i_image, i_category, i_stock, i_name, si_num,i_id);
+					itemAllList.add(productInfo);
+				}
+			}
+		}
+				
+		catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			close(rs);
+			close(pstmt);
+		}
+		return itemAllList;
+		
+		
+	}
+
+
+
+
+	public boolean updateStock(String i_id, int s_num,boolean s_stock) {
+		String sql="update shopitem set i_stock=? where i_id=? and s_num=?";
+		PreparedStatement pstmt=null;
+		int stock=0;
+		try{
+			if(s_stock==true){
+				stock=1;
+				}
+			else if(s_stock==false){
+				stock=2;
+			}
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, stock);
+			pstmt.setString(2, i_id);
+			pstmt.setInt(3, s_num);
+			pstmt.executeUpdate();
+			commit(con);
+			
+			return true;
+			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			return false;
+			
+	/*	}finally{
+			close(pstmt);
+		}*/
+		
+		}
+	}
+
+
+}

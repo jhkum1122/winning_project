@@ -1,0 +1,164 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+
+
+<%-- <center>
+	<BR>
+	<BR>
+	<BR> <Strong><%=session.getAttribute("id")%></strong>님
+
+		<input type="hidden" name="m_id"
+			value="<%=session.getAttribute("id")%>"> 회원탈퇴 후 일주일간은 회원가입이
+		불가능합니다.<br> 탈퇴와 재가입을 통해 아이디를 교체하면서 선량한 이용자들께 피해를 끼치는 행위를 <Br>
+		방지하기 위한 조치이오니 넓은 양해 바랍니다. <br>
+		<strong>회원탈퇴 하시겠습니까? <strong> <BR>
+			<BR> <input type="submit" value="확인"
+				onclick="javascript:alert('탈퇴 성공!');" /> <input type="reset"
+				value="취소" /> <BR>
+</center> --%>
+
+
+<style type="text/css">
+body {
+	font-family: '돋움';
+	font-size: 11px
+}
+
+#font2 {
+	font-family: '맑은 고딕';
+	font-size: 13px
+}
+</style>
+<form name="memberRemove"
+	action="<%=request.getContextPath()%>/main/memberRemove.mem"
+	method="post">
+	<table width="802" border="0" cellspacing="0" cellpadding="0"
+		align="right">
+		
+		<%=session.getAttribute("id")%></strong>님
+		
+		<input type="hidden" name="m_id"
+			value="<%=session.getAttribute("id")%>">
+		<tr>
+			<td>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td width="81" align="center"><img
+							src="<%=request.getContextPath()%>/image/member/quit_stitle01.jpg"
+							width="81" height="26"></td>
+						<td align="right">&nbsp;</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td height="12"></td>
+		</tr>
+		<tr>
+			<td>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td height="21">
+							<table width="100%" border="0" cellspacing="0" cellpadding="0">
+								<tr>
+									<td width="10" align="left"><img
+										src="<%=request.getContextPath()%>/image/member/bullet_01.png"
+										width="6" height="6"></td>
+									<td align="left">회원탈퇴를 하시면 보유하신 적립금 및 할인쿠폰은 자동소멸됩니다.</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td height="21">
+							<table width="100%" border="0" cellspacing="0" cellpadding="0">
+								<tr>
+									<td width="10" align="left"><img
+										src="<%=request.getContextPath()%>/image/member/bullet_01.png"
+										width="6" height="6"></td>
+									<td align="left">고객님의 정보는 전자상거래등에서의 소비자보호에 관한 법률에서 정한 일정기간
+										동안 보존됩니다.</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td height="21">
+							<table width="100%" border="0" cellspacing="0" cellpadding="0">
+								<tr>
+									<td width="10" align="left"><img
+										src="<%=request.getContextPath()%>/image/member/bullet_01.png"
+										width="6" height="6"></td>
+									<td align="left">탈퇴후 재가입 시 신규가입시 혜택(할인쿠폰, 가입적립금)은 지급되지
+										않습니다.</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td height="12"></td>
+		</tr>
+		<tr>
+			<td valign="top">
+
+
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td height="1" bgcolor="#84716a"></td>
+					</tr>
+					<tr>
+						<td height="40" class="line1">
+							<table width="100%" border="0" cellspacing="0" cellpadding="0">
+								<tr>
+									<td width="30" height="40" align="left" bgcolor="#f7f5f5"></td>
+									<td width="135" height="40" align="left" bgcolor="#f7f5f5"><span
+										class="text2">탈퇴사유</span></td>
+									<td width="15" height="40"></td>
+									<td height="40" align="left"><span class="line4"> <select
+											name=MemDrop_gb>
+												<option value=''>탈퇴사유 선택</option>
+												<option value=00001>사이트이용빈도낮음
+												<option value=00002>지점제한적
+												<option value=00003>제품제한적
+												<option value=00004>기타
+										</select>
+									</span></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td height="40" class="line1">
+
+
+							<table width="100%" border="0" cellspacing="0" cellpadding="0">
+								<tr>
+									<td width="30" height="40" align="left" bgcolor="#f7f5f5"></td>
+									<td width="135" height="40" align="left" bgcolor="#f7f5f5"><span
+										class="text2">내용</span></td>
+									<td width="15" height="40"></td>
+									<td height="252" align="left"><textarea name="Note"
+											id="Note" style="width: 97%; height: 230px;"></textarea></td>
+								</tr>
+
+							</table>
+
+							<table width="502" border="0" cellspacing="0" cellpadding="0"
+								align="right">
+								<tr>
+									<td><input type="image"
+										src="<%=request.getContextPath()%>/image/member/basket_ok_btn01.png"
+										width="122" height="46" /> <!-- onclick="javascript:alert('탈퇴 성공!');" -->
+
+
+
+										<img
+										src="<%=request.getContextPath()%>/image/member/cancel_btn01.png"
+										width="122" height="46" onclick="javascript:history.back(-1);">
+									</td>
+								</tr>
+							</table>
+							</form>

@@ -1,0 +1,34 @@
+package roadshop.web.manager.action.member;
+
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import roadshop.web.manager.svc.member.MMemberRegistService;
+import roadshop.web.manager.validation.MemberInfoValidator;
+import roadshop.web.member.vo.MemberInfo;
+
+@Controller
+public class MMemberRegistAction{
+
+@Autowired
+MMemberRegistService mmrs;
+
+	@RequestMapping("/manager/member/memberRegist.mm")
+	public String memberRegist(@ModelAttribute("command") MemberInfo mi,BindingResult result){
+		new MemberInfoValidator().validate(mi, result);
+		if(result.hasErrors()){
+			return "/manager/member/memberRegistForm.mm";
+		}
+		else{
+			mmrs.memberGetRegist(mi);
+		return "/manager/member/memberAllList.mm";
+		}
+	
+	}
+
+}

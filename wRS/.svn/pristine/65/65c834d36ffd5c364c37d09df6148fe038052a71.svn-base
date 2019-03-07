@@ -1,0 +1,137 @@
+/*package roadshop.web.mypage.controller;
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import roadshop.actionforward.ActionForward;
+import roadshop.web.mypage.action.FavoriteListAction;
+import roadshop.web.mypage.action.FavoriteRegistAction;
+import roadshop.web.mypage.action.FavoriteRemoveAction;
+import roadshop.web.mypage.action.MypageAction;
+import roadshop.web.mypage.action.MypageViewAction;
+import roadshop.web.mypage.action.ShopRegiAction;
+import roadshop.web.mypage.action.ShopRegiFormAction;
+
+
+*//**
+ * Servlet implementation class MypageFrontController
+ *//*
+@WebServlet("*.my")
+public class MypageFrontController extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+    *//**
+     * Default constructor. 
+     *//*
+    public MypageFrontController() {
+        // TODO Auto-generated constructor stub
+    }
+
+	*//**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 *//*
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doProcess(request,response);
+	}
+
+	*//**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 *//*
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doProcess(request,response);
+	}
+	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String requestURI = request.getRequestURI();
+		
+		String context = request.getContextPath();
+		
+		System.out.println(context);
+		String command = requestURI.substring(context.length());
+		
+		MypageAction action = null;
+		ActionForward forward = null;
+		
+		System.out.println(command);
+		
+		if(command.equals("/mypage/mypage.my")){
+			
+			action = new MypageViewAction();
+			try{
+				forward=action.execute(request,response);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		else if(command.equals("/mypage/shopRegi.my")){
+			
+			action = new ShopRegiAction();
+			try{
+				forward=action.execute(request,response);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		else if(command.equals("/mypage/shopRegiForm.my")){
+			
+			action = new ShopRegiFormAction();
+			try{
+				forward=action.execute(request,response);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+
+		else if(command.equals("/mypage/favoriteList.my")) {
+			
+			action = new FavoriteListAction();
+			try {
+				forward = action.execute(request, response);
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		else if(command.equals("/main/FavoriteItemDelete.my")) {
+			System.out.println("¾È³ç");
+			action = new FavoriteRemoveAction();
+			try {
+				forward = action.execute(request, response);
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		else if(command.equals("/product/favoriteItemRegist.my")){
+			   action = new FavoriteRegistAction();
+			   try{
+			    forward = action.execute(request, response);
+			    
+			   }catch(Exception e){
+			    e.printStackTrace();
+			   }
+			  }
+		
+		
+		
+		
+		if(forward!=null){
+			if(forward.isRedirect()){
+				response.sendRedirect(forward.getUrl());
+			}
+			else
+			{	
+				RequestDispatcher dispatcher = request.getRequestDispatcher(forward.getUrl());
+				dispatcher.forward(request,response);
+			}
+		}
+		
+	}
+
+}
+*/

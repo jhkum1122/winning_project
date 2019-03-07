@@ -1,0 +1,30 @@
+package roadshop.web.member.svc;
+
+import static roadshop.db.jdbcUtil.close;
+import static roadshop.db.jdbcUtil.con;
+
+import java.sql.Connection;
+import java.util.ArrayList;
+
+import roadshop.web.member.dao.MemberDao;
+import roadshop.web.member.vo.MemberInfo;
+import roadshop.web.user.dao.UserDAO;
+
+public class MemberSelectModifyService {
+
+	public MemberInfo memberGetInfo(String m_id) {
+		// TODO Auto-generated method stub
+
+		Connection con = con();
+
+		MemberDao m = new MemberDao(con);
+
+		MemberInfo member = m.selectIdMember(m_id);
+
+		close(con);
+
+		return member;
+
+	}
+
+}

@@ -1,0 +1,113 @@
+<%@page import="roadshop.web.manager.vo.PagingInfo"%>
+<%@page import="roadshop.web.member.vo.MemberInfo"%>
+<%@page import="java.util.ArrayList"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%
+	PagingInfo pagingInfo=(PagingInfo)request.getAttribute("pagingInfo");
+	int count=0;
+	int currentPage=0;
+	int pageCount=0;
+	int startPage=0;
+	int endPage=0;
+	int number=0;
+	int pageNum=0;
+	ArrayList<MemberInfo> memberList = (ArrayList<MemberInfo>)request.getAttribute("memberList");
+	if(pagingInfo!=null){
+	 count=pagingInfo.getCount();
+	 currentPage=pagingInfo.getCurrentPage();
+	 pageCount=pagingInfo.getPageCount();
+	 startPage=pagingInfo.getStartPage();
+	 endPage=pagingInfo.getEndPage();
+	 number=pagingInfo.getPagenumber();
+	 pageNum=pagingInfo.getCurrentPage();
+	}
+%>
+
+	<!-- contents -->
+	<div id="contents">
+		<h2>회원관리</h2>
+		<form name="searchForm" action="memberSearch.mm" method="post">
+		<div class="Search_area">
+			<select name="category">
+			<option value="m_name">이름</option>
+			<option value="m_id">아이디</option>
+			</select>
+			<input type="text" class="input_search" name="keyword" value="">
+			<span class="btn_pack small"><a onClick="submit_go()">검색하기</a></span>
+		</div>
+		</form>
+		
+		<div class="button_area">
+			<span class="textguide fl">회원 이름을 누르시면 수정하실 수 있습니다.</span>
+			<span class="btn_pack large icon"><span class="add"></span><a href="memberRegistForm.mm">회원 등록</a></span>
+		</div>
+		<table class="tbl_list00" cellpadding="0" cellspacing="0" border="0">
+			<caption>채널관리리스트</caption>
+			<colgroup>
+				<col width="2%" />
+				<col width="5%" />
+				<col width="4%" />
+				<col width="3%" />
+				<col width="5%" />
+				<col width="2%" />
+			</colgroup>
+			<thead>
+				<tr>
+					<th>No.</th>
+					<th>회원 ID</th>
+					<th>회원 이름</th>
+					<th>회원 생일</th>
+					<th>회원 전화번호</th>
+					<th>회원 삭제</th>
+				</tr>
+			</thead>
+			<tbody>
+ 			
+			<% if(memberList!=null){ 
+			for(int i =0;i<memberList.size();i++){%>
+				<tr>
+					<td><%=memberList.get(i).getM_num() %></td>
+					<td><%=memberList.get(i).getM_id() %></td>
+					<td><a href="memberInfo.mm?m_id=<%=memberList.get(i).getM_id()%>"><b><%=memberList.get(i).getM_name() %></b></a></td>
+					<td><%=memberList.get(i).getM_ssn1() %></td>
+					<td><%=memberList.get(i).getM_tel1() %>-<%=memberList.get(i).getM_tel2() %>-
+						<%=memberList.get(i).getM_tel3() %>
+					</td>
+					
+					<td><a href="memberRemove.mm?m_id=<%=memberList.get(i).getM_id() %>" onClick="return confirm('삭제하시겠습니까?')" ><img src="<%=request.getContextPath() %>/image/manager/btn_delete.gif" alt="삭제버튼"/></a></td>
+				</tr><%}}
+				else{%>
+				<tr>
+				<td colspan=6><strong>해당 정보 없음</strong></td>
+				</tr>
+				<%} %>
+						
+			</tbody>
+		</table>
+		<div class="paginate_regular">
+			<div class="pagination">
+<%
+if(pagingInfo!=null){
+	if(count > 0){
+		
+		if(startPage > 10) {	
+			%>
+			<a href="memberAllList.mm?pageNum=<%=startPage - 10 %>">이전</a>
+			<%
+		}
+		for(int i = startPage; i <= endPage; i++){
+			%>
+			<a href="memberAllList.mm?pageNum=<%=i %>">[<%=i %>]</a>
+			<%
+		}
+		if(endPage < pageCount){	
+			%>
+			<a href="memberAllList.mm?pageNum=<%=startPage + 10 %>">다음</a>
+			<%
+		}
+	}
+}
+%>		</div>
+	</div>
+	</div>

@@ -1,0 +1,23 @@
+package roadshop.web.manager.svc.shop;
+
+import java.sql.Connection;
+import java.util.ArrayList;
+import static roadshop.db.jdbcUtil.*;
+import roadshop.web.shop.dao.ShopDao;
+import roadshop.web.shop.vo.ShopInfo;
+
+public class ShopSearchService {
+	
+	public ArrayList<ShopInfo> getShopSearchList(String keyword,
+			String category, int startRow, int pageSize) {
+		Connection con=con();
+		ShopDao shopDao = new ShopDao(con);
+		ArrayList<ShopInfo> check = null;
+		check = shopDao.selectKeyword(keyword,category,startRow,pageSize);
+		
+		close(con);
+		return check;
+	}
+	
+
+}

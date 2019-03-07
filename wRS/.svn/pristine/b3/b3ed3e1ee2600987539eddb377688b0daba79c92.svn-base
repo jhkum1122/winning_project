@@ -1,0 +1,92 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<%@page import="roadshop.web.shop.vo.ShopInfo"%>
+<%@page import="java.util.ArrayList"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<title>Insert title here</title>
+<%
+ArrayList<ShopInfo> list = (ArrayList<ShopInfo>)request.getAttribute("shopList");
+String m_id=(String)session.getAttribute("id");
+%>
+</head>
+<body>
+
+
+<h1 align="center">샵정보</h1>
+
+
+
+<table align="center" width="680"  border="0" cellspacing="0" cellpadding="0">
+<tr>
+	<td>
+		<table width="680" border="0" cellpadding="0" cellspacing="0">
+		<tr>
+			<td height="2" colspan="14" bgcolor="#D4D4D4"></td>
+		</tr>
+		<tr>
+			<td width="51" height="23" align="center" style="font-size:11px; background-color:#F4F4F4;"><font color=#818181>샵번호</td>
+			<td width="1" align="center" style="background-color:#F4F4F4;"><img src="../image/bbs_list_line.gif" align="absmiddle" border="0"></td>
+			<td align="center" style="font-size:11px; background-color:#F4F4F4;"><font color=#818181>브랜드</td>
+			<td width="1" align="center" style="background-color:#F4F4F4;"><img src="../image/bbs_list_line.gif" align="absmiddle" border="0"></td>
+			<td width="70" align="center" style="font-size:11px; background-color:#F4F4F4;"><font color=#818181>우편번호</td>
+			<td width="1" align="center" style="background-color:#F4F4F4;"><img src="../image/bbs_list_line.gif" align="absmiddle" border="0"></td>
+			<td width="70" align="center" style="font-size:11px; background-color:#F4F4F4;"><font color=#818181>상품정보</td>
+			<td width="1" align="center" style="background-color:#F4F4F4;"><img src="../image/bbs_list_line.gif" align="absmiddle" border="0"></td>
+			<td width="70" align="center" style="font-size:11px; background-color:#F4F4F4;"><font color=#818181>수정</td>
+			<td width="1" align="center" style="background-color:#F4F4F4;"><img src="../image/bbs_list_line.gif" align="absmiddle" border="0"></td>
+			<td width="70" align="center" style="font-size:11px; background-color:#F4F4F4;"><font color=#818181>가맹해지</td>
+			
+			
+		</tr>
+		<tr>
+			<td height="1px" colspan="14" bgcolor="#D4D4D4"></td>
+		</tr>
+		</table>
+<%
+for (int i=0;i<list.size();i++){
+		ShopInfo shop=list.get(i);
+%>
+
+		<table cellspacing='0' cellpadding='0' border='0' width=100% border=0><td valign=top align=center>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+
+<tr height="27">
+	<!--<td width="3"></td>-->
+	<td width="51" align="center"><%out.print(shop.getS_num()); %></td>
+	<td width="1"></td>
+	<td align="center"><%out.println(shop.getS_brand()); %></td>
+	<td width="1"></td>
+	<td width="70" align="center"><%out.println(shop.getS_zipcode()); %></td>
+	<td width="1"></td>
+	<td width="70" align="center"><input type="button" value="상품정보" onclick="location.href='productList.pro?s_num=<%=shop.getS_num()%>'"></td>
+	<td width="1"></td>
+	<td width="70" align="center"><input type="button" value="수정" onclick="location.href='shopModifyForm.sh?s_num=<%=shop.getS_num()%>'"></td>
+	<td width="1"></td>
+	<td width="70" align="center"><input type="button" value="캔슬" onclick="location.href='shopCancel.sh?s_num=<%=shop.getS_num()%>'"></td>
+
+
+	
+	<!--<td width="3"></td>-->
+</tr>
+<tr>
+	<td height="1" colspan="14" bgcolor="#F0F0F0"></td>
+</tr>
+</table>
+
+<td>
+
+
+</td></tr><td valign=top align=center>
+<%
+}
+%>
+
+
+
+
+</body>
+</html>

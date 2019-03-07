@@ -1,0 +1,31 @@
+package roadshop.web.board.action;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+import roadshop.web.board.svc.BoardDeleteService;
+
+@Controller
+public class BoardDeleteProAction{
+
+	@RequestMapping("/main/boardDelete.bo")
+	public ModelAndView boardDeletePro(@RequestParam(value="pageNum",defaultValue="1") String pageNum,
+			@RequestParam(value="num") int num) throws Exception {
+
+		ModelAndView mav = new ModelAndView();
+		String load = "../board/list.jsp";
+		//../board/content.jsp
+		BoardDeleteService bds=new BoardDeleteService();
+		boolean isDeleteSuccess=false;
+		isDeleteSuccess=bds.deleteArticle(num);
+
+		if(isDeleteSuccess){
+			mav.addObject("load",load);
+			mav.addObject("pageNum", pageNum);
+			mav.setViewName("../main/beforeMain");
+		}else{
+			System.out.println("글 삭제 실패!!");
+		}
+		return mav;
+	}
+}

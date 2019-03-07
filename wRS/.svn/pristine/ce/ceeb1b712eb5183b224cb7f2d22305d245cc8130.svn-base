@@ -1,0 +1,54 @@
+package roadshop.web.manager.action.item;
+
+import java.util.ArrayList;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import roadshop.web.item.vo.ItemInfo;
+import roadshop.web.manager.svc.item.ItemAllListService;
+import roadshop.web.manager.svc.item.PagingService;
+import roadshop.web.manager.vo.PagingInfo;
+
+@Controller
+public class ItemAllListAction {
+
+	@Autowired
+	PagingService ps;
+	
+	@Autowired
+	ItemAllListService ials;
+	
+	@RequestMapping("/manager/item/itemAllList.mi")
+	public ModelAndView itemAllList(@RequestParam(value="pageNum",defaultValue="1") String pageNum) {
+		ArrayList<ItemInfo> itemAllList = new ArrayList<ItemInfo>();
+		ModelAndView mav = new ModelAndView();
+		int pageSize = 10;
+		
+		PagingInfo pagingInfo=null;
+		try {
+			pagingInfo = ps.getPagingInfo(pageNum, pageSize,null,null);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		itemAllList = ials.itemGetAllList(pagingInfo.getStartRow(),pageSize);
+		
+		if(itemAllList!=null){
+			mav.addObject("pagingInfo", pagingInfo);
+			mav.addObject("itemList", itemAllList);
+			mav.addObject("load","../manager/item/item.jsp");
+			mav.setViewName("/manager/managerMain.jsp");			
+		}
+		else{
+			mav.addObject("load","../manager/item/item.jsp");
+			mav.setViewName("/manager/managerMain.jsp");			
+		}
+		return mav;
+	}
+}
+
+

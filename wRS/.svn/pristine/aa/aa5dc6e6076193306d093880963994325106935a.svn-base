@@ -1,0 +1,132 @@
+package roadshop.web.manager.controller;
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import roadshop.actionforward.ActionForward;
+import roadshop.web.manager.action.ManagerAction;
+import roadshop.web.manager.action.item.ItemAllListAction;
+import roadshop.web.manager.action.item.ItemInfoAction;
+import roadshop.web.manager.action.item.ItemModifyAction;
+import roadshop.web.manager.action.item.ItemRegistAction;
+import roadshop.web.manager.action.item.ItemRegistFormAction;
+import roadshop.web.manager.action.item.ItemRemoveAction;
+import roadshop.web.manager.action.item.ItemSearchAction;
+
+/**
+ * Servlet implementation class ManagerItemFrontController
+ */
+@WebServlet("*.mi")
+public class ManagerItemFrontController extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public ManagerItemFrontController() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+    protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	request.setCharacterEncoding("UTF-8");
+		String requestURI = request.getRequestURI();
+		String context = request.getContextPath();
+		String command = requestURI.substring(context.length());
+		
+		ManagerAction action = null;
+		ActionForward forward = null;
+		if(command.equals("/manager/item/itemAllList.mi")){
+			action = new ItemAllListAction();
+			try{
+				forward = action.execute(request, response);
+				
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		else if(command.equals("/manager/item/itemRegist.mi")){
+			action = new ItemRegistAction();
+			try{
+				forward = action.execute(request, response);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		} 
+		else if(command.equals("/manager/item/itemRemove.mi")){
+			action = new ItemRemoveAction();
+			try{
+				forward = action.execute(request, response);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		} 
+		else if(command.equals("/manager/item/itemInfo.mi")){
+			action = new ItemInfoAction();
+			try{
+				forward = action.execute(request, response);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		} 
+		else if(command.equals("/manager/item/itemModify.mi")){
+			action = new ItemModifyAction();
+			try{
+				forward = action.execute(request, response);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		} 
+		else if(command.equals("/manager/item/itemSearch.mi")){
+			action = new ItemSearchAction();
+			try{
+				forward = action.execute(request, response);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		} 
+		else if(command.equals("/manager/item/itemRegistForm.mi")){
+			action = new ItemRegistFormAction();
+			try{
+				forward = action.execute(request, response);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		} 
+	
+		if(forward != null){
+			if(forward.isRedirect()){
+				response.sendRedirect(forward.getUrl());
+			}
+			else{
+				RequestDispatcher dispatcher = request.getRequestDispatcher(forward.getUrl());
+				dispatcher.forward(request, response);
+				
+						
+			}
+		}
+		
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doProcess(request,response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doProcess(request,response);
+	}
+
+}

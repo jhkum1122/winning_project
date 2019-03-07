@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+     xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:jee="http://www.springframework.org/schema/jee"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.2.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+    http://www.springframework.org/schema/jee 
+    http://www.springframework.org/schema/jee/spring-jee-3.2.xsd"
+>
+    <context:component-scan base-package="roadshop.web.board.action"></context:component-scan>
+   <!--  <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+      	<property name="alwaysUseFullPath" value="true"></property> 
+    </bean> -->
+</beans>
+
+   <!-- 	Annotation은 2가지 handlerMapping이 있음 그러므로 지금 사용하는 HandlerMapping을 설정해야함! -->
+ <!--  	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+      	<property name="alwaysUseFullPath" value="true"></property> 
+    </bean>
+
+   	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+      	<property name="alwaysUseFullPath" value="true"></property> 
+    </bean>
+	기본적으로 Spring에서 mvc요청 매핑을 처리 할때는 AnnotationMethodHandlerAdapter ,DefaultAnnotationHandlerMapping 2가지를 사용하므로
+		요청Url에 대한 Mapping을 설정할 때! 컨텍스트루트부터 무조건 Url경로로 사용 하려면 두 Bean객체의 alwaysUseFullPath속성을 True로 지정해야함!
+   
+   이 부분은 file업로드 
+   <bean id="multipartResolver"
+       class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+       ></bean>
+	InternalResourceViewResolver:Web자원을 이용해서 View페이지를 생성하는 ViewResolver
+
+	<bean id = "searchController"
+	    class="kosta.spring.controller.SearchController"
+	    ></bean>
+	<context:component-scan base-package="kosta.spring.controller"></context:component-scan>
+		
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource"> 
+	    <property name="basenames">
+	        <list>
+	            <value>messages.validation</value>
+	        </list>
+	    </property>
+	</bean> -->

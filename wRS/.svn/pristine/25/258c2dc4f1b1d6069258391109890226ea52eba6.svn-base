@@ -1,0 +1,112 @@
+package roadshop.web.shop.vo;
+
+public class ProductInfo {
+	private String i_id;
+	private int s_num;
+	private int i_price;
+	private String i_brand;
+	private String i_detail;
+	private String i_image;
+	private String i_category;
+	private boolean i_stock;
+	private String i_name;
+	private int si_num;
+	
+	
+
+
+	public ProductInfo(int s_num, int i_price, String i_brand, String i_detail,
+			String i_image, String i_category, boolean i_stock, String i_name,
+			int si_num,String i_id) {
+		super();
+		this.s_num = s_num;
+		this.i_price = i_price;
+		this.i_brand = i_brand;
+		this.i_detail = i_detail;
+		this.i_image = i_image;
+		this.i_category = i_category;
+		this.i_stock = i_stock;
+		this.i_name = i_name;
+		this.si_num = si_num;
+		this.i_id=i_id;
+	}
+	
+	
+	public int getS_num() {
+		return s_num;
+	}
+	public void setS_num(int s_num) {
+		this.s_num = s_num;
+	}
+
+	public int getI_price() {
+		return i_price;
+	}
+	public void setI_price(int i_price) {
+		this.i_price = i_price;
+	}
+	public String getI_brand() {
+		return i_brand;
+	}
+	public void setI_brand(String i_brand) {
+		this.i_brand = i_brand;
+	}
+	public String getI_detail() {
+		return i_detail;
+	}
+	public void setI_detail(String i_detail) {
+		this.i_detail = i_detail;
+	}
+	public String getI_image() {
+		return i_image;
+	}
+	public void setI_image(String i_image) {
+		this.i_image = i_image;
+	}
+	public String getI_category() {
+		return i_category;
+	}
+	public void setI_category(String i_category) {
+		this.i_category = i_category;
+	}
+
+
+	public String getI_name() {
+		return i_name;
+	}
+
+	public void setI_name(String i_name) {
+		this.i_name = i_name;
+	}
+
+	public int getSi_num() {
+		return si_num;
+	}
+
+	public void setSi_num(int si_num) {
+		this.si_num = si_num;
+	}
+
+
+	public String getI_id() {
+		return i_id;
+	}
+
+
+	public void setI_id(String i_id) {
+		this.i_id = i_id;
+	}
+
+
+	public boolean isI_stock() {
+		return i_stock;
+	}
+
+
+	public void setI_stock(boolean i_stock) {
+		this.i_stock = i_stock;
+	}
+	
+
+
+}

@@ -1,0 +1,28 @@
+package roadshop.web.manager.svc.shop;
+
+import java.sql.Connection;
+import java.util.ArrayList;
+import static roadshop.db.jdbcUtil.*;
+import roadshop.web.shop.dao.ShopDao;
+import roadshop.web.shop.vo.ShopInfo;
+
+public class ShopBrandListService {
+	
+	Connection con = con();
+	ShopDao shopDao = new ShopDao(con);
+	
+	public ArrayList<ShopInfo> shopGetBrandList(String s_brand) {
+		ArrayList<ShopInfo> check = null;
+		
+		check=shopDao.selectBrandListShop(s_brand);
+		
+		if(check!=null){
+			commit(con);
+		}else{
+			rollback(con);
+		}
+		close(con);
+		return check;
+	}
+
+}

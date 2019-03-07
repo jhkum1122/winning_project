@@ -1,0 +1,121 @@
+package roadshop.web.board.action;
+/*이 부분을 오늘 수정해야 함!!*/
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+import roadshop.web.board.vo.BoardInfo;
+
+
+@Controller
+public class BoardWriteFormAction{
+
+	//중요한 것은!!!!
+	//이 곳에서 request.getParameter("num")을 해야 한다는 것이다~~~
+	//request.getParameter("b_num")을 하면 계속 값을 받아오지 못한다!!
+	@RequestMapping("/main/boardWriteForm.bo")
+	public ModelAndView boardWriteForm(HttpServletRequest request) throws Exception {
+		//함수(@ModelAttribute("article") BoardInfo article)
+		//이 것으로 바꾸면 된다!!
+		int num = 0;
+		int ref=1,re_step=0,re_level=0;
+		String m_id="before";
+		String i_id="item";
+		
+		ModelAndView mav = new ModelAndView();
+		if (request.getParameter("num")!=null) {
+			num=Integer.parseInt(request.getParameter("num"));
+			ref=Integer.parseInt(request.getParameter("ref"));
+			re_step=Integer.parseInt(request.getParameter("re_step"));
+			re_level=Integer.parseInt(request.getParameter("re_level"));
+			m_id=request.getParameter("m_id");
+			i_id=request.getParameter("i_id");
+		}
+		BoardInfo boardInfo = new BoardInfo();
+		boardInfo.setB_num(num);
+		boardInfo.setRef(ref);
+		boardInfo.setRe_step(re_step);
+		boardInfo.setRe_level(re_level);		
+		//이 밑에는 시험판입니다.
+		boardInfo.setM_id(m_id);
+		boardInfo.setI_id(i_id);
+
+		//session처리 ID로 로그인이 되었을 때임!!
+		HttpSession session = request.getSession();
+		String id = (String)session.getAttribute("id");
+
+		System.out.println("boardWriteForm() "+"ReplyVO.num = "+boardInfo.getB_num()+", ReplyVO.ref = "+boardInfo.getRef()+", ReplyVO.re_step = "+boardInfo.getRe_step()
+				+", ReplyVO.re_level = "+boardInfo.getRe_level()+", ReplyVO.m_id = "+boardInfo.getM_id() );
+		String load = "../board/writeForm.jsp";
+
+		mav.addObject("load",load);
+		mav.addObject("boardInfo", boardInfo);		//글 i_id,m_id에 대한 정보 설정!!
+		mav.setViewName("../main/beforeMain.jsp");
+		
+		return mav;
+	}
+}
+		
+		
+		
+		/*MVC2버전으로 처리한 부분임!!
+public class BoardWriteFormAction implements BoardAction {
+		 public ActionForward execute(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		//이 곳에서 num=0,ref=1,re_step=0,re_level=0;으로 초기화함!!!
+		int num=0,ref=1,re_step=0,re_level=0;
+		//이 곳은 시험판입니다.
+		String m_id="before";
+		String i_id="item";
+
+		if(request.getParameter("num")!=null){
+			//해당 JSP로 전달된 request에 저장된 "num" 파라미터의 값이 존재한다면! 
+			//여기에서 request.getParameter("num")의 값을 받아옴!!
+			num=Integer.parseInt(request.getParameter("num"));
+			ref=Integer.parseInt(request.getParameter("ref"));
+			re_step=Integer.parseInt(request.getParameter("re_step"));
+			re_level=Integer.parseInt(request.getParameter("re_level"));
+			m_id=request.getParameter("m_id");
+			i_id=request.getParameter("i_id");
+
+			System.out.println("BoardWriteFormAction.execute()의 if안에 문장!!DB에 값이 있을때임!!\n "+"ReplyVO.num = "+num+", ReplyVO.ref = "+ref+", ReplyVO.re_step = "+re_step
+						+", ReplyVO.re_level = "+re_level+", ReplyVO.m_id = "+m_id );
+			System.out.println("==================================================="
+					+"\nm_id = "+m_id+",i_id = "+i_id);
+		}
+		//해당 JSP로 전달된 request에 저장된 "num" 파라미터의 값이 존재하지 않는다면! 
+		System.out.println("BoardWriteFormAction.execute()의 if밖의 문장!! DB에 값이 없을때임!!\n "+"ReplyVO.num = "+num+", ReplyVO.ref = "+ref+", ReplyVO.re_step = "+re_step
+				+", ReplyVO.re_level = "+re_level+", boardInfo.m_id = "+m_id);
+		System.out.println("==================================================="
+				+"\nm_id = "+m_id+",i_id = "+i_id);
+		BoardInfo boardInfo = new BoardInfo();
+		boardInfo.setB_num(num);
+		boardInfo.setRef(ref);
+		boardInfo.setRe_step(re_step);
+		boardInfo.setRe_level(re_level);		
+		//이 밑에는 시험판입니다.
+		boardInfo.setM_id(m_id);
+		boardInfo.setI_id(i_id);
+
+		//session처리 ID로 로그인이 되었을 때임!!
+		HttpSession session = request.getSession();
+		String id = (String)session.getAttribute("id");
+		
+		String load = "../board/writeForm.jsp";
+
+		request.setAttribute("load",load);
+		request.setAttribute("boardInfo", boardInfo);	//글 i_id,m_id에 대한 정보 설정!!
+		ActionForward forward=new ActionForward();
+		forward.setUrl("../main/beforeMain.jsp");
+		System.out.println("Here is BoardWriteFormAction&&&return forward로 FrontController로 이동 그리고!!" +
+				"" + forward.getUrl() +"으로 이동 할 것임!!");
+		return forward;
+	}
+}
+
+*/

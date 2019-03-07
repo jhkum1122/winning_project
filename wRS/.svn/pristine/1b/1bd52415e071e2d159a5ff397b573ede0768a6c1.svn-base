@@ -1,0 +1,12 @@
+ <Context> 
+  <Resource name="jdbc/WhereRoadShop" 
+   auth="Container"
+   type="javax.sql.DataSource" 
+   username="java" 
+   password="java"
+   driverClassName="oracle.jdbc.driver.OracleDriver"
+   factory="org.apache.tomcat.dbcp.dbcp.BasicDataSourceFactory"
+   url="jdbc:oracle:thin:@192.168.7.156:1521:orcl"
+   maxActive="500" 
+   maxIdle="100"/>
+ </Context>

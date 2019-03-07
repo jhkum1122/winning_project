@@ -1,0 +1,26 @@
+package roadshop.web.manager.svc.shop;
+
+import java.sql.Connection;
+
+import roadshop.web.shop.dao.ShopDao;
+import roadshop.web.shop.vo.ShopInfo;
+import static roadshop.db.jdbcUtil.*;
+public class ShopRegistService {
+	
+	
+	public boolean shopGetInsert(ShopInfo shopInfo) {
+		Connection con = con();
+		ShopDao shopDao = new ShopDao(con);
+		boolean check = shopDao.insertShop(shopInfo);
+		
+		if(check){
+			commit(con);
+		}else{
+			rollback(con);
+		}
+		
+		close(con);
+		return check;
+	}
+
+}

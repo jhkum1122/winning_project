@@ -1,0 +1,65 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<form method=post name=form1>
+
+	<table border="0" cellpadding=0 cellspacing=0 width="902" align="center">
+
+	<table border="0" cellpadding=0 cellspacing=0 wsidth="100%"
+		align="center">
+		<td width="694" valign=top>
+		</tr>
+		<!-- <tr>
+			<td style="padding-left: 86px"><img
+				src="../image/member/login.png" width="525" height="171" /></td>
+		</tr> -->
+		<tr>
+			<td height="143" style="padding: 36px 0px 0px 185px">
+			  
+			<table
+					width="322" border="0" cellspacing="0" cellpadding="0" >
+
+					<!-- 아이디 -->
+					<tr>
+						<td valign="top" style="padding-bottom: 5px"><img
+							src="<%=request.getContextPath()%>/image/member/id.jpg" width="62" height="20" /></td>
+						<td valign="top" style="padding-bottom: 5px;" class="aal"><input
+							type=text name=m_id size=12 maxlength=12
+							onBlur="document.form1.m_pwd.focus()"></td>
+						<td width="107" rowspan="2" align="right" valign="top"><a
+							href=JavaScript:check()> <img
+								src="<%=request.getContextPath()%>/image/member/loginok.png" width="102" height="47"
+								border="0" /></a></td>
+					</tr>
+
+					<!-- 비밀번호 -->
+					<tr>
+						<td valign="top" style="padding-bottom: 11px"><img
+							src="<%=request.getContextPath()%>/image/member/pass.jpg" width="62" height="20" /></td>
+						<td valign="top" style="padding-bottom: 11px" class="aal"><input
+							type=password name=passwd size=12 maxlength=12
+							onKeydown="CheckKey()"></td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+
+					</tr>
+				</table></td>
+		</tr>
+		<tr>
+			<td style="padding-left: 86px"><table width="525" border="0"
+					cellspacing="0" cellpadding="0">
+					<tr>
+						<td height="1" bgcolor="#ececec"></td>
+					</tr>
+				</table></td>
+		</tr>
+		<tr>
+			<td style="padding: 26px 0px 61px 248px"><a
+				href=/shop/idinfo.html?type=new><img
+					src="<%=request.getContextPath()%>/image/member/login_05.gif" width="106" height="48"
+					border="0" /></a><a href=/shop/lostpass.html><img
+					src="<%=request.getContextPath()%>/image/member/login_06.gif" width="109" height="48"
+					border="0" /></a></td>
+		</tr>
+
+	</table>

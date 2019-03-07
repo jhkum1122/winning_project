@@ -1,0 +1,15 @@
+function chkagree() {
+	var form = document.formmain;
+	if (form.agree1.checked == false) {
+		alert("개인정보보호정책에 동의하셔야 합니다.");
+		form.agree1.focus();
+		return false;
+	}
+	if (form.agree2.checked == false) {
+		alert("서비스이용약관에 동의하셔야 합니다.");
+		form.agree2.focus();
+		return false;
+	}
+	form.action = "memberRegistView.mem";
+	form.submit();
+}

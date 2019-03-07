@@ -1,0 +1,100 @@
+package roadshop.web.mypage.dao;
+
+import static roadshop.db.jdbcUtil.close;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+
+import roadshop.web.item.vo.ItemInfo;
+
+
+
+public class FavoriteDao {
+	Connection con;
+	PreparedStatement pstmt;
+	ResultSet rs;
+	ItemInfo item;
+	
+
+	public FavoriteDao(Connection con) {
+		this.con = con;
+	}
+	
+	public ArrayList<ItemInfo> getItem(String[] split){
+		ArrayList<ItemInfo> ItemList = new ArrayList<ItemInfo>();
+		for(int i=0; i<split.length; i++){
+			
+				try {
+					
+					String sql = "SELECT * FROM ITEM where i_id=?";
+					
+					pstmt = con.prepareStatement(sql);
+					pstmt.setString(1, split[i]);
+					rs = pstmt.executeQuery();
+					
+					
+					if(rs.next()) 
+					{	
+					String id = rs.getString("i_id");
+					String name = rs.getString("i_name");
+					String brand = rs.getString("i_brand");
+					int price = rs.getInt("i_price");
+					String image = rs.getString("i_image");
+					
+					
+					item = new ItemInfo(id, name, price, brand, image);
+					ItemList.add(item);
+					
+					}
+				
+					
+					
+				} catch(Exception e) {
+					System.out.println(" 아이템 선택 에러 " + e.toString());
+				} finally {
+					close(rs);
+					close(pstmt);
+				}
+				
+			}
+		return ItemList;
+		}
+	
+	
+}
+
+
+
+
+/*public ArrayList<DogVO> printAllDogListDB() {
+	// TODO Auto-generated method stub
+	ArrayList<DogVO> dogList = new ArrayList<DogVO>();
+	
+	try {
+		String sql = "SELECT * FROM dog";
+		pstmt = con.prepareStatement(sql);
+		
+		rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			int id = rs.getInt(1);
+			String name = rs.getString(2);
+			int price = rs.getInt(3);
+			String image = rs.getString(4);
+			String country = rs.getString(5);
+			int height = rs.getInt(6);
+			int weight = rs.getInt(7);
+			String content = rs.getString(8);
+			d = new DogVO(id,name,price,image,country,height,weight,content);
+			dogList.add(d);
+		}
+	} catch(Exception e) {
+		e.printStackTrace();
+	} finally {
+		close(rs);
+		close(pstmt);
+	}
+	return dogList;
+}*/

@@ -1,0 +1,28 @@
+package roadshop.web.shop.action;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import roadshop.web.shop.svc.ShopOneService;
+import roadshop.actionforward.*;
+import roadshop.web.shop.vo.ShopInfo;
+
+
+public class ShopModifyFromAction implements ShopAction {
+
+	
+	public ActionForward execute(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		int s_num = Integer.parseInt(request.getParameter("s_num"));
+		ShopOneService sol=new ShopOneService();
+		ShopInfo shopinfo=sol.oneShop(s_num);
+		System.out.println(s_num);
+		request.setAttribute("shopOneList", shopinfo);
+		ActionForward forward = new ActionForward();
+		String load = "../shopmanager/shopModifyForm.jsp";
+		request.setAttribute("load",load);
+		forward.setUrl("/main/beforeMain.jsp");
+		return forward;
+	}
+
+}

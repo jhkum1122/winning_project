@@ -1,0 +1,27 @@
+package roadshop.web.manager.svc.item;
+import static roadshop.db.jdbcUtil.*;
+
+import java.sql.Connection;
+
+import roadshop.web.item.dao.ItemDAO;
+
+public class ItemRemoveService {
+
+	Connection con = con();
+	ItemDAO itemDAO = new ItemDAO(con);
+	
+	public boolean itemGetRemove(String id) {
+		// TODO Auto-generated method stub
+		
+		boolean check = itemDAO.deleteItem(id);
+		
+		if(check){
+			commit(con);
+		}else{
+			rollback(con);
+		}
+		close(con);
+		return check;
+	}
+
+}

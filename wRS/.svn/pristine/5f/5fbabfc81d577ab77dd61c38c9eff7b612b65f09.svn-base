@@ -1,0 +1,54 @@
+/*
+	이 곳은... 해당 글을 저장 할때 발생하는 기능들을 나타냄!!
+*/
+function writeSave(){
+	
+	if(document.writeform.b_writer.value==""){
+	  alert("작성자를 입력하십시요.");
+	  document.writeform.b_writer.focus();
+	  return false;
+	}
+	if(document.writeform.b_subject.value==""){
+	  alert("제목을 입력하십시요.");
+	  document.writeform.b_subject.focus();
+	  return false;
+	}
+	
+	if(document.writeform.b_content.value==""){
+	  alert("내용을 입력하십시요.");
+	  document.writeform.b_content.focus();
+	  return false;
+	}       
+	
+	if(document.searchForm.keyword.value==""){
+		  alert("키워드를 입력하십시요.");
+		  document.searchForm.keyword.focus();
+		  return false;
+	}
+	if(document.fileUploadForm.b_writer.value==""){
+		  alert("작성자를 입력하십시요.");
+		  document.fileUploadForm.b_writer.focus();
+		  return false;
+	}
+	
+	if(document.fileUploadForm.b_subject.value==""){
+		  alert("글제목을 입력하십시요.");
+		  document.fileUploadForm.b_subject.focus();
+		  return false;
+	}
+	
+	if(document.fileUploadForm.m_id.value==""){
+		  alert("멤버아이디를 입력하십시요.");
+		  document.fileUploadForm.m_id.focus();
+		  return false;
+	}
+	
+	if(document.fileUploadForm.i_id.value==""){
+		  alert("상품아이디를 입력하십시요.");
+		  document.fileUploadForm.i_id.focus();
+		  return false;
+	}
+	
+	
+ }    
+

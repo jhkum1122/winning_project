@@ -1,0 +1,58 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+
+<table width="100%" border="0" cellspacing="5" cellpadding="0">
+
+	<tr>
+		<td>
+	<tr>
+		<td width="226" height="162"><img
+			src="<%=request.getContextPath()%>/image/member/my_room_topimg01.jpg"
+			width="226" height="162" /></td>
+		</tr>
+            
+				<table width="207" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td align="left">
+					<table width="207" border="0" cellspacing="0" cellpadding="0">
+
+						
+						<tr>
+							<td height="26" align="left" valign="top"><img
+								src="<%=request.getContextPath()%>/image/member/my_romm_leftmenu_title01.jpg"
+								width="102" height="21"></td>
+						</tr>
+
+
+
+						<tr>
+							<td align="left"><img
+								src="<%=request.getContextPath()%>/image/member/20130507_175523.png"
+								name="leftmenu" id="leftmenu"></td>
+						</tr>
+
+						<tr></tr>
+						<tr></tr>
+						<tr></tr>
+						<tr>
+							<td align="left">
+								<table width="207" border="0" cellspacing="0" cellpadding="0">
+									<tr>
+										<td height="26" align="left" valign="top"><img
+											src="<%=request.getContextPath()%>/image/member/my_romm_leftmenu_title04.jpg"
+											width="102" height="21"></td>
+									</tr>
+									<tr>
+										<td align="left"><img
+											src="<%=request.getContextPath()%>/image/member/20130507_163258.png"
+											name="leftmenu" id="leftmenu"></td>
+									</tr>
+									<tr>
+										<td align="left"><img
+											src="<%=request.getContextPath()%>/image/member/20130507_174709.png"
+											name="leftmenu2" id="leftmenu2"></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>

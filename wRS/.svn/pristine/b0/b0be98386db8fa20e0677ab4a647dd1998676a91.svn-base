@@ -1,0 +1,23 @@
+package roadshop.web.shop.svc;
+
+
+import static roadshop.db.jdbcUtil.*;
+
+import java.sql.Connection;
+
+import roadshop.web.shop.dao.ShopDao;
+import roadshop.web.shop.vo.ShopInfo;
+
+public class ShopOneService {
+
+	public ShopInfo oneShop(int s_num) {
+		Connection con = con();
+		ShopDao dao = new ShopDao(con);
+		
+		ShopInfo shopinfo =  dao.selectOneShop(s_num);
+		
+		// TODO Auto-generated method stub
+		return shopinfo;
+	}
+
+}

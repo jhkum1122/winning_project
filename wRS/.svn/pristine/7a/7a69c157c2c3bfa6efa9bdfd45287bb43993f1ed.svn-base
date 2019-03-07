@@ -1,0 +1,13 @@
+package roadshop.web.shop.action;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import roadshop.actionforward.*;
+
+
+
+public interface ShopAction {
+	public ActionForward execute (HttpServletRequest request,HttpServletResponse response) throws Exception;
+
+}

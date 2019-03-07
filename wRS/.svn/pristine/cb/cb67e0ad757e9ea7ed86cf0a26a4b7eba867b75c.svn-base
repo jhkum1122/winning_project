@@ -1,0 +1,45 @@
+$(document).ready(function(){
+	
+	$("#loginSub").click(function(){
+		$.ajax({
+			type:"post"
+			,data:$("#loginForm").serialize()
+			,url:"userLogin.us"
+			,cache:true
+			,success:function(data){
+				$("#divLogin").html(data);
+			}
+		});
+	});
+	$("#loginSub").click(function(){
+		$.ajax({
+			type:"post"
+			,url:"loginTop.jsp"
+			,cache:true
+			,success:function(data){
+				$(".first").html(data);
+			}
+		});
+	});
+	
+	 $('#shopList').click(function(){
+		dataUrl = "shopList.sh";
+		doUrl(dataUrl);
+	}); 
+	 $('#mypage').click(function(){
+		dataUrl = "mypage.my";
+		doUrl(dataUrl);
+	}); 
+	
+	 function doUrl(source){
+		 $.ajax({
+				type:"post"
+				,url:source
+				,cache:true
+				,success:function(data){
+					$("#result").html(data);
+				}
+				
+		});
+	} 
+});

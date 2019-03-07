@@ -1,0 +1,23 @@
+package roadshop.web.member.action;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import roadshop.actionforward.ActionForward;
+
+public class MemberMyPageAction implements MemberAction {
+
+	@Override
+	public ActionForward execute(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		// TODO Auto-generated method stub
+		ActionForward forward = new ActionForward();
+		String load = "../member/mypage.jsp";
+
+		request.setAttribute("load", load);
+		forward.setUrl("/main/beforeMain.jsp");
+
+		return forward;
+	}
+
+}

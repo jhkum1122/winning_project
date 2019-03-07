@@ -1,0 +1,30 @@
+package roadshop.web.shop.svc;
+
+import static roadshop.db.jdbcUtil.close;
+import static roadshop.db.jdbcUtil.commit;
+import static roadshop.db.jdbcUtil.con;
+import static roadshop.db.jdbcUtil.rollback;
+
+import java.sql.Connection;
+
+import roadshop.web.shop.dao.ProductDao;
+import roadshop.web.shop.dao.ShopDao;
+
+public class ProductStockService {
+
+	public boolean stockProduct(String i_id,int s_num,boolean s_stock) {
+		
+		Connection con = con();
+		ProductDao dao = new ProductDao(con);
+		
+		boolean stock = dao.updateStock(i_id,s_num,s_stock);
+		
+		
+		return stock;
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+
+}

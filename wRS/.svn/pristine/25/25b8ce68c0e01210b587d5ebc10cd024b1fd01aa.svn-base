@@ -1,0 +1,39 @@
+package roadshop.web.manager.action.member;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import roadshop.actionforward.ActionForward;
+import roadshop.web.manager.action.ManagerAction;
+import roadshop.web.manager.svc.member.MMemberInfoService;
+import roadshop.web.member.vo.MemberInfo;
+
+public class MMemberInfoAction implements ManagerAction {
+
+	@Override
+	public ActionForward execute(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		// TODO Auto-generated method stub
+		ActionForward forward = null;
+		MemberInfo isSuccess = null;
+		
+		String m_id = request.getParameter("m_id");
+		
+		MMemberInfoService mmInfos = new MMemberInfoService();
+		isSuccess = mmInfos.memberGetInfo(m_id);
+		String load = "../manager/member/memberModifyForm.jsp";
+		if(isSuccess!=null){
+			request.setAttribute("memberInfo", isSuccess);
+			forward = new ActionForward();
+			request.setAttribute("load", load);
+			forward.setUrl("/manager/managerMain.jsp");
+		}else{
+			System.out.println("<script>");
+			System.out.println("alert('등록 실패 입니다')");
+			System.out.println("history.back()");
+			System.out.println("</script>");
+		}
+		return forward;
+	}
+
+}

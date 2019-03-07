@@ -1,0 +1,56 @@
+package roadshop.web.item.action;
+
+import java.util.ArrayList;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import roadshop.actionforward.ActionForward;
+import roadshop.web.item.svc.ItemListService;
+import roadshop.web.item.vo.ItemInfo;
+import roadshop.web.item.svc.PagingService;
+import roadshop.web.item.vo.PagingInfo;
+
+@Controller
+public class BrandListAction {
+	@Autowired
+	private ItemListService itemListService;
+	@Autowired
+	private PagingService ps;
+	
+	@RequestMapping("/product/brandSearch.it")
+	public ModelAndView brandList(@RequestParam("brand") String brand, @RequestParam(value="pageNum",defaultValue="1") String pageNum){
+		ModelAndView mav = new ModelAndView();
+		ArrayList<ItemInfo> brandList = new ArrayList<ItemInfo>();
+		PagingInfo pagingInfo = null;
+		int pageSize = 5;
+		String category = null;
+		if(pageNum == null){
+			pageNum = "1";
+		}
+		
+		try{
+			pagingInfo = ps.getPagingInfo(pageNum, pageSize, category, brand);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		if(pagingInfo.getCount()>0)
+		brandList = itemListService.getBrandList(pagingInfo.getStartRow(),pageSize,brand);
+		mav.addObject("brandList", brandList);
+		mav.addObject("brand" , brand);
+		mav.addObject("pagingInfo" , pagingInfo);
+		mav.addObject("load", "../product/brandList.jsp");
+		mav.setViewName("../main/beforeMain.jsp");	
+	
+		return mav;
+	}
+
+}

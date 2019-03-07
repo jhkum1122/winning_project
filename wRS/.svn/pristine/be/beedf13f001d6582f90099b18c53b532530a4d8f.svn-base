@@ -1,0 +1,38 @@
+package roadshop.web.manager.validation;
+
+import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
+import org.springframework.validation.Validator;
+
+import roadshop.web.member.vo.MemberInfo;
+
+public class MemberInfoValidator implements Validator {
+
+	@Override
+	public boolean supports(Class<?> arg0) {
+		// TODO Auto-generated method stub
+		if(MemberInfo.class.isAssignableFrom(arg0)){
+		return true;
+		}
+		return false;
+	}
+
+	@Override
+	public void validate(Object arg0, Errors arg1) {
+		// TODO Auto-generated method stub
+		ValidationUtils.rejectIfEmptyOrWhitespace(arg1, "m_id", "required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(arg1, "m_pwd", "required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(arg1, "m_name", "required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(arg1, "m_zipcode", "required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(arg1, "m_addr1", "required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(arg1, "m_addr2", "required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(arg1, "m_ssn1", "required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(arg1, "m_email1", "required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(arg1, "m_email2", "required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(arg1, "m_tel1", "required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(arg1, "m_tel2", "required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(arg1, "m_tel3", "required");
+
+	}
+
+}

@@ -1,0 +1,77 @@
+<%@page import="roadshop.web.shop.vo.ShopInfo"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+<script>
+function zip() {
+	var url = "<%=request.getContextPath()%>/member/search-zipcode.jsp";
+	window.open(url, '_blank',
+			'width=450,height=450,left=100,top=100,resizable=no');
+}
+</script>
+<%ShopInfo shopInfo = (ShopInfo)request.getAttribute("shopInfo"); %>
+
+<form name="frmEdt" method="post" action="shopModify.ms">
+<input type="hidden" name="s_num" value="<%=shopInfo.getS_num()%>">
+<input type="hidden" name="s_grade" value="<%=shopInfo.getS_grade()%>">
+<input type="hidden" name="m_id" value="<%=shopInfo.getM_id()%>">
+	<div id="contents">
+		<h2>매장수정</h2>
+		<table class="tbl_edit00" cellpadding="0" cellspacing="0" border="0">
+			<caption>매장수정</caption>
+			<colgroup>
+				<col width="170px" />
+				<col width="*" />
+			</colgroup>
+			<tbody>
+				<tr>
+					<th scope="row">매장 브랜드</th>
+					<td><input class="input01" type="text" name="s_brand"
+						value="<%=shopInfo.getS_brand()%>"></td>
+				</tr>
+				<tr>
+					<th scope="row">회원아이디</th>
+					<td><%=shopInfo.getM_id()%></td>
+				</tr>
+				<tr>
+					<th scope="row">매장전화번호</th>
+					<td><input class="input01" type="text" name="s_tel1" value="<%=shopInfo.getS_tel1()%>">
+					   -<input class="input01" type="text" name="s_tel2" value="<%=shopInfo.getS_tel2()%>">
+					   -<input class="input01" type="text" name="s_tel3" value="<%=shopInfo.getS_tel3()%>"></td>
+				</tr>
+				<tr>
+					<th scope="row">사업자등록번호</th>
+					<td><input class="input01" type="text" name="s_brn1" value="<%=shopInfo.getS_brn1()%>">
+					   -<input class="input01" type="text" name="s_brn2" value="<%=shopInfo.getS_brn2()%>">
+					   -<input class="input01" type="text" name="s_brn3" value="<%=shopInfo.getS_brn3()%>"></td>
+				</tr>
+				<tr>
+					<th scope="row">우편번호</th>
+					<td><input class="input01" type="text" name="s_zipcode" value="<%=shopInfo.getS_zipcode()%>">&nbsp;&nbsp;&nbsp;
+														<a href="javascript:zip()"> <img src="<%=request.getContextPath() %>/image/member/member_btn02.jpg" 
+														width="92" height="29"/></a></td>
+				</tr>
+				<tr>
+					<th scope="row">매장주소</th>
+					<td>주소<input class="input01" type="text" name="s_addr1" value="<%=shopInfo.getS_addr1()%>">
+					      상세주소<input class="input01" type="text" name="s_addr2" value="<%=shopInfo.getS_addr2()%>"></td>
+				</tr>
+				<tr>
+					<th scope="row">매장 좌표</th>
+					<td>경도<input type="text" name="s_lon" value="<%=shopInfo.getS_lon()%>">
+					      위도<input type="text" name="s_lat" value="<%=shopInfo.getS_lat()%>"></td>
+				</tr>
+				
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="2" class="edit_btnarea">
+						<span class="btn_pack large icon"><span class="add"></span><input type="submit" value="수정하기"></span>&nbsp;&nbsp;&nbsp;
+						<span class="btn_pack large icon"><span class="refresh"></span><a href="shopAllList.ms">취소</a></span>
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+</form>
+

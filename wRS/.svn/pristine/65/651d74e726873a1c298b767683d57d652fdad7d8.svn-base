@@ -1,0 +1,105 @@
+package roadshop.web.user.action;
+
+import java.io.PrintWriter;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import roadshop.web.user.svc.IdAskService;
+
+
+@Controller
+public class SearchIdAction{
+	@Autowired
+	private IdAskService idAskService;
+	
+	@RequestMapping("/user/searchUserid.us")
+	public ModelAndView searchId(@RequestParam("name") String name, 
+				@RequestParam("ssn1") int ssn1, HttpServletResponse response) throws Exception{
+			ModelAndView mav = new ModelAndView();
+			String searchId = idAskService.getId(name, ssn1);
+			if(searchId != null) {
+				mav.addObject("searchId", searchId);
+				mav.addObject("load", "/user/idAskResult.jsp");
+				mav.setViewName("/main/beforeMain.jsp");
+			}else{
+				response.setContentType("text/html;charset=utf-8");
+				PrintWriter out = response.getWriter();
+				out.println("<script>");
+				out.println("alert('아이디찾기에 실패했습니다 다시 확인하세요')");
+				out.println("history.back()");
+				out.println("</script>");
+				return null;
+			}
+			return mav;
+		}
+	}
+
+
+
+
+/*
+import java.io.PrintWriter;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import roadshop.actionforward.ActionForward;
+import roadshop.web.member.vo.MemberInfo;
+import roadshop.web.user.svc.IdAskService;
+import roadshop.web.user.svc.LoginService;
+
+public class SearchIdAction implements UserAction {
+@Override
+public ActionForward execute(HttpServletRequest request,
+		HttpServletResponse response) throws Exception {
+	// TODO Auto-generated method stub
+	
+	response.setContentType("text/html;charset=euc-kr");
+
+
+
+	String name = request.getParameter("name");
+	int ssn1 = Integer.parseInt(request.getParameter("ssn1"));
+	
+
+	IdAskService idAskService= new IdAskService();
+		  
+		  
+	String searchId = idAskService.getId(name, ssn1);
+			
+			ActionForward forward = null;
+		
+
+		if(searchId != null) {
+			request.setAttribute("searchId", searchId);
+			forward = new ActionForward();
+			forward.setUrl("idAskResult.jsp");
+			//로그인된 결
+		
+			
+
+		}
+			else {
+				response.setContentType("text/html;charset=euc-kr");
+				PrintWriter out = response.getWriter();
+				out.println("<script>");
+				out.println("alert('아이디찾기에 실패했습니다 다시 확인하세요')");
+				out.println("history.back()");
+				out.println("</script>");
+			}
+			
+			return forward;
+			
+		}
+
+	
+
+	
+}*/

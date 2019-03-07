@@ -1,0 +1,21 @@
+package roadshop.web.manager.action.member;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import roadshop.actionforward.ActionForward;
+import roadshop.web.manager.action.ManagerAction;
+
+public class MMemberRegistFormAction implements ManagerAction {
+
+	@Override
+	public ActionForward execute(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		// TODO Auto-generated method stub
+		ActionForward forward = new ActionForward();
+		request.setAttribute("load", "../manager/member/memberRegist.jsp");
+		forward.setUrl("/manager/managerMain.jsp");
+		return forward;
+	}
+
+}

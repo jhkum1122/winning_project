@@ -1,0 +1,113 @@
+/*package roadshop.web.shop.controller;
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+import roadshop.web.shop.action.ShopAction;
+import roadshop.web.shop.action.ShopCancelAction;
+import roadshop.web.shop.action.ShopModifyAction;
+import roadshop.web.shop.action.ShopListAction;
+import roadshop.web.shop.action.ShopModifyFromAction;
+import roadshop.actionforward.*;
+
+
+
+*//**
+ * Servlet implementation class shopfrontController
+ *//*
+@WebServlet("*.sh")
+public class ShopFrontController extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+    *//**
+     * Default constructor. 
+     *//*
+    public ShopFrontController() {
+        // TODO Auto-generated constructor stub
+    }
+
+	*//**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 *//*
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doProcess(request,response);
+	}
+
+	*//**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 *//*
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doProcess(request,response);
+	}
+	
+	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
+		String requestURI = request.getRequestURI();
+		// /project/boardWriteForm.bo
+		String context = request.getContextPath();
+		// /project
+	
+		String command = requestURI.substring(context.length());
+		
+		ShopAction action = null;
+		ActionForward forward = null;
+		System.out.println(command );
+	
+		
+		
+		if(command.equals("/mypage/shopModify.sh")){
+			
+			action = new ShopModifyAction();
+			try{
+				forward=action.execute(request,response);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}else if(command.equals("/mypage/shopList.sh")){
+			action = new ShopListAction();
+			try{
+				forward=action.execute(request,response);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}else if(command.equals("/mypage/shopModifyForm.sh")){
+			action = new ShopModifyFromAction();
+			try{
+				forward=action.execute(request, response);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}else if(command.equals("/mypage/shopCancel.sh")){
+			action = new ShopCancelAction();
+			try{
+				forward=action.execute(request, response);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		if(forward!=null){
+			if(forward.isRedirect()){
+				response.sendRedirect(forward.getUrl());
+			}
+			else
+			{	
+				RequestDispatcher dispatcher = request.getRequestDispatcher(forward.getUrl());
+				dispatcher.forward(request,response);
+			}
+		}
+		
+	}
+	
+	
+
+}*/

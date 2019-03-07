@@ -1,0 +1,27 @@
+package roadshop.web.manager.svc.item;
+
+import java.sql.Connection;
+import static roadshop.db.jdbcUtil.*;
+import roadshop.web.item.dao.ItemDAO;
+import roadshop.web.item.vo.ItemInfo;
+
+public class ItemInfoService {
+	
+	public ItemInfo memberGetInfo(String i_id) {
+		
+		Connection con =con();
+		ItemDAO itemDAO = new ItemDAO(con);
+		ItemInfo check = null;
+		check = itemDAO.selectItemInfo(i_id);
+		
+		if(check!=null){
+			commit(con);
+		}else{
+			rollback(con);
+		}
+		close(con);
+		
+		return check;
+	}
+
+}

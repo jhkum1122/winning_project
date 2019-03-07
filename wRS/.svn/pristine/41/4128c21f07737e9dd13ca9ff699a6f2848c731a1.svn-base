@@ -1,0 +1,7 @@
+window.onload = function(){
+	//이벤트 등록
+	
+	document.getElementById("m_id");
+	
+	
+}

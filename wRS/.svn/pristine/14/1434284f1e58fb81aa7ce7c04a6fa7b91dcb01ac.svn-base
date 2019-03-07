@@ -1,0 +1,56 @@
+package roadshop.web.manager.action.item;
+
+import java.util.ArrayList;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import roadshop.actionforward.ActionForward;
+import roadshop.web.item.vo.ItemInfo;
+import roadshop.web.manager.action.ManagerAction;
+import roadshop.web.manager.svc.item.ItemAllListService;
+import roadshop.web.manager.svc.item.PagingService;
+import roadshop.web.manager.vo.PagingInfo;
+
+public class ItemAllListAction implements ManagerAction {
+
+	@Override
+	public ActionForward execute(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		ActionForward forward=null;
+		ArrayList<ItemInfo> itemAllList = new ArrayList<ItemInfo>();
+		
+		int pageSize = 10;
+		String keyword = null;
+		String category = null;
+		String pageNum = request.getParameter("pageNum");
+		PagingService ps=new PagingService();
+		
+		if(pageNum == null){
+			pageNum = "1";
+		}
+		PagingInfo pagingInfo=ps.getPagingInfo(pageNum, pageSize,category,keyword);
+		
+		ItemAllListService ials = new ItemAllListService();
+		if(pagingInfo.getCount()>0)
+		itemAllList = ials.itemGetAllList(pagingInfo.getStartRow(),pageSize);
+		String load = "../manager/item/item.jsp";
+		if(itemAllList!=null){
+			request.setAttribute("pagingInfo", pagingInfo);
+			request.setAttribute("itemList", itemAllList);
+			request.setAttribute("load",load);
+			forward = new ActionForward();
+			forward.setUrl("/manager/managerMain.jsp");
+		}
+		
+		else{
+			System.out.println("<script>");
+			System.out.println("alert('등록 실패 입니다')");
+			System.out.println("history.back()");
+			System.out.println("</script>");
+		}
+		return forward;
+		
+	}
+
+}

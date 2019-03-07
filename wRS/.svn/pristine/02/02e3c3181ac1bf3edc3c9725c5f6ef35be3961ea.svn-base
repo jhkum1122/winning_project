@@ -1,0 +1,377 @@
+package roadshop.web.member.dao;
+
+import static roadshop.db.jdbcUtil.close;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+
+import roadshop.web.item.vo.ItemInfo;
+import roadshop.web.member.vo.MemberInfo;
+import roadshop.web.member.vo.ZipcodeInfo;
+
+public class MemberDao {
+	Connection con;
+
+	public MemberDao(Connection con) {
+		this.con = con;
+	}
+
+	public boolean insertMember(MemberInfo mi) {
+		// TODO Auto-generated method stub
+		String sql = "insert into member(m_id,m_pwd,m_name,m_zipcode,m_addr1"
+				+ ",m_addr2,m_ssn1,m_email1,m_email2,m_tel1,m_tel2,m_tel3,m_grade,m_num)"
+				+ "values(?,?,?,?,?,?,?,?,?,?,?,?,1,member_seq.nextval)";
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, mi.getM_id());
+			pstmt.setString(2, mi.getM_pwd());
+			pstmt.setString(3, mi.getM_name());
+			pstmt.setString(4, mi.getM_zipcode());
+			pstmt.setString(5, mi.getM_addr1());
+			pstmt.setString(6, mi.getM_addr2());
+			pstmt.setInt(7, mi.getM_ssn1());
+			pstmt.setString(8, mi.getM_email1());
+			pstmt.setString(9, mi.getM_email2());
+			pstmt.setString(10, mi.getM_tel1());
+			pstmt.setString(11, mi.getM_tel2());
+			pstmt.setString(12, mi.getM_tel3());
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			close(pstmt);
+		}
+		return true;
+	}
+
+	public boolean updateMMember(MemberInfo mi) {
+		String sql = "UPDATE member SET m_id=?,m_pwd=?,m_name=?,m_zipcode=?,m_addr1=?,"
+				+ "m_addr2=?,m_ssn1=?,m_email1=?,m_email2=?,m_tel1=?,m_tel2=?,m_tel3=?,m_grade=?"
+				+ "WHERE m_num=?";
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, mi.getM_id());
+			pstmt.setString(2, mi.getM_pwd());
+			pstmt.setString(3, mi.getM_name());
+			pstmt.setString(4, mi.getM_zipcode());
+			pstmt.setString(5, mi.getM_addr1());
+			pstmt.setString(6, mi.getM_addr2());
+			pstmt.setInt(7, mi.getM_ssn1());
+			pstmt.setString(8, mi.getM_email1());
+			pstmt.setString(9, mi.getM_email2());
+			pstmt.setString(10, mi.getM_tel1());
+			pstmt.setString(11, mi.getM_tel2());
+			pstmt.setString(12, mi.getM_tel3());
+			pstmt.setInt(13, mi.getM_grade());
+			pstmt.setInt(14, mi.getM_num());
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			close(pstmt);
+		}
+		return true;
+	}
+
+	public boolean deleteMember(String m_id) {
+		// TODO Auto-generated method stub
+		String sql = "DELETE FROM member WHERE m_id=?";
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, m_id);
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("지워졌는가?");
+			System.out.println(e);
+			return false;
+		} finally {
+			close(pstmt);
+		}
+		return true;
+	}
+
+	public ArrayList<MemberInfo> selectAllMember(int start, int pageSize) {
+		// TODO Auto-generated method stub
+		String sql = "SELECT list2.* FROM " + "(SELECT rownum r, list1.* FROM "
+				+ "(SELECT * FROM member ORDER BY m_num) list1) "
+				+ "list2 WHERE r between ? AND ?";
+
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		MemberInfo memberInfo = null;
+		ArrayList<MemberInfo> allMember = new ArrayList<MemberInfo>();
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, start + pageSize - 1);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				int m_num = rs.getInt("m_num");
+				String m_id = rs.getString("m_id");
+				String m_name = rs.getString("m_name");
+				String m_pwd = rs.getString("m_pwd");
+				String m_tel1 = rs.getString("m_tel1");
+				String m_tel2 = rs.getString("m_tel2");
+				String m_tel3 = rs.getString("m_tel3");
+				int m_ssn1 = rs.getInt("m_ssn1");
+				String m_zipcode = rs.getString("m_zipcode");
+				String m_addr1 = rs.getString("m_addr1");
+				String m_addr2 = rs.getString("m_addr2");
+				String m_email1 = rs.getString("m_email1");
+				String m_email2 = rs.getString("m_email2");
+				int m_grade = rs.getInt("m_grade");
+
+				memberInfo = new MemberInfo(m_num, m_id, m_pwd, m_name,
+						m_zipcode, m_addr1, m_addr2, m_ssn1, m_email1,
+						m_email2, m_tel1, m_tel2, m_tel3, m_grade);
+
+				allMember.add(memberInfo);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			allMember = null;
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return allMember;
+	}
+
+
+	public MemberInfo selectIdMember(String m_id1) {
+		// TODO Auto-generated method stub
+		String sql = "SELECT * FROM MEMBER WHERE m_id=?";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		MemberInfo selectIdMember = null;
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, m_id1);
+
+			rs = pstmt.executeQuery();
+			rs.next();
+
+			int m_num = rs.getInt("m_num");
+			String m_id = rs.getString("m_id");
+			String m_name = rs.getString("m_name");
+			String m_pwd = rs.getString("m_pwd");
+			String m_tel1 = rs.getString("m_tel1");
+			String m_tel2 = rs.getString("m_tel2");
+			String m_tel3 = rs.getString("m_tel3");
+			int m_ssn1 = rs.getInt("m_ssn1");
+			String m_zipcode = rs.getString("m_zipcode");
+			String m_addr1 = rs.getString("m_addr1");
+			String m_addr2 = rs.getString("m_addr2");
+			String m_email1 = rs.getString("m_email1");
+			String m_email2 = rs.getString("m_email2");
+			int m_grade = rs.getInt("m_grade");
+
+			selectIdMember = new MemberInfo(m_num, m_id, m_pwd, m_name,
+					m_zipcode, m_addr1, m_addr2, m_ssn1, m_email1, m_email2,
+					m_tel1, m_tel2, m_tel3, m_grade);
+		} catch (Exception e) {
+			selectIdMember = null;
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return selectIdMember;
+	}
+
+
+	// 아이디 중복 체크
+	public boolean existsId(String id) {
+
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		boolean isExists = false;
+
+		String sql = "select * from member where m_id=?";
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				isExists = true;
+			}
+
+			/*
+			 * while (rs.next()) { String id = rs.getString(id);
+			 * 
+			 * if (id.equals(id)) a = true;
+			 */
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			close(rs);
+			close(con);
+			close(pstmt);
+		}
+		return isExists;
+
+	}
+
+	public boolean updateMember(MemberInfo mi) {
+		// TODO Auto-generated method stub
+
+		String sql = "UPDATE member SET m_pwd=?,m_ssn1=?,m_zipcode=?,m_addr1=?"
+				+ ",m_addr2=?,m_tel1=?,m_tel2=?,m_tel3=?,m_email1=?,m_email2=?,m_grade=? "
+				+ "where m_id=?";
+
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, mi.getM_pwd());
+			pstmt.setInt(2, mi.getM_ssn1());
+			pstmt.setString(3, mi.getM_zipcode());
+			pstmt.setString(4, mi.getM_addr1());
+			pstmt.setString(5, mi.getM_addr2());
+			pstmt.setString(6, mi.getM_tel1());
+			pstmt.setString(7, mi.getM_tel2());
+			pstmt.setString(8, mi.getM_tel3());
+			pstmt.setString(9, mi.getM_email1());
+			pstmt.setString(10, mi.getM_email2());
+			pstmt.setInt(11, mi.getM_grade());
+			pstmt.setString(12, mi.getM_id());
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			close(pstmt);
+		}
+		return true;
+	}
+
+	public int selectMemberCount(String category, String keyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int x = 0;
+		String sql=null;
+		if(category==null){
+			sql="SELECT COUNT(*) FROM MEMBER";
+		}else if(category.equals("m_name")){
+			sql="SELECT COUNT(*) FROM MEMBER WHERE m_name LIKE '%"+keyword+"%'";
+		}else if(category.equals("m_id")){
+			sql="SELECT COUNT(*) FROM MEMBER WHERE m_id LIKE '%"+keyword+"%'";
+		}
+		try {
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				x = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return x;
+	}
+
+	// 우편번호 검색
+	public ArrayList<ZipcodeInfo> selectZipcode(String keyword) {
+		// TODO Auto-generated method stub
+
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ZipcodeInfo zipcodeInfo = null;
+		String sql;
+		ArrayList<ZipcodeInfo> zipcodelist = new ArrayList<ZipcodeInfo>();
+
+		try {
+			sql = "SELECT * FROM zipcode where z_dong=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, keyword);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				int z_id = rs.getInt("z_id");
+				String z_zipcode = rs.getString("z_zipcode");
+				String z_sido = rs.getString("z_sido");
+				String z_gugun = rs.getString("z_gugun");
+				String z_dong1 = rs.getString("z_dong");
+				String z_ri = rs.getString("z_ri");
+				String z_bunji = rs.getString("z_bunji");
+
+				String m_addr = z_sido + " " + z_gugun + " " + z_dong1 + " "
+						+ z_ri + " " + z_bunji + " ";
+
+				zipcodeInfo = new ZipcodeInfo(z_id, z_zipcode, z_sido, z_gugun,
+						z_dong1, z_ri, z_bunji);
+				zipcodelist.add(zipcodeInfo);
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return zipcodelist;
+	}
+
+	public ArrayList<MemberInfo> selectMemberSearchList(String keyword,
+			String category, int start, int pageSize) {
+		String sql="SELECT list2.* FROM "
+				+ "(SELECT rownum r, list1.* FROM "
+				+ "(SELECT * FROM MEMBER WHERE "+category+" LIKE '%"+keyword+"%' ORDER BY M_NUM) list1)"
+				+ "list2 WHERE r between ? AND ?";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<MemberInfo> memberList = new ArrayList<MemberInfo>();
+		MemberInfo memberInfo = null;
+		try {
+			pstmt = con.prepareStatement(sql);
+
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, start + pageSize - 1);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				int m_num = rs.getInt("m_num");
+				String m_id = rs.getString("m_id");
+				String m_name = rs.getString("m_name");
+				String m_pwd = rs.getString("m_pwd");
+				String m_tel1 = rs.getString("m_tel1");
+				String m_tel2 = rs.getString("m_tel2");
+				String m_tel3 = rs.getString("m_tel3");
+				int m_ssn1 = rs.getInt("m_ssn1");
+				String m_zipcode = rs.getString("m_zipcode");
+				String m_addr1 = rs.getString("m_addr1");
+				String m_addr2 = rs.getString("m_addr2");
+				String m_email1 = rs.getString("m_email1");
+				String m_email2 = rs.getString("m_email2");
+				int m_grade = rs.getInt("m_grade");
+
+				memberInfo = new MemberInfo(m_num, m_id, m_pwd, m_name,
+						m_zipcode, m_addr1, m_addr2, m_ssn1, m_email1,
+						m_email2, m_tel1, m_tel2, m_tel3, m_grade);
+				memberList.add(memberInfo);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+
+		return memberList;
+	}
+}

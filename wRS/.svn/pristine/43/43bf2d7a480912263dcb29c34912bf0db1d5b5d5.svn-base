@@ -1,0 +1,101 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="EUC-KR"%>
+<script>
+function zip() {
+	var url = "<%=request.getContextPath()%>/member/search-zipcode.jsp";
+	window.open(url, '_blank',
+			'width=450,height=450,left=100,top=100,resizable=no');
+}
+
+function SetEmailTail(emailValue){
+	var emailTail = document.getElementById("m_email2");
+	if(emailValue=="notSelected"){
+		emailTail.value="";
+		return;
+	}
+	else if(emailValue=="write"){
+		emailTail.readOnly="";
+		emailTail.value="";
+		emailTail.focus();
+	}else{
+		emailTail.readOnly="true";
+		emailTail.value=emailValue;
+	}
+}
+</script>
+
+<form name="memberRegist" method="post" action="memberRegist.mm">
+	<div id="contents">
+		<h2>회원 등록</h2>
+		<table class="tbl_edit00" cellpadding="0" cellspacing="0" border="0">
+			<caption>회원등록</caption>
+			<colgroup>
+				<col width="170px" />
+				<col width="*" />
+			</colgroup>
+			<tbody>
+				<tr>
+					<th scope="row">회원 아이디</th>
+					<td><input class="input01" type="text" name="m_id"></td>
+				</tr>
+				<tr>
+					<th scope="row">회원 이름</th>
+					<td><input class="input01" type="text" name="m_name"></td>
+				</tr>
+				<tr>
+					<th scope="row">패스 워드</th>
+					<td><input class="input01" type="text" name="m_pwd"></td>
+				</tr>
+				<tr>
+					<th scope="row">전화 번호</th>
+					<td><input class="input01" type="text" name="m_tel1" >
+					   -<input class="input01" type="text" name="m_tel2" >
+					   -<input class="input01" type="text" name="m_tel3" >
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">생년 월일</th>
+					<td><input class="input01" type="text" name="m_ssn1" >&nbsp;&nbsp;예)19851225</td>
+				</tr>
+				<tr>
+					<th scope="row">우편 번호</th>
+					<td><input class="input01" type="text" name="m_zipcode">&nbsp;&nbsp;&nbsp;
+														<a href="javascript:zip()"> <img src="<%=request.getContextPath() %>/image/member/member_btn02.jpg" 
+														width="92" height="29"/></a></td>
+				</tr>
+				<tr>
+					<th scope="row">회원 주소</th>
+					<td>주소<input class="input01" type="text" name="m_addr1" >&nbsp;
+					      상세주소<input class="input01" type="text" name="m_addr2"></td>
+				</tr>
+				<tr>
+					<th scope="row">회원 이메일</th>
+					<td><input class="input01" type="text" name="m_email1" >@
+					<input class="input01" type="text" name="m_email2" id="m_email2" ReadOnly/>
+					<select class="select01" name="emailCheck" 
+					onchange="SetEmailTail(emailCheck.options[this.selectedIndex].value)">
+							<option value="notSelected">선택</option>
+							<option value="write">직접입력</option>
+							<option value="naver.com">naver.com</option>
+							<option value="paran.com">paran.com</option>
+							<option value="google.com">google.com</option>
+							<option value="hotmail.com">hotmail.com</option>
+							<option value="nate.com">nate.com</option>
+						    <option value="daum.net">daum.net</option>
+							<option value="hanmail.net">hanmail.net</option>
+					</select>
+					</td>
+				</tr>
+				
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="2" class="edit_btnarea">
+						<span class="btn_pack large icon"><span class="add"></span><input type="submit" value="등록하기"></span>&nbsp;&nbsp;&nbsp;
+						<span class="btn_pack large icon"><span class="refresh"></span><a href="memberAllList.mm">목록으로</a></span>
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+</form>

@@ -1,0 +1,44 @@
+package roadshop.web.shop.validator;
+
+
+
+import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
+import org.springframework.validation.Validator;
+
+import roadshop.web.shop.vo.ShopInfo;
+
+public class ShopInfoValidator implements Validator {
+
+	@Override
+	public boolean supports(Class<?> arg0) {
+		// TODO Auto-generated method stub
+		//어떤 클래스 형태의 커맨드 객체의 유효성을 체크할 지를 설정하는 메소드
+		if(ShopInfo.class.isAssignableFrom(arg0)){
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public void validate(Object arg0, Errors arg1) {
+		// TODO Auto-generated method stub
+		ValidationUtils.rejectIfEmptyOrWhitespace(arg1, "m_id", "required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(arg1, "s_num", "required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(arg1, "s_brand", "required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(arg1, "s_zipcode", "required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(arg1, "s_brn1", "required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(arg1, "s_brn2", "required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(arg1, "s_btn3", "required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(arg1, "s_tel1", "required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(arg1, "s_tel2", "required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(arg1, "s_tel3", "required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(arg1, "s_addr1", "required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(arg1, "s_addr2", "required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(arg1, "s_lon", "required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(arg1, "s_lat", "required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(arg1, "s_grade", "required");
+			}
+
+
+}

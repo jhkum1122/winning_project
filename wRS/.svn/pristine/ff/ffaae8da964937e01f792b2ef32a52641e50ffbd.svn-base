@@ -1,0 +1,77 @@
+package roadshop.web.mypage.action;
+
+import java.util.ArrayList;
+
+
+
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import roadshop.web.item.vo.ItemInfo;
+import roadshop.web.member.vo.MemberInfo;
+import roadshop.web.mypage.action.MypageAction;
+import roadshop.web.mypage.svc.FavoriteService;
+import roadshop.actionforward.ActionForward;
+import roadshop.web.shop.vo.ShopInfo;
+
+
+
+
+public class FavoriteRemoveAction implements MypageAction{
+
+	@Override
+	public ActionForward execute(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		boolean flag = false;
+		response.setContentType("text/html;charset=euc-kr");
+		
+		HttpSession session = request.getSession();
+		
+		String m_id = (String)session.getAttribute("id");
+		Cookie[] cookies = request.getCookies();
+		ArrayList<ItemInfo> fItemList = new ArrayList<ItemInfo>(); 
+		String updateFavoriteList = null;
+		String[] idCheck = request.getParameterValues("chDel");
+		
+		int j;
+		ActionForward forward = null;
+		if(idCheck != null) {
+			
+			for(int i=0; i<cookies.length; i++){
+				if(cookies[i].getName().startsWith(m_id)){
+					String favoriteList = cookies[i].getValue();
+					
+					String[] split = favoriteList.split("&");
+					
+					for(j=0;j<split.length;j++){
+						for(int k=0; k<idCheck.length; k++) {
+							if(!split[j].equals(idCheck[k])){
+								updateFavoriteList += split[k] + "&";
+							}
+						}
+					}
+					
+					updateFavoriteList.substring(0, updateFavoriteList.length()-1);
+					cookies[i].setValue(updateFavoriteList);
+					
+					request.setAttribute("fItemList", fItemList);
+					flag = true;
+					}
+							
+				}
+		}
+		if(!flag){
+			forward = new ActionForward();
+			forward.setUrl("/index.jsp");
+			}
+			
+	
+		forward = new ActionForward();
+		forward.setUrl("/cartList.jsp");
+		 
+		return forward;
+	}
+}

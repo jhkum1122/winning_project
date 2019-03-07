@@ -1,0 +1,23 @@
+package roadshop.web.manager.action.shop;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import roadshop.web.manager.svc.shop.MShopRemoveService;
+
+@Controller
+public class MShopRemoveAction {
+@Autowired
+MShopRemoveService msrs;
+	@RequestMapping("/manager/shop/shopRemove.ms")
+	public String shopRemove(@RequestParam("s_num") int s_num) {
+		
+		if(msrs.deleteShop(s_num))
+			return "/manager/shop/shopAllList.ms";
+		else
+			return "/manager/shop/shopAllList.ms";			
+	}
+
+}

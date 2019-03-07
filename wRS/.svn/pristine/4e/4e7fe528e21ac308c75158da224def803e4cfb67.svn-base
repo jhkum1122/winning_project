@@ -1,0 +1,59 @@
+package roadshop.web.manager.svc.member;
+import static roadshop.db.jdbcUtil.*;
+
+import java.sql.Connection;
+
+import roadshop.web.manager.vo.PagingInfo;
+import roadshop.web.member.dao.MemberDao;
+
+
+public class PagingService {
+
+	public PagingInfo getPagingInfo(String pageNum, int pageSize,String category,String keyword) throws Exception{
+		int currentPage = Integer.parseInt(pageNum);		
+		int startRow = (currentPage - 1) * pageSize + 1;		
+		int count = 0;
+		int number = 0;		
+		Connection con=con();		
+		MemberDao dao=new MemberDao(con);
+
+		if(category==null){
+			count = dao.selectMemberCount(category,keyword);
+			}else if(category.equals("m_name")){
+				count = dao.selectMemberCount(category,keyword);
+			}else if(category.equals("m_id")){
+				count = dao.selectMemberCount(category,keyword);
+			}
+		number = count - ((currentPage - 1) * pageSize);
+						
+		int pageCount=0;
+		int startPage=0;
+		int endPage=0;
+		
+		if(count > 0){
+			pageCount = count/pageSize + ((count % pageSize) == 0 ? 0 : 1);
+		
+			startPage = (int) ((currentPage - 1) / 10) * 10 + 1;
+			
+			int pageBlock = 10;
+		
+			endPage = startPage + pageBlock - 1;
+			
+			if(endPage > pageCount)
+				endPage = pageCount;
+		}
+		PagingInfo info=new PagingInfo();
+		info.setCount(count);
+		info.setCurrentPage(currentPage);
+		info.setEndPage(endPage);
+		info.setPagenumber(number);
+		info.setPageCount(pageCount);
+		info.setStartPage(startPage);
+		info.setStartRow(startRow);
+				
+		return info;
+		
+	}
+
+	
+}

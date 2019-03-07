@@ -1,0 +1,67 @@
+package roadshop.web.manager.action.shop;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import roadshop.actionforward.ActionForward;
+import roadshop.web.manager.action.ManagerAction;
+import roadshop.web.manager.svc.shop.ShopRegistService;
+import roadshop.web.shop.vo.ShopInfo;
+
+public class ShopRegistAction implements ManagerAction {
+
+	@Override
+	public ActionForward execute(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		
+		ActionForward forward = null;
+		String m_id=null;
+		int s_num=0;
+		String s_brand=null;
+		String s_zipcode=null;
+		String s_brn1=null;
+		String s_brn2=null;
+		String s_brn3=null;
+		String s_tel1=null;
+		String s_tel2=null;
+		String s_tel3=null;
+		String s_addr1=null;
+		String s_addr2=null;
+		double s_lon=0;
+		double s_lat=0;
+		
+		  m_id=request.getParameter("m_id");
+		  s_zipcode=request.getParameter("s_zipcode");
+		  s_addr1=request.getParameter("s_addr1");
+		  s_addr2=request.getParameter("s_addr2");
+		  s_brn1=request.getParameter("s_brn1");
+		  s_brn2=request.getParameter("s_brn2");
+		  s_brn3=request.getParameter("s_brn3");
+		  s_brand=request.getParameter("s_brand");
+		  s_tel1=request.getParameter("s_tel1");
+		  s_tel2=request.getParameter("s_tel2");
+		  s_tel3=request.getParameter("s_tel3");
+		  s_lon=Double.parseDouble(request.getParameter("s_lon"));
+		  s_lat=Double.parseDouble(request.getParameter("s_lat"));
+		  
+		  ShopInfo shopInfo = new ShopInfo( m_id, s_num, s_brand, s_zipcode,  
+				  							s_brn1, s_brn2, s_brn3, s_tel1,	s_tel2, 
+				  							s_tel3, s_addr1, s_addr2, s_lon, s_lat);
+		  
+		  ShopRegistService srs = new ShopRegistService();
+		  boolean isSuccess = srs.shopGetInsert(shopInfo);
+		  
+		  if(isSuccess){
+			  forward = new ActionForward();
+			  forward.setUrl("/manager/shop/shopAllList.ms");
+		  }else{
+			System.out.println("<script>");
+			System.out.println("alert('등록 실패 입니다')");
+			System.out.println("history.back()");
+			System.out.println("</script>"); 
+		  }
+		
+		return forward;
+	}
+
+}

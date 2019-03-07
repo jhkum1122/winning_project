@@ -1,0 +1,32 @@
+package roadshop.web.shop.action;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import roadshop.web.shop.svc.ShopModifyService;
+import roadshop.web.shop.vo.ShopInfo;
+
+@Controller
+public class ShopModifyAction{
+	
+	@Autowired
+	ShopModifyService sms;
+	
+	@RequestMapping("/mypage/shopModify.sh")
+	public String ShopModify(ShopInfo shopinfo){
+		 System.out.println("1818181818");
+		 if(sms.modifyshop(shopinfo)){
+			
+			 return "/mypage/shopList.sh";
+		}
+		
+		else{
+			System.out.println("<script>");
+			System.out.println("alert('수정 실패 입니다')");
+			System.out.println("history.back()");
+			System.out.println("</script>");
+			
+			return "/mypage/shopList.sh";
+		}
+	}
+}

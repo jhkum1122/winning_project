@@ -1,0 +1,28 @@
+package roadshop.web.member.svc;
+
+import static roadshop.db.jdbcUtil.commit;
+import static roadshop.db.jdbcUtil.con;
+import static roadshop.db.jdbcUtil.rollback;
+
+import java.sql.Connection;
+
+import roadshop.web.member.dao.MemberDao;
+
+public class MemberRemoveService {
+
+	public boolean memberGetRemove(String m_id) {
+		// TODO Auto-generated method stub
+		Connection con = con();
+		MemberDao memberDao = new MemberDao(con);
+
+		boolean check = memberDao.deleteMember(m_id);
+		if (check) {
+			commit(con);
+			return true;
+		} else {
+			rollback(con);
+			return false;
+		}
+	}
+
+}

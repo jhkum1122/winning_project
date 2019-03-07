@@ -1,0 +1,31 @@
+package roadshop.web.shop.svc;
+
+import static roadshop.db.jdbcUtil.close;
+import static roadshop.db.jdbcUtil.commit;
+import static roadshop.db.jdbcUtil.con;
+import static roadshop.db.jdbcUtil.rollback;
+
+import java.sql.Connection;
+
+import roadshop.web.shop.dao.ShopDao;
+
+public class ShopCancelService {
+
+	public boolean deleteShop(int s_num) {
+		Connection con = con();
+		ShopDao dao = new ShopDao(con);
+		boolean updateState=dao.deleteShop(s_num);
+		if(updateState == true){
+			System.out.println("comi");
+			commit(con);
+		}else{
+			System.out.println("roll");
+			rollback(con);
+		}
+		close(con);
+		return updateState;
+		
+
+	}
+
+}

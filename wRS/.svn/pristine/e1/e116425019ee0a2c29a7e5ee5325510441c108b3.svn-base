@@ -1,0 +1,60 @@
+package roadshop.web.mypage.action;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import roadshop.actionforward.ActionForward;
+
+import roadshop.web.mypage.svc.ShopRegiService;
+import roadshop.web.shop.svc.ShopModifyService;
+import roadshop.web.shop.vo.ShopInfo;
+
+public class ShopRegiAction implements MypageAction {
+
+	@Override
+	public ActionForward execute(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		
+		
+		boolean isSuccess=false;
+		ShopRegiService srs = new ShopRegiService(); 
+		
+		
+		 String m_id=request.getParameter("m_id");
+		 String s_zipcode=request.getParameter("s_zipcode");
+		 String s_addr1=request.getParameter("s_addr1");
+		 String s_addr2=request.getParameter("s_addr2");
+		 String s_brn1=request.getParameter("s_brn1");
+		 String s_brn2=request.getParameter("s_brn2");
+		 String s_brn3=request.getParameter("s_brn3");
+		 String s_brand=request.getParameter("s_brand");
+		 String s_tel1=request.getParameter("s_tel1");
+		 String s_tel2=request.getParameter("s_tel2");
+		 String s_tel3=request.getParameter("s_tel3");
+		 int s_grade = 1;
+		 
+		ShopInfo shopinfo=new ShopInfo(m_id, s_brand,s_zipcode, s_brn1, s_brn2, s_brn3, s_tel1, s_tel2, s_tel3, s_addr1, s_addr2,s_grade);
+		
+		isSuccess=srs.Regishop(shopinfo);
+		String load = "../mypage/mypage.jsp";
+		
+		ActionForward forward = null;
+		
+		if(isSuccess == true){
+			
+			forward = new ActionForward();
+			forward.setUrl("/mypage/mypage.my");
+		}
+		
+		else{
+			System.out.println("<script>");
+			System.out.println("alert('등록실패')");
+			System.out.println("history.back()");
+			System.out.println("</script>");
+		}
+		
+		return forward;
+		
+	}
+
+}

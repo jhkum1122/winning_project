@@ -1,0 +1,25 @@
+package roadshop.web.manager.svc.member;
+
+import java.sql.Connection;
+
+import roadshop.web.member.dao.MemberDao;
+import roadshop.web.member.vo.MemberInfo;
+import static roadshop.db.jdbcUtil.*;
+public class MMemberRegistService {
+
+	public boolean memberGetRegist(MemberInfo mi) {
+		// TODO Auto-generated method stub
+			Connection con = con();
+			MemberDao memberDao = new MemberDao(con);
+			
+			boolean check = memberDao.insertMember(mi);
+			if(check){
+				commit(con);
+			}
+			else {
+				rollback(con);
+			}
+			close(con);
+			return check;
+		}
+	}

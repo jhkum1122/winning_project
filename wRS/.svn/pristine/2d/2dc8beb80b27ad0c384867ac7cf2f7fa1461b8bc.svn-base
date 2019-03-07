@@ -1,0 +1,42 @@
+package roadshop.web.manager.action.item;
+
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import roadshop.actionforward.ActionForward;
+import roadshop.web.manager.action.ManagerAction;
+import roadshop.web.manager.svc.item.ItemModifyService;
+import roadshop.web.manager.svc.item.ItemRemoveService;
+import static roadshop.db.jdbcUtil.*;
+public class ItemRemoveAction implements ManagerAction {
+
+	
+	@Override
+	public ActionForward execute(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		// TODO Auto-generated method stub
+		ActionForward forward=null;
+		String id = request.getParameter("i_id");
+	
+		ItemRemoveService irs = new ItemRemoveService(); 
+		
+		boolean isSuccess=irs.itemGetRemove(id);
+		
+		
+		if(isSuccess){
+			forward = new ActionForward();
+			forward.setUrl("/manager/item/itemAllList.mi");
+		}
+		
+		else{
+			System.out.println("<script>");
+			System.out.println("alert('등록 실패 입니다')");
+			System.out.println("history.back()");
+			System.out.println("</script>");
+		}
+		return forward;
+
+	}
+
+}

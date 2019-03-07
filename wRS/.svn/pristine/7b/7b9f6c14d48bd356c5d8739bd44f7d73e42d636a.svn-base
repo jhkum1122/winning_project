@@ -1,0 +1,28 @@
+package roadshop.web.shop.svc;
+
+import static roadshop.db.jdbcUtil.close;
+import static roadshop.db.jdbcUtil.con;
+
+import java.sql.Connection;
+import java.util.ArrayList;
+
+import roadshop.web.shop.dao.ProductDao;
+import roadshop.web.shop.dao.ShopDao;
+import roadshop.web.shop.vo.ProductInfo;
+import roadshop.web.shop.vo.ShopInfo;
+
+public class ProductListService {
+
+	public ArrayList<ProductInfo> productList(int s_num) {
+		// TODO Auto-generated method stub
+	    Connection con = con();
+		ProductDao productDao = new ProductDao(con);
+		
+		ArrayList<ProductInfo> productList = productDao.selectAllItem(s_num);
+			close(con);
+			
+	return productList;
+
+	}
+
+}

@@ -1,0 +1,19 @@
+package roadshop.web.manager.action.member;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+
+@Controller
+public class MMemberRegistFormAction{
+
+	@RequestMapping("/manager/member/memberRegistForm.mm")
+	public ModelAndView memberRegistForm() {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("load", "../manager/member/memberRegist.jsp");
+		mav.setViewName("/manager/managerMain.jsp");
+		return mav;
+	}
+
+}

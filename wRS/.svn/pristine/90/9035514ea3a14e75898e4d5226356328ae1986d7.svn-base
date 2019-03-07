@@ -1,0 +1,25 @@
+package roadshop.web.shop.svc;
+
+
+import static roadshop.db.jdbcUtil.*;
+
+import java.sql.Connection;
+import java.util.ArrayList;
+
+import roadshop.web.shop.dao.ShopDao;
+import roadshop.web.shop.vo.ShopInfo;
+
+
+public class ShopListService {
+
+	public ArrayList<ShopInfo> shopList(String m_id){
+    Connection con = con();
+	ShopDao shopDao = new ShopDao(con);
+	
+	ArrayList<ShopInfo> shopList = shopDao.selectAllShop(m_id);
+		close(con);
+		
+		return shopList;
+
+	}
+}

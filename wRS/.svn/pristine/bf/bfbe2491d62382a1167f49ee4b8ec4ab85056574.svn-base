@@ -1,0 +1,31 @@
+package roadshop.web.manager.action.member;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import roadshop.web.manager.svc.member.MMemberModifyService;
+import roadshop.web.member.vo.MemberInfo;
+
+@Controller
+public class MMemberModifyAction{
+	@Autowired
+	MMemberModifyService mmms;
+	@RequestMapping("/manager/member/memberModify.mm")
+	public  ModelAndView memberModify(MemberInfo mi){
+		ModelAndView mav = new ModelAndView();
+		/*mi = 
+		new MemberInfo(mi.getM_num(),mi.getM_id(),mi.getM_pwd(),mi.getM_name(),mi.getM_zipcode(),mi.getM_addr1(),mi.getM_addr2(),mi.getM_ssn1(),mi.getM_email1(),mi.getM_email2(),mi.getM_tel1(),mi.getM_tel2(),mi.getM_tel3(),mi.getM_grade());*/
+		boolean isSuccess = mmms.memberGetModify(mi);
+		if(isSuccess){
+			mav.setViewName("/manager/member/memberAllList.mm");
+		}
+		else{
+			mav.setViewName("/manager/member/memberModify.mm");
+		}
+		return mav;
+	}
+
+}

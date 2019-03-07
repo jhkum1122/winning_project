@@ -1,0 +1,28 @@
+package roadshop.web.member.svc;
+
+import static roadshop.db.jdbcUtil.close;
+import static roadshop.db.jdbcUtil.con;
+
+import java.sql.Connection;
+
+
+import roadshop.web.member.dao.MemberDao;
+
+public class IdAskService {
+
+	public boolean getId(String id) {
+		// TODO Auto-generated method stub
+
+		Connection con = con();
+
+		MemberDao m = new MemberDao(con);
+
+		boolean searchId = m.existsId(id); //searchid가 true이면 중복, false이면 사용가능
+		close(con);
+
+		return searchId;
+
+	
+	}
+
+}

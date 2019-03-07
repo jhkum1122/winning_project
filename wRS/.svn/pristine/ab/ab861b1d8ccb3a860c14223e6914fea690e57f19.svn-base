@@ -1,0 +1,53 @@
+package roadshop.web.manager.action.item;
+
+import java.util.ArrayList;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import roadshop.web.item.vo.ItemInfo;
+import roadshop.web.manager.svc.item.ItemSearchService;
+import roadshop.web.manager.svc.item.PagingService;
+import roadshop.web.manager.vo.PagingInfo;
+@Controller
+public class ItemSearchAction {
+@Autowired
+ItemSearchService iss;
+@Autowired
+PagingService ps;
+
+	@RequestMapping("/manager/item/itemSearch.mi")
+	public ModelAndView itemSearch(@RequestParam(value="pageNum",defaultValue="1") String pageNum,
+			@RequestParam("category") String category,@RequestParam("keyword") String keyword) {
+		ArrayList<ItemInfo> isSuccess = new ArrayList<ItemInfo>();
+		ModelAndView mav = new ModelAndView();
+		int pageSize = 10;		
+		PagingInfo pagingInfo=null;
+		
+		try {
+			pagingInfo = ps.getPagingInfo(pageNum, pageSize, category, keyword);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		isSuccess=iss.getSearchList(keyword, category, pagingInfo.getStartRow(), pageSize);
+		
+		if(isSuccess.size()>0){
+			mav.addObject("pagingInfo", pagingInfo);
+			mav.addObject("itemList", isSuccess);
+			mav.addObject("load", "../manager/item/item.jsp");
+			mav.setViewName("/manager/managerMain.jsp");
+		}else{
+			mav.addObject("itemList", null);
+			mav.addObject("load", "../manager/item/item.jsp");
+			mav.setViewName("/manager/managerMain.jsp");
+		}
+		return mav;
+	}
+
+}

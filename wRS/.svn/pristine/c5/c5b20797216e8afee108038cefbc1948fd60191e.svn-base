@@ -1,0 +1,105 @@
+package roadshop.web.member.action;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import roadshop.web.member.svc.MemberRegistService;
+import roadshop.web.member.vo.MemberInfo;
+
+@Controller
+public class MemberRegistAction{
+	
+	@Autowired
+	MemberRegistService mrs;
+	
+	@RequestMapping("/main/memberRegist.mem")
+	public String memberRegist(MemberInfo mi){
+		boolean isSuccess = mrs.memberGetRegist(mi);
+		
+		if(isSuccess){
+			return "/main/beforeMain.jsp";
+		}
+		else{
+			return "/main/memberRegistView.mem";
+		}
+	}
+	
+}
+
+
+/* 1.MVC 패턴
+import java.io.PrintWriter;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import roadshop.actionforward.ActionForward;
+
+import roadshop.web.member.svc.MemberRegistService;
+import roadshop.web.member.vo.MemberInfo;
+
+public class MemberRegistAction implements MemberAction {
+
+	@Override
+	public ActionForward execute(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		// TODO Auto-generated method stub
+
+		String m_id;
+		String m_pwd;
+		String m_name;
+		String m_zipcode;
+		String m_addr1;
+		String m_addr2;
+		int m_ssn1;
+		String m_email1;
+		String m_email2;
+		String m_tel1;
+		String m_tel2;
+		String m_tel3;
+		int m_grade = 0;
+		boolean isSuccess;
+
+		m_id = request.getParameter("m_id");
+		m_pwd = request.getParameter("m_pwd");
+		m_name = request.getParameter("m_name");
+		m_zipcode = request.getParameter("m_zipcode");
+		m_addr1 = request.getParameter("m_addr1");
+		m_addr2 = request.getParameter("m_addr2");
+		m_ssn1 = Integer.parseInt(request.getParameter("m_ssn1"));
+		m_email1 = request.getParameter("m_email1");
+		m_email2 = request.getParameter("m_email2");
+		m_tel1 = request.getParameter("m_tel1");
+		m_tel2 = request.getParameter("m_tel2");
+		m_tel3 = request.getParameter("m_tel3");
+
+		MemberInfo mi = new MemberInfo(m_id, m_pwd, m_name, m_zipcode, m_addr1,
+				m_addr2, m_ssn1, m_email1, m_email2, m_tel1, m_tel2, m_tel3,
+				m_grade);
+
+		MemberRegistService mrs = new MemberRegistService();
+		isSuccess = mrs.memberGetRegist(mi);
+
+		ActionForward forward = null;
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
+
+		// 성공여부
+
+		if (isSuccess) {
+			forward = new ActionForward();
+
+			forward.setUrl("/main/beforeMain.jsp");
+		} else {
+			out.println("<script>");
+			out.println("alert('등록 실패 입니다')");
+			out.println("history.back()");
+			out.println("</script>");
+		}
+		return forward;
+
+	}
+
+}*/

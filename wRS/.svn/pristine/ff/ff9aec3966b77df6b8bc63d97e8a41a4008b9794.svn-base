@@ -1,0 +1,27 @@
+package roadshop.web.manager.svc.item;
+
+import java.sql.Connection;
+import java.util.ArrayList;
+import static roadshop.db.jdbcUtil.*;
+import roadshop.web.item.dao.ItemDAO;
+import roadshop.web.item.vo.ItemInfo;
+
+public class ItemAllListService {
+	
+	public ArrayList<ItemInfo> itemGetAllList(int startRow, int pageSize) {
+		Connection con = con();
+		ArrayList<ItemInfo> itemAllList = new ArrayList<ItemInfo>();
+		ItemDAO itemDAO = new ItemDAO(con);
+		itemAllList = itemDAO.selectAllItemList(startRow, pageSize);
+		
+		if(itemAllList!=null){
+			commit(con);
+		}
+		else{
+			rollback(con);
+		}
+		
+		return itemAllList;
+	}
+
+}

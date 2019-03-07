@@ -1,0 +1,170 @@
+<%@page import="roadshop.web.item.vo.ItemInfo"%>
+<%@page import="java.util.ArrayList"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="EUC-KR"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<link rel="stylesheet" href="<%=request.getContextPath() %>/css/web/style.css" type="text/css" />
+<link rel="stylesheet" href="<%=request.getContextPath() %>/css/web/item.css" type="text/css" />
+<title>Where Is The RoadShop?!</title>
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<%
+ArrayList<ItemInfo> itemList = (ArrayList<ItemInfo>)request.getAttribute("itemList");
+String keyword = (String)request.getAttribute("keyword");
+%>
+<!-- 팝업 광고 닫기 시작 -->
+ <script>
+  function floating_close(divid) {
+             var strObj = document.getElementById(divid);
+             strObj.style.display = "none";
+   }
+  </script>
+  <!--  팝업 광고 닫기 끝 -->
+</head>
+<body>
+<!-- header 부분 -->
+	<div class="header">
+		<div>
+			<a href="<%=request.getContextPath()%>/main/main.jsp" id="logo"><img src="../image/logo_large.png" alt="logo"/></a>
+				
+			<div class="navigation">
+				<ul class="first">
+					<li class="first"><a href="wRSInfo">ABOUT US</a></li>
+					<li><a href="mypage.jsp">MYPAGE</a></li>
+					<li><a href="join.jsp">JOIN</a></li>
+				</ul>
+			</div>
+		</div>
+		<!-- <div id="search">	
+			<form action="" class="search">
+				<input type="text" value="search" onblur="this.value=!this.value?'search':this.value;" onfocus="this.select()" onclick="this.value='';"/>
+				<input type="submit" id="submit" value=""/>
+			</form>
+		</div> -->
+			
+		<div id="navigation">
+			<ul>
+				<li><a href="<%=request.getContextPath()%>/product/keywordSearch.jsp">KeywordSearch</a></li>
+				<li><a href="<%=request.getContextPath()%>/product/mapSearch.jsp">MapSearch</a></li>
+				<li><a href="<%=request.getContextPath()%>/product/bestItems.it">BestItem</a></li>
+				<li><a href="<%=request.getContextPath()%>/board/main.jsp">Review</a></li>
+			</ul>
+		</div>
+			
+	</div> 
+		
+	<!-- body 부분 -->
+	<br>
+	<div class="body">
+		<div class="center1">
+			<form class='login_form' name="login" action='' method='post' onsubmit='return check_loginform()'>
+					<table width=195 border=0 cellspacing=3 cellpadding=0 align=center>
+							<tr>
+								<td height=2></td>
+							</tr>
+							<tr>
+								<td><input type='text' name="loginid" value="id" style="font-size:14px; float:left; background:#FFFFFF; height:20px; width:115px; border:1px solid #c8c6c6;" style="ime-mode:disabled;" value="" maxlength="12" tabindex=1 onfocus="this.value=''"/></td>
+								<td rowspan="3" align=center><input type="image" src="../image/web/login_btn01.jpg" width="66px" height="55px" name="submit" style="float:left; margin-left:5px;margin-top:0px;"></td>
+							</tr>
+							<tr><td height=1></td></tr>
+							<tr>
+								<td><input type='password' name="passwd"  value="password" style="font-size:14px; float:left; background:#FFFFFF; height:20px; width:115px; border:1px solid #c8c6c6;" maxlength="17" tabindex=2 onfocus="this.value=''"/></td>
+							</tr>
+							<tr><td height="2spx"></td></tr>
+							<tr><td colspan="2" align=center>
+								<a href="" class="gray"><img src="../image/web/login_btn02.jpg"></a>
+								<a href=""><img src="../image/web/login_btn03.jpg" style="cursor:pointer;" alt="회원가입"></a>
+								</td>
+							</tr>
+					</table>
+			 </form>
+		</div>
+		<!-- <div style="clear:both;"></div> -->
+		
+		
+		<div class="keywordSearch">
+			<form method="post" action="keywordSearch.it">
+					<table align=center>
+						<tr>
+						<td><select id="brand" name="brand">
+							<option value="all">전체</option>
+							<option value="missha">미샤</option>
+							<option value="etude">에뛰드</option>
+							<option value="tonymoly">토니모리</option>
+							<option value="naturerepublic">네이처리퍼블릭</option>
+							<option value="thefaceshop">더페이스샵</option>
+							</select></td>
+						<td>
+						<% if(keyword != null){ %>
+							<input type="text" class="i_text" name="keyword" value="<%=keyword%>">
+						<%}
+						else{%>
+							<input type="text" class="i_text" name="keyword">
+						<%} %>
+						</td>
+						<td>
+						<!-- <input type="button" value="검색" onclick="checkKeyword()"> -->
+						<input type="image" value="검색" src="<%=request.getContextPath()%>/image/web/btn_search.jpg">
+						</td>
+						</tr>
+					</table>
+				</form>
+				<br><br>
+			
+				<% if(itemList != null){ %>
+				<table id=listtable cellpadding=0 cellspacing=0 border=0 align=center>
+				<%for(int i=0; i<itemList.size();i++){
+					ItemInfo itemInfo = itemList.get(i);%>
+				<tr>
+					<td rowspan=2><a href="itemAsk.it?i_id=<%=itemInfo.getI_id() %>"><img src="<%=request.getContextPath() %>/image/item/<%=itemInfo.getI_image()%>" width="200" height="150"/></a></td>
+					<td>브랜드 : <%=itemInfo.getI_brand() %></td>
+					
+				</tr>
+				<tr>
+					<td>상품명 : <a href="itemAsk.it?i_id=<%=itemInfo.getI_id() %>"><%=itemInfo.getI_name() %></a></td>
+					<%-- <td>가격 : <%=itemInfo.getI_price() %></td>
+					<td>재고 : <%if(itemInfo.getI_stock() != 1){%>유
+								<%}else{ %> 무<%} %></td> --%>
+				</tr>
+				<tr><td colspan=3 height="10"></td></tr>
+				<%}%>
+			</table>
+			<%}%>
+			<br>
+		</div>
+		
+	</div><!-- body 마지막 div -->
+		
+		
+		<div class="fixed-top" >
+  			<div id="fixed-top">
+   				<table border="0" cellpadding="5" cellspacing="0" bgcolor="#ffffff">
+    				<tr>
+     					<td align="center" >
+     				 	<img src="../image/web/facesale_content_right_banner.jpg" width=90% height=90%>
+      					</td>
+    				</tr>
+   					 <tr>
+  						<td height="10" align="center" style="background-color:#ffffff;color:black;">
+  						<a href="javascript:floating_close('fixed-top');" style="color:#000000; text-decoration:none; font-size:12px;">
+  						<strong>[닫기]</strong></a></td>
+  					</tr>
+ 				</table>
+			</div>
+		</div>
+		
+			
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+	
+	
+	
+	<!-- footer 부분 -->	
+	<div class="footer">
+		<p>&#169; 2013 WhereIsTheROADSHOP. All Rights Reserved.</p>
+	</div>
+</body>
+
+</html>

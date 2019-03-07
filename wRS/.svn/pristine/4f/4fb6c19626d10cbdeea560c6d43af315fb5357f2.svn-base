@@ -1,0 +1,29 @@
+package roadshop.web.item.action;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import roadshop.actionforward.ActionForward;
+import roadshop.web.item.svc.BestItemService;
+import roadshop.web.item.vo.ItemInfo;
+
+public class BestItemAction implements ItemAction {
+
+	@Override
+	public ActionForward execute(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		// TODO Auto-generated method stub
+		
+		BestItemService bi = new BestItemService();
+		
+		HashMap<String, ArrayList<ItemInfo>> bestItem = bi.getbestItem();
+		request.setAttribute("bestItem", bestItem);
+		ActionForward forward = new ActionForward();
+		forward.setUrl("/product/bestItems.jsp");
+		return forward;
+	}
+
+}

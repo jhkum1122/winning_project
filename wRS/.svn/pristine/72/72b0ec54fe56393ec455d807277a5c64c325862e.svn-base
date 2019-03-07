@@ -1,0 +1,37 @@
+
+@charset "utf-8";
+
+/*---------- reset 셋팅 ----------*/
+html, body, div, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, address, dl, dt, dd, ol, ul, li, fieldset, form, legend, table, caption, thead, tfoot, tbody, th, tr, td, input{margin:0; padding:0;}
+h1, h2, h3, h4, h5, h6{font-size:100%;}
+img, fieldset{border:none;}
+img{vertical-align:top;}
+table{border-collapse:collapse; border-spacing:0;}
+ul, ol, li{list-style:none;}
+address{font-style:normal;}
+input, select, textarea{vertical-align:middle;}
+
+
+/*---------- font ----------*/
+body{font:100% "돋움",Dotum,"굴림",Gulim,Verdana,Arial,sans-serif; color:#666;background:#eee;}
+input, select, textarea{font:1em "돋움",Dotum,"굴림",Gulim,Verdana,Arial,sans-serif; color:#666;}
+
+
+/*---------- anchor ----------*/
+A:link    { color:#666;text-decoration:none;}
+A:visited { color:#666;text-decoration:none;}
+A:active  { color:#666;text-decoration:none;}
+A:hover  {color:#357fde;text-decoration:underline;position:relative;}
+
+a.navi:link    { color:#666;text-decoration:none;letter-spacing:-2px; font-weight:bold; }
+a.navi:visited { color:#666;text-decoration:none;letter-spacing:-2px; font-weight:bold; }
+a.navi:active  { color:#666;text-decoration:none;letter-spacing:-2px; font-weight:bold; }
+a.navi:hover  {color:#357fde;text-decoration:none;position:relative;letter-spacing:-2px; font-weight:bold; }
+
+a.cog:link    { color:#357fde;text-decoration:none;letter-spacing:-1px; }
+a.cog:visited { color:#357fde;text-decoration:none;letter-spacing:-1px; }
+a.cog:active  { color:#357fde;text-decoration:none;letter-spacing:-1px; }
+a.cog:hover  {color:#666;text-decoration:underline;position:relative;letter-spacing:-1px; }
+
+/*---------- skip ----------*/
+#accessibility, .skip, hr, legend, caption{width:0; height:0; font-size:0; line-height:0; position:absolute; visibility:hidden; overflow:hidden; left:-5000px;}

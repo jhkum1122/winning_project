@@ -1,0 +1,109 @@
+package roadshop.web.user.action;
+
+import java.io.PrintWriter;
+
+import javax.servlet.http.HttpServletResponse;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import roadshop.web.user.svc.PwdAskService;
+
+
+@Controller
+public class SearchPwdAction{
+	@Autowired
+	private PwdAskService pwdAskService;
+	
+	@RequestMapping("/user/searchUserpwd.us")
+	public ModelAndView searchPwd(@RequestParam("id") String id,
+			@RequestParam("ssn1") int ssn1, HttpServletResponse response) throws Exception{
+		ModelAndView mav = new ModelAndView();
+		String searchPwd = pwdAskService.getPwd(id, ssn1);
+		if(searchPwd != null) {
+			mav.addObject("searchPwd", searchPwd);
+			mav.addObject("load", "/user/pwdAskResult.jsp");
+			mav.setViewName("/main/beforeMain.jsp");
+		}else{
+			response.setContentType("text/html;charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>");
+			out.println("alert('비밀번호찾기에 실패했습니다 다시 확인하세요')");
+			out.println("history.back()");
+			out.println("</script>");
+			return null;
+		}
+		return mav;
+}
+}
+/*
+import java.io.PrintWriter;
+
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import roadshop.actionforward.ActionForward;
+import roadshop.web.user.svc.IdAskService;
+import roadshop.web.user.svc.PwdAskService;
+
+public class SearchPwdAction implements UserAction {
+	@Override
+	public ActionForward execute(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		// TODO Auto-generated method stub
+		
+		response.setContentType("text/html;charset=euc-kr");
+
+
+
+		String id = request.getParameter("id");
+		int ssn1 = Integer.parseInt(request.getParameter("ssn1"));
+		
+
+		PwdAskService pwdAskService= new PwdAskService();
+			  
+			  
+		String searchPwd = pwdAskService.getPwd(id, ssn1);
+				
+				ActionForward forward = null;
+				
+				
+				
+
+			if(searchPwd != null) {
+				request.setAttribute("searchPwd", searchPwd);
+				forward = new ActionForward();
+				forward.setUrl("PwdAskResult.jsp");
+				//로그인된 결
+				
+				
+			
+				request.setAttribute("searchPwd",searchPwd);
+				forward.setUrl("pwdAskResult.jsp");
+				 
+				
+
+			}
+				else {
+					response.setContentType("text/html;charset=euc-kr");
+					PrintWriter out = response.getWriter();
+					out.println("<script>");
+					out.println("alert('로그인정보를 다시 확인하세요')");
+					out.println("history.back()");
+					out.println("</script>");
+				}
+			
+			return forward;
+				
+			}
+
+		
+
+	}
+*/

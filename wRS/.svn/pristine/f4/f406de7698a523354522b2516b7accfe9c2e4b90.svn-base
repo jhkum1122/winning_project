@@ -1,0 +1,36 @@
+package roadshop.web.user.svc;
+
+
+
+import java.sql.*;
+
+
+
+import roadshop.web.user.dao.*;
+import roadshop.web.member.vo.MemberInfo;
+import static roadshop.db.jdbcUtil.*;
+
+
+
+
+public class LoginService {
+
+	public MemberInfo loginUser(String id, String pwd) {
+		// TODO Auto-generated method stub
+		Connection con = con();
+		
+		UserDAO userDAO = new UserDAO(con);
+	
+		MemberInfo  member= userDAO.getUserLogin(id,pwd);//아이디,비번을 매개변수로 전달
+
+		   close(con);
+
+		  
+
+		   return member;
+
+
+
+	}
+	
+}

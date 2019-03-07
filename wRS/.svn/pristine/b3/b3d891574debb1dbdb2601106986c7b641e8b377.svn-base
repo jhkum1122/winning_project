@@ -1,0 +1,42 @@
+package roadshop.web.shop.action;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import roadshop.actionforward.ActionForward;
+import roadshop.web.shop.svc.ProductStockService;
+
+public class ProductStockAction implements ShopAction {
+
+	public ActionForward execute(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String i_id = request.getParameter("i_id");
+		int s_num = Integer.parseInt(request.getParameter("s_num"));
+		boolean s_stock = (request.getParameter("s_stock").equals("Y")) ? true : false;
+		
+		
+		ProductStockService pss = new ProductStockService();
+		
+		//String load = "/mypage/productList.pro";
+		
+		
+		
+		boolean stock = pss.stockProduct(i_id,s_num,s_stock);
+		ActionForward forward = new ActionForward();
+		if(stock==true){
+			//request.setAttribute("load",load);
+			forward.setUrl("/mypage/productList.pro");
+
+			
+		}else{
+			System.out.println("<script>");
+			System.out.println("alert('¼öÁ¤¾ÈµÊ')");
+			System.out.println("history.back()");
+			System.out.println("</script>");
+
+		}
+// TODO Auto-generated method stub
+		return forward;
+	}
+
+}

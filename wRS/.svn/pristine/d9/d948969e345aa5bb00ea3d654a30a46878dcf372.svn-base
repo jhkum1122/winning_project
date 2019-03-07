@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.2.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-3.2.xsd"
+>
+<bean id="pagingService" class="roadshop.web.manager.svc.item.PagingService"></bean>
+<bean id="itemAllListService" class="roadshop.web.manager.svc.item.ItemAllListService"></bean>
+<bean id="itemRemoveService" class="roadshop.web.manager.svc.item.ItemRemoveService"></bean>
+<bean id="itemSearchService" class="roadshop.web.manager.svc.item.ItemSearchService"></bean>
+<bean id="itemModifyService" class="roadshop.web.manager.svc.item.ItemModifyService"></bean>
+<bean id="itemInfoService" class="roadshop.web.manager.svc.item.ItemInfoService"></bean>
+<bean id="itemRegistService" class="roadshop.web.manager.svc.item.ItemRegistService"></bean>
+ <bean id="multipartResolver"
+       class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+     <property name="maxUploadSize" value="10000000"></property>
+ </bean>
+<context:component-scan base-package="roadshop.web.manager.action.item"></context:component-scan>
+</beans>

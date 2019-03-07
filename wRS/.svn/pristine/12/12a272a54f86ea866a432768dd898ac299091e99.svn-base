@@ -1,0 +1,104 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<%@page import="roadshop.web.shop.vo.ProductInfo"%>
+<%@page import="java.util.ArrayList"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<title>Insert title here</title>
+<%
+ArrayList<ProductInfo> list = (ArrayList<ProductInfo>)request.getAttribute("productList");
+String m_id=(String)session.getAttribute("id");
+%>
+
+</head>
+<body>
+<form name="f1" action="productView" method="post">
+<table align=center border="1" cellspacing="0" cellpadding="2">
+<center><h1><b>fffff</b></h1></center>
+
+
+
+
+</td>
+</tr>
+
+</table>
+<table align="center" width="680"  border="0" cellspacing="0" cellpadding="0">
+<tr>
+	<td>
+		<table width="680" border="0" cellpadding="0" cellspacing="0">
+		<tr>
+			<td height="2" colspan="14" bgcolor="#D4D4D4"></td>
+		</tr>
+		<tr>
+			<td width="51" height="23" align="center" style="font-size:11px; background-color:#F4F4F4;"><font color=#818181>상품번호</td>
+			<td width="1" align="center" style="background-color:#F4F4F4;"><img src="../image/bbs_list_line.gif" align="absmiddle" border="0"></td>
+			<td align="center" style="font-size:11px; background-color:#F4F4F4;"><font color=#818181>브랜드</td>
+			<td width="1" align="center" style="background-color:#F4F4F4;"><img src="../image/bbs_list_line.gif" align="absmiddle" border="0"></td>
+			<td align="center" style="font-size:11px; background-color:#F4F4F4;"><font color=#818181>상품명</td>
+			<td width="1" align="center" style="background-color:#F4F4F4;"><img src="../image/bbs_list_line.gif" align="absmiddle" border="0"></td>
+			<td width="70" align="center" style="font-size:11px; background-color:#F4F4F4;"><font color=#818181>상품유무</td>
+			<td width="1" align="center" style="background-color:#F4F4F4;"><img src="../image/bbs_list_line.gif" align="absmiddle" border="0"></td>
+			<td width="70" align="center" style="font-size:11px; background-color:#F4F4F4;"><font color=#818181>상품유무수정</td>
+			
+			
+		</tr>
+		<tr>
+			<td height="1px" colspan="14" bgcolor="#D4D4D4"></td>
+		</tr>
+		</table>
+<%
+for (int i=0;i<list.size();i++){
+		ProductInfo product=list.get(i);
+%>
+<tr>
+<td>
+
+
+<%
+	String isStock;
+	if(product.isI_stock()){
+		isStock = "Y";
+	} else {
+		isStock = "N";
+	}
+%>		
+		
+
+		<table cellspacing='0' cellpadding='0' border='0' width=100% border=0><td valign=top align=center>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+
+<tr height="27"  >
+	<!--<td width="3"></td>-->
+	<td width="51" align="center"><%out.println(product.getSi_num()); %></td>
+	<td width="1"></td>
+	<td align="center"><%out.println(product.getI_brand()); %></td>
+	<td width="1"></td>
+	<td align="center"><%out.print(product.getI_name()); %></td>
+	<td width="1"></td>
+	<td width="70" align="center"><%out.print(product.isI_stock()); %></td>
+	<td width="1"></td>
+	<td width="70" align="center"><input type="button" value="수정" onclick="location.href='productStock.sh?i_id=<%=product.getI_id()%>&s_num=<%=product.getS_num()%>&s_stock=<%=isStock%>'"></td>
+
+
+
+	
+	<!--<td width="3"></td>-->
+</tr>
+<tr>
+	<td height="1" colspan="14" bgcolor="#F0F0F0"></td>
+</tr>
+</table>
+
+<td>
+
+
+</td></tr><td valign=top align=center>
+<%
+}
+%>
+<input type="button" value="샵리스트" onclick="location.href='shopList.sh'"/>
+</body>
+</html>

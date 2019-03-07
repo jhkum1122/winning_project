@@ -1,0 +1,37 @@
+package roadshop.web.manager.action.shop;
+
+import java.util.ArrayList;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import roadshop.actionforward.ActionForward;
+import roadshop.web.manager.action.ManagerAction;
+import roadshop.web.manager.svc.shop.ShopAllListService;
+import roadshop.web.manager.svc.shop.ShopBrandListService;
+import roadshop.web.shop.vo.ShopInfo;
+
+public class ShopBrandListAction implements ManagerAction {
+
+	@Override
+	public ActionForward execute(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		// TODO Auto-generated method stub
+		ActionForward forward = new ActionForward();
+		String s_brand =null;
+		
+		s_brand = request.getParameter(s_brand);
+		
+		ShopBrandListService sbls = new ShopBrandListService();
+		ArrayList<ShopInfo> isSuccess = sbls.shopGetBrandList(s_brand);
+		
+		if(isSuccess!=null){
+			request.setAttribute("shopBrandList",isSuccess);
+			forward.setUrl("/shopmanager/shopManagementMain.jsp");
+			}else{
+				System.out.println(" ¾È‰è");
+			}
+			
+			return forward;
+	}
+}

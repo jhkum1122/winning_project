@@ -1,0 +1,39 @@
+package roadshop.web.shop.action;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import roadshop.actionforward.ActionForward;
+import roadshop.web.shop.svc.ProductStockService;
+@Controller
+
+public class ProductStockAction {
+@Autowired
+ProductStockService pss;
+@RequestMapping("/mypage/productStock.sh")
+	public ModelAndView mProductStockAction(HttpServletRequest request ,
+			@RequestParam("i_id")String i_id , @RequestParam("s_num")int s_num) throws Exception {
+		ModelAndView mav =  new ModelAndView();
+		boolean s_stock = (request.getParameter("s_stock").equals("Y")) ? true : false;
+		boolean stock = pss.stockProduct(i_id,s_num,s_stock);
+		
+		if(stock==true){
+			mav.setViewName("/mypage/productList.sh");
+		}else{
+			System.out.println("<script>");
+			System.out.println("alert('¼öÁ¤¾ÈµÊ')");
+			System.out.println("history.back()");
+			System.out.println("</script>");
+
+		}
+// TODO Auto-generated method stub
+		return mav;
+	}
+
+}

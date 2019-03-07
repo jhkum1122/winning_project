@@ -1,0 +1,26 @@
+package roadshop.web.mypage.action;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import roadshop.actionforward.ActionForward;
+import roadshop.web.shop.action.ShopAction;
+
+public class ShopRegiFormAction implements MypageAction {
+
+	@Override
+	public ActionForward execute(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		ActionForward forward= new ActionForward();
+		
+		String load = "../mypage/shopRegist.jsp";
+		request.setAttribute("load",load);
+		forward.setUrl("/main/beforeMain.jsp");
+		
+		return forward;
+		
+	
+		
+	}
+
+}

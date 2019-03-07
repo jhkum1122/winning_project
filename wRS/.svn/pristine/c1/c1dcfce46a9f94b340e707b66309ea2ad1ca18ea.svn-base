@@ -1,0 +1,32 @@
+package roadshop.web.manager.action.item;
+
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import roadshop.actionforward.ActionForward;
+import roadshop.web.manager.action.ManagerAction;
+import roadshop.web.manager.svc.item.ItemRemoveService;
+
+@Controller
+public class ItemRemoveAction {
+
+@Autowired
+ItemRemoveService irs;
+
+	@RequestMapping("/manager/item/itemRemove.mi")
+	public String itemRemove(@RequestParam("i_id") String i_id){
+
+		if(irs.itemGetRemove(i_id))
+			return "/manager/item/itemAllList.mi";
+		else{
+			return "/manager/item/itemAllList.mi";
+		}
+	}
+
+}

@@ -1,0 +1,31 @@
+package roadshop.web.item.action;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import roadshop.actionforward.ActionForward;
+import roadshop.web.item.svc.ItemAskService;
+import roadshop.web.item.vo.ItemInfo;
+
+public class ItemAskAction implements ItemAction {
+
+	@Override
+	public ActionForward execute(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		// TODO Auto-generated method stub
+		String i_id = request.getParameter("i_id");
+		
+		ItemAskService ia = new ItemAskService();
+		ItemInfo itemAsk = ia.getItemAsk(i_id);
+		request.setAttribute("itemAsk", itemAsk);
+		
+		ActionForward forward = new ActionForward();
+		String load = "../product/itemAsk.jsp";
+		request.setAttribute("load", load);
+		forward.setUrl("/main/beforeMain.jsp");	
+		
+		return forward;
+	}
+
+
+}

@@ -1,0 +1,99 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<title>whathe</title>
+<link rel="stylesheet" href="../css/web/gStyle.css" type="text/css" />
+
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script>
+	$(document).ready(function(){
+		$('.menuBar').hover(function(){
+			$(this).css({
+				background:'red',
+				color:'pink'
+			});
+		},
+		function(){
+			$(this).css({
+				background:'pink',
+				color:'White'
+			});
+		}
+		);
+		
+		
+		var dataUrl = "mypage.jsp";
+		doUrl(dataUrl);
+		
+		//Home 화면
+		$('#td2').click(function(){
+			dataUrl = "mypage.jsp";
+			doUrl(dataUrl);
+		});
+		
+		//Introduction 화면
+		$('#td3').click(function(){
+			dataUrl = "intro.jsp";
+			doUrl(dataUrl);
+		});
+		
+		/* $('#mainImg').click(function(){
+			dataUrl = "Main.jsp";
+			doUrl(dataUrl);
+		}); */
+		
+		
+		function doUrl(source){
+			$.ajax({
+				url:source,
+				cache:false,
+				dataType:"html",
+				success: function(data){
+					$('#d1').html(data);
+				}
+			});
+		}
+	});
+</script>
+<style type="text/css">
+	div {text-align:center;}
+	table{
+		border-style:hidden;
+		border-width:3px;
+		border-color:black;
+		width:70%;height:50px;
+		margin:auto auto;
+	}
+	td{
+		font-family:휴면매직체;
+		font-size:18px;
+		background-color:pink;
+		color:white;
+	}
+	
+	
+</style>
+</head>
+<body>
+<div id = "mainImg">
+	<a href="gMain.jsp" id="logo"><img src="../image/logo_large.png" alt="logo"/></a>
+</div>
+<br>
+<div>
+<table>
+<tr>
+	<td id="td2" class="menuBar" width="25%">게시판</td>
+	<td id="td3" class="menuBar" width="25%">???</td>
+	<td id="td1" class="menuBar" width="25%">???</td>
+	<td id="td4" class="menuBar" width="25%">???</td>
+</tr>
+</table>
+<div id = "d1">
+
+</div>
+</div>
+</body>
+</html>

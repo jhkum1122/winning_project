@@ -1,0 +1,16 @@
+package roadshop.web.user.action;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+@Controller
+public class SearchIdFormAction {
+	@RequestMapping("/user/idsearchform.us")
+	public ModelAndView searchIdForm() {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("load", "/user/search_id.jsp");
+		mav.setViewName("/main/beforeMain.jsp");
+		return mav;
+}
+}

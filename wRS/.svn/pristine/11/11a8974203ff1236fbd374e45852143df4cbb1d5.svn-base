@@ -1,0 +1,24 @@
+package roadshop.web.manager.action.shop;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import roadshop.web.manager.svc.shop.MShopModifyService;
+import roadshop.web.shop.vo.ShopInfo;
+
+@Controller
+public class MShopModifyAction {
+	@Autowired
+	MShopModifyService msms;
+
+	@RequestMapping("/manager/shop/shopModify.ms")
+	public String shopModify(ShopInfo shopInfo) {
+		
+		  if( msms.mshopGetModify(shopInfo))
+			  return "/manager/shop/shopAllList.ms";
+		  else
+			  return "/manager/shop/shopAllList.ms";
+			 
+	}
+
+}

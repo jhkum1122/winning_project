@@ -1,0 +1,64 @@
+package roadshop.web.user.action;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+
+
+@Controller
+public class UserLogoutAction{
+	@RequestMapping("/user/userLogout.us")
+	public ModelAndView userLogout(HttpSession session){
+		ModelAndView mav = new ModelAndView();
+		if(session!=null){
+	           //세션정보가 있다면 -> 로그인이 되었다면
+	           session.invalidate();
+	       }
+		mav.setViewName("/main/beforeMain.jsp");
+		return mav;
+	}
+}
+/*
+import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import roadshop.web.user.action.*;
+
+import roadshop.actionforward.ActionForward;
+
+
+	public class UserLogoutAction implements UserAction {
+		@Override
+		public ActionForward execute(HttpServletRequest request,
+				HttpServletResponse response) throws Exception {
+			// TODO Auto-generated method stub
+			 HttpSession session = request.getSession();
+			 ActionForward forward = new ActionForward();
+			   if(session!=null){
+		           //세션정보가 있다면 -> 로그인이 되었다면
+		           session.invalidate();
+		       }
+		       
+			  
+
+			   RequestDispatcher dispatcher
+
+			   =request.getRequestDispatcher("login.html");//로그 아웃 하면 다음 페이지로 보낸다.
+
+			   dispatcher.forward(request, response);
+			   
+			  
+			   forward.setUrl("/main/beforeMain.jsp");
+
+				return forward;
+
+
+
+		}
+			
+
+   }*/

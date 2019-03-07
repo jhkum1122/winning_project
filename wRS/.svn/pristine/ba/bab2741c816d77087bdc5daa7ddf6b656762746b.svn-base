@@ -1,0 +1,29 @@
+package roadshop.web.board.action;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+import roadshop.web.board.svc.BoardContentService;
+import roadshop.web.board.vo.BoardInfo;
+
+@Controller
+public class BoardContentAction{
+
+	@RequestMapping("/main/boardContent.bo")
+	public ModelAndView boardContent(@RequestParam(value="pageNum",defaultValue="1") String pageNum,
+			@RequestParam(value="num") int num) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		
+		BoardContentService bcs=new BoardContentService();
+		BoardInfo article=bcs.getArticle(num);
+
+		String load = "../board/content.jsp";
+		mav.addObject("load",load);
+		mav.addObject("article", article);
+		mav.addObject("pageNum", pageNum);
+		
+		mav.setViewName("../main/beforeMain.jsp");
+		
+		return mav;
+	}
+}

@@ -1,0 +1,35 @@
+package roadshop.web.manager.action.shop;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import roadshop.actionforward.ActionForward;
+import roadshop.web.manager.action.ManagerAction;
+import roadshop.web.manager.svc.shop.ShopInfoService;
+import roadshop.web.shop.vo.ShopInfo;
+
+public class ShopInfoAction implements ManagerAction {
+
+	@Override
+	public ActionForward execute(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		// TODO Auto-generated method stub
+		ActionForward forward = null;
+		ShopInfo isSuccess = null;
+		int s_num=Integer.parseInt(request.getParameter("s_num"));
+		
+		ShopInfoService sis = new ShopInfoService();
+		isSuccess = sis.shopGetInfo(s_num);
+		String load ="../manager/shop/shopModifyForm.jsp";
+		if(isSuccess!=null){
+			request.setAttribute("shopInfo", isSuccess);
+			forward = new ActionForward();
+			request.setAttribute("load", load);
+			forward.setUrl("/manager/managerMain.jsp");
+		}else{
+			System.out.println("정보를 못가져왔쪙");
+		}
+		return forward;
+	}
+
+}

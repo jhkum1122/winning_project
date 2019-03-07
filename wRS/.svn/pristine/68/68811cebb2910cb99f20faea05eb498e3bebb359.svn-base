@@ -1,0 +1,60 @@
+package roadshop.web.item.svc;
+
+import static roadshop.db.jdbcUtil.commit;
+import static roadshop.db.jdbcUtil.con;
+import static roadshop.db.jdbcUtil.close;
+import static roadshop.db.jdbcUtil.rollback;
+
+import java.sql.Connection;
+import java.util.ArrayList;
+
+import roadshop.web.item.dao.ItemDAO;
+import roadshop.web.item.vo.ItemInfo;
+public class ItemListService {
+
+	public ArrayList<ItemInfo> getItemList(String brand, String keyword) {
+		// TODO Auto-generated method stub
+		Connection con = con();
+		ItemDAO itemDAO = new ItemDAO(con);
+		ArrayList<ItemInfo> itemList = itemDAO.selectItemList(brand, keyword);
+		close(con);
+		
+		return itemList;
+	}
+
+	public ArrayList<ItemInfo> getBrandList(int startRow, int pageSize, String brand) {
+		// TODO Auto-generated method stub
+		Connection con = con();
+		ItemDAO itemDAO = new ItemDAO(con);
+		ArrayList<ItemInfo> brandList = itemDAO.selectBrandList(startRow, pageSize, brand);
+	
+		if(brandList != null){
+			commit(con);
+		}
+		else {
+			rollback(con);
+		}
+		close(con);
+		
+		return brandList;
+	}
+
+	public ArrayList<ItemInfo> getCategoryList(int startRow, int pageSize, String category) {
+		// TODO Auto-generated method stub
+		Connection con = con();
+		ItemDAO itemDAO = new ItemDAO(con);
+		ArrayList<ItemInfo> categoryList = itemDAO.selectCategoryList(startRow, pageSize, category);
+		
+		if(categoryList != null){
+			commit(con);
+		}
+		else {
+			rollback(con);
+		}
+		close(con);
+		
+		
+		return categoryList;
+	}
+
+}

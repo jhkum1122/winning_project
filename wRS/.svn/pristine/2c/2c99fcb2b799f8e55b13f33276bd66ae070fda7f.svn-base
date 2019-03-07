@@ -1,0 +1,31 @@
+package roadshop.web.manager.svc.member;
+
+import java.sql.Connection;
+
+import static roadshop.db.jdbcUtil.close;
+import static roadshop.db.jdbcUtil.commit;
+import static roadshop.db.jdbcUtil.con;
+import static roadshop.db.jdbcUtil.rollback;
+
+import roadshop.web.member.dao.MemberDao;
+import roadshop.web.member.vo.MemberInfo;
+
+public class MMemberInfoService {
+	
+	
+	public MemberInfo memberGetInfo(String m_id) {
+		Connection con=con();
+		MemberDao memberDao = new MemberDao(con);
+		MemberInfo check=null;
+		check = memberDao.selectIdMember(m_id);
+		if(check!=null){
+			commit(con);
+		}
+		else {
+			rollback(con);
+		}
+		close(con);
+		return check;
+	}
+
+}

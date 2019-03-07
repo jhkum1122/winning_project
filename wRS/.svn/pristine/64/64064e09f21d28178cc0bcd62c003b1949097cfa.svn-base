@@ -1,0 +1,520 @@
+package roadshop.web.item.dao;
+
+import static roadshop.db.jdbcUtil.*;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import roadshop.web.item.vo.ItemInfo;
+
+public class ItemDAO {
+	Connection con;
+	
+	public ItemDAO(Connection con) {
+		// TODO Auto-generated constructor stub
+		this.con = con;
+	}
+
+	public ArrayList<ItemInfo> selectItemList(String brand, String keyword) {
+		// TODO Auto-generated method stub
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ItemInfo itemInfo = null;
+		ArrayList<ItemInfo> itemList = new ArrayList<ItemInfo>();
+		//ArrayList<String> shop_m_id = new ArrayList<String>();
+		//String m_id;
+		String sql;
+		
+		try{
+			/*if(brand.equals("all")){
+				sql = "SELECT m_id from shop";
+				pstmt = con.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+			}else{	
+				sql = "SELECT m_id from shop WHERE s_brand=?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, brand);
+				rs = pstmt.executeQuery();
+			}
+			while(rs.next()){
+				m_id=rs.getString(1);
+				shop_m_id.add(m_id);
+			}
+			
+			for(int i=0;i<shop_m_id.size();i++){
+				sql="SELECT * FROM shop_stock_"+shop_m_id.get(i)+" WHERE i_name LIKE '%"+keyword+"%'";
+				pstmt = con.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+			
+				while(rs.next()){
+					String m_id1 =  rs.getString("m_id");
+					int i_stock = rs.getInt("i_stock");
+					String i_id = rs.getString("i_id");
+		
+					sql="SELECT * FROM item WHERE i_id=?";
+					pstmt = con.prepareStatement(sql);
+					pstmt.setString(1, i_id);
+					
+					ResultSet rs1 = pstmt.executeQuery();
+					rs1.next();
+					
+					String i_name =  rs1.getString("i_name");
+					String i_brand = rs1.getString("i_brand");
+					String i_image = rs1.getString("i_image");
+					int i_price = rs1.getInt("i_price");
+					int i_count = rs1.getInt("i_count");
+					
+					itemInfo = new ItemInfo(m_id1, i_id, i_name, i_price, i_brand, i_image, i_stock,i_count);
+					itemList.add(itemInfo);
+					close(rs1);
+			}
+			}*/
+			
+			if(brand.equals("all")){
+				sql = "SELECT * from item WHERE i_name LIKE '%"+keyword+"%'";
+				pstmt = con.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+			}else{	
+				sql = "SELECT * FROM item WHERE i_brand=? AND i_name LIKE '%"+keyword+"%'";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, brand);
+				rs = pstmt.executeQuery();
+			}
+			while(rs.next()){
+				//String m_id = "0";
+				//int i_stock = rs.getInt("i_stock");
+				String i_id = rs.getString("i_id");
+				String i_name =  rs.getString("i_name");
+				String i_brand = rs.getString("i_brand");
+				String i_image = rs.getString("i_image");
+				int i_price = rs.getInt("i_price");
+				
+				itemInfo = new ItemInfo(i_id, i_name, i_price, i_brand, i_image);
+				itemList.add(itemInfo);
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		finally{
+				close(rs);
+				close(pstmt);
+			}
+		
+		return itemList;
+	}
+
+	public ItemInfo selectItem(String i_id) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ItemInfo itemInfo = null;
+		// TODO Auto-generated method stub
+		try{
+			pstmt = con.prepareStatement("UPDATE item SET i_count=i_count+1 WHERE i_id=?"); 
+			pstmt.setString(1,i_id);
+			int count = pstmt.executeUpdate();
+			if(count > 0){
+				commit(con);
+			}
+			
+			String sql = "SELECT * FROM item WHERE i_id=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, i_id);
+			pstmt.executeUpdate();
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				String i_name =  rs.getString("i_name");
+				int i_price = rs.getInt("i_price");
+				String i_image = rs.getString("i_image");
+				String i_brand = rs.getString("i_brand");
+				String i_detail = rs.getString("i_detail");
+				int i_count = rs.getInt("i_count");
+				
+				itemInfo = new ItemInfo(i_id, i_count, i_name, i_price, i_brand, i_detail, i_image);
+				
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		finally{
+			close(rs);
+			close(pstmt);
+		}
+		return itemInfo;
+	}
+
+	public boolean insertItem(ItemInfo itemInfo) {
+			String sql="insert into item(I_COUNT,I_IMAGE,I_DETAIL,I_PRICE,I_NAME,I_ID,I_BRAND,I_NUM,I_CATEGORY)"
+					+"values(1,?,?,?,?,?,?,ITEM_SEQ.nextval,?)";
+			PreparedStatement pstmt=null;
+			try{
+					pstmt=con.prepareStatement(sql);
+					pstmt.setString(1, itemInfo.getI_image());
+					pstmt.setString(2, itemInfo.getI_detail());
+					pstmt.setInt(3, itemInfo.getI_price());
+					pstmt.setString(4, itemInfo.getI_name());
+					pstmt.setString(5, itemInfo.getI_id());
+					pstmt.setString(6, itemInfo.getI_brand());
+					pstmt.setString(7, itemInfo.getI_category());
+					pstmt.executeUpdate();
+			}catch(Exception e){
+				e.printStackTrace();
+				return false;
+			}finally{
+				close(pstmt);
+			}
+			return true;
+	}
+
+	public boolean updateItem(ItemInfo itemInfo) {
+		String sql="UPDATE ITEM SET I_COUNT=?,I_IMAGE=?,I_DETAIL=?,I_PRICE=?,I_NAME=?,I_ID=?,I_BRAND=?,I_CATEGORY=?"
+				+"WHERE I_NUM=?";
+		
+		PreparedStatement pstmt=null;
+		try{
+			pstmt=con.prepareStatement(sql);
+				pstmt.setInt(1, itemInfo.getI_count());
+				pstmt.setString(2, itemInfo.getI_image());
+				pstmt.setString(3, itemInfo.getI_detail());
+				pstmt.setInt(4, itemInfo.getI_price());
+				pstmt.setString(5, itemInfo.getI_name());
+				pstmt.setString(6, itemInfo.getI_id());
+				pstmt.setString(7, itemInfo.getI_brand());
+				pstmt.setString(8, itemInfo.getI_category());
+				pstmt.setInt(9, itemInfo.getI_num());
+				pstmt.executeUpdate();
+		}catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}finally{
+			close(pstmt);
+		}
+		return true;
+	}
+
+	public boolean deleteItem(String i_id) {
+	
+		String sql="DELETE FROM item WHERE i_id=?";
+		PreparedStatement pstmt=null;
+		try{
+				pstmt=con.prepareStatement(sql);
+				pstmt.setString(1, i_id);
+				pstmt.executeUpdate();
+		}catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}finally{
+			close(pstmt);
+		}
+		return true;
+	}
+
+	public ArrayList<ItemInfo> selectAllItemList(int start, int pageSize) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ItemInfo itemInfo = null;
+		ArrayList<ItemInfo> itemAllList = new ArrayList<ItemInfo>();
+		String sql = "SELECT list2.* FROM "
+				+ "(SELECT rownum r, list1.* FROM "
+				+ "(SELECT * FROM ITEM ORDER BY i_num) list1) "
+				+ "list2 WHERE r between ? AND ?";
+		try{
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, start + pageSize-1);
+			rs = pstmt.executeQuery();
+				
+			while(rs.next()){
+				String i_id = rs.getString("i_id");
+				String i_name =  rs.getString("i_name");
+				int i_price = rs.getInt("i_price");
+				String i_image = rs.getString("i_image");
+				String i_brand = rs.getString("i_brand");
+				String i_detail = rs.getString("i_detail");
+				int i_count = rs.getInt("i_count");
+				int i_num = rs.getInt("i_num");
+				String i_category = rs.getString("i_category");
+				itemInfo = new ItemInfo(i_id,i_name,i_price, i_brand, i_detail, i_image, i_count,i_num,i_category);
+				itemAllList.add(itemInfo);
+			}
+		}catch(Exception e){
+				e.printStackTrace();
+				itemAllList=null;
+		}finally{
+			close(rs);
+			close(pstmt);
+		}
+		return itemAllList;
+	}
+
+	public int selectItemCount(String category, String keyword) {
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			int x = 0;
+			String sql=null;
+			if(category==null){
+				sql="SELECT COUNT(*) FROM ITEM";
+			}else if(category.equals("i_name")){
+				sql="SELECT COUNT(*) FROM ITEM WHERE i_name LIKE '%"+keyword+"%'";
+			}else if(category.equals("i_brand")){
+				sql="SELECT COUNT(*) FROM ITEM WHERE i_brand LIKE '%"+keyword+"%'";
+			}else if(category.equals("i_id")){
+				sql="SELECT COUNT(*) FROM ITEM WHERE i_id LIKE '%"+keyword+"%'";
+			}
+			try{
+				pstmt = con.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()){
+					x = rs.getInt(1);
+				}
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+			finally{
+				close(rs);
+				close(pstmt);
+			}
+			return x;
+		}
+	
+	public int selectItemCount2(String category, String brand) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int x = 0;
+		String sql=null;
+		if(category == null){
+			sql="SELECT COUNT(*) FROM ITEM WHERE i_brand='" + brand +"'";
+		}
+		else if(brand == null){
+			sql="SELECT COUNT(*) FROM ITEM WHERE i_category='" + category +"'";
+		}
+		try{
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				x = rs.getInt(1);
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		finally{
+			close(rs);
+			close(pstmt);
+		}
+		return x;
+	}
+
+	public ItemInfo selectItemInfo(String i_id1) {
+		// TODO Auto-generated method stub
+		String sql = "SELECT * FROM ITEM WHERE i_id='"+i_id1+"'";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ItemInfo itemInfo=null;
+		try{
+		pstmt=con.prepareStatement(sql);
+		rs=pstmt.executeQuery();
+		
+		rs.next();
+		
+		String i_id = rs.getString("i_id");
+		String i_name =  rs.getString("i_name");
+		int i_price = rs.getInt("i_price");
+		String i_image = rs.getString("i_image");
+		String i_brand = rs.getString("i_brand");
+		String i_detail = rs.getString("i_detail");
+		int i_count = rs.getInt("i_count");
+		int i_num = rs.getInt("i_num");
+		String i_category = rs.getString("i_category");
+		
+		itemInfo = new ItemInfo(i_id, i_name, i_price, i_brand, i_detail, i_image, i_count, i_num, i_category);
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+			close(rs);
+		}
+		return itemInfo;
+	}
+
+	public HashMap<String, ArrayList<ItemInfo>> selectBestItem() {
+		// TODO Auto-generated method stub
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String[] category = {"skincare", "cleansing", "makeup", "bodyandhair"};
+		HashMap<String, ArrayList<ItemInfo>> bestItem = new HashMap<String, ArrayList<ItemInfo>>();
+		ArrayList<ItemInfo> categoryItem = null;
+		ItemInfo itemInfo=null;
+		try{
+			for(int i=0;i<category.length;i++){
+				categoryItem = new ArrayList<ItemInfo>();
+				String sql = "SELECT list2.* FROM (SELECT rownum r, list1.* FROM (SELECT * FROM ITEM WHERE I_CATEGORY = ? ORDER BY i_count DESC) list1) list2 WHERE r between 1 AND 4";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setString(1, category[i]);
+				rs=pstmt.executeQuery();
+				while(rs.next()){
+					String i_id = rs.getString("i_id");
+					String i_name =  rs.getString("i_name");
+					int i_price = rs.getInt("i_price");
+					String i_image = rs.getString("i_image");
+					String i_brand = rs.getString("i_brand");
+					String i_detail = rs.getString("i_detail");
+					int i_count = rs.getInt("i_count");
+					int i_num = rs.getInt("i_num");
+					String i_category = rs.getString("i_category");
+					
+					itemInfo = new ItemInfo(i_id, i_name, i_price, i_brand, i_detail, i_image, i_count, i_num, i_category);
+					
+					categoryItem.add(itemInfo);
+				}
+				bestItem.put(category[i], categoryItem);
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		finally{
+			close(pstmt); 
+			close(rs); 
+		}
+		return bestItem;
+	}
+
+	public ArrayList<ItemInfo> selectItemSearchList(String keyword, String category, int startrow,
+			int pageSize) {
+		
+			String sql="SELECT list2.* FROM "
+					+ "(SELECT rownum r, list1.* FROM "
+					+ "(SELECT * FROM ITEM WHERE "+category+" LIKE '%"+keyword+"%' ORDER BY i_num) list1)"
+					+ "list2 WHERE r between ? AND ?";
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			ArrayList<ItemInfo> itemList = new ArrayList<ItemInfo>();
+			ItemInfo itemInfo = null;
+			
+			try{
+				pstmt= con.prepareStatement(sql);
+				pstmt.setInt(1, startrow);
+				pstmt.setInt(2, startrow + pageSize-1);
+				
+				rs = pstmt.executeQuery();
+				
+				while(rs.next()){
+					String i_id = rs.getString("i_id");
+					String i_name =  rs.getString("i_name");
+					int i_price = rs.getInt("i_price");
+					String i_image = rs.getString("i_image");
+					String i_brand = rs.getString("i_brand");
+					String i_detail = rs.getString("i_detail");
+					int i_count = rs.getInt("i_count");
+					int i_num = rs.getInt("i_num");
+					String i_category = rs.getString("i_category");
+					itemInfo = new ItemInfo(i_id,i_name,i_price, i_brand, i_detail, i_image, i_count,i_num,i_category);
+					itemList.add(itemInfo);
+				}
+			}catch(Exception e){
+				e.printStackTrace();
+			}finally{
+				close(rs);
+				close(pstmt);
+			}
+			
+			return itemList;
+		}
+
+	public ArrayList<ItemInfo> selectBrandList(int start, int pageSize, String brand) {
+		// TODO Auto-generated method stub
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ItemInfo itemInfo = null;
+		ArrayList<ItemInfo> brandList = new ArrayList<ItemInfo>();
+		// TODO Auto-generated method stub
+		try{
+			
+			String sql = "SELECT list2.* FROM "
+					+ "(SELECT rownum r, list1.* FROM "
+					+ "(SELECT * FROM item WHERE i_brand=? ORDER BY i_count DESC) list1)"
+					+ "list2 WHERE r between ? AND ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, brand);
+			pstmt.setInt(2, start);
+			pstmt.setInt(3, pageSize);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				String i_id = rs.getString("i_id");
+				String i_name =  rs.getString("i_name");
+				int i_price = rs.getInt("i_price");
+				String i_image = rs.getString("i_image");
+				String i_brand = rs.getString("i_brand");
+				String i_category = rs.getString("i_category");
+				
+				itemInfo = new ItemInfo(i_id, i_name, i_price, i_brand, i_image, i_category);
+				brandList.add(itemInfo);
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		finally{
+			close(rs);
+			close(pstmt);
+		}
+		return brandList;
+	}
+
+	public ArrayList<ItemInfo> selectCategoryList(int start, int pageSize, String category) {
+		// TODO Auto-generated method stub
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ItemInfo itemInfo = null;
+		ArrayList<ItemInfo> categoryList = new ArrayList<ItemInfo>();
+		// TODO Auto-generated method stub
+		try{
+			
+			String sql = "SELECT list2.* FROM "
+					+ "(SELECT rownum r, list1.* FROM "
+					+ "(SELECT * FROM ITEM WHERE i_category=? ORDER BY i_count DESC) list1)"
+					+ "list2 WHERE r between ? AND ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, category);
+			pstmt.setInt(2, start);
+			pstmt.setInt(3, pageSize);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				String i_id = rs.getString("i_id");
+				String i_name =  rs.getString("i_name");
+				int i_price = rs.getInt("i_price");
+				String i_image = rs.getString("i_image");
+				String i_brand = rs.getString("i_brand");
+				String i_category = rs.getString("i_category");
+				
+				itemInfo = new ItemInfo(i_id, i_name, i_price, i_brand, i_image, i_category);
+				categoryList.add(itemInfo);
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		finally{
+			close(rs);
+			close(pstmt);
+		}
+		return categoryList;
+	}
+
+	
+		
+	
+	
+	
+}

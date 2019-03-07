@@ -1,0 +1,135 @@
+/*package roadshop.web.manager.controller;
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import roadshop.actionforward.ActionForward;
+import roadshop.web.manager.action.ManagerAction;
+import roadshop.web.manager.action.shop.MShopModifyAction;
+import roadshop.web.manager.action.shop.MShopRemoveAction;
+import roadshop.web.manager.action.shop.ShopAllListAction;
+import roadshop.web.manager.action.shop.ShopInfoAction;
+import roadshop.web.manager.action.shop.ShopRegistAction;
+import roadshop.web.manager.action.shop.ShopRegistFormAction;
+import roadshop.web.manager.action.shop.ShopSearchAction;
+
+*//**
+ * Servlet implementation class ManagerShopFrontController
+ *//*
+@WebServlet("*.ms")
+public class ManagerShopFrontController extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    *//**
+     * @see HttpServlet#HttpServlet()
+     *//*
+    public ManagerShopFrontController() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+    
+    protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	request.setCharacterEncoding("UTF-8");
+		String requestURI = request.getRequestURI();
+		String context = request.getContextPath();
+		String command = requestURI.substring(context.length());
+		
+		ManagerAction action = null;
+		ActionForward forward = null;
+		
+		
+		if(command.equals("/manager/shop/shopAllList.ms")){
+			action = new ShopAllListAction();
+			try{
+				forward = action.execute(request, response);
+				
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		else if(command.equals("/manager/shop/shopRegist.ms")){
+			action = new ShopRegistAction();
+			try{
+				forward = action.execute(request, response);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		} 
+		else if(command.equals("/manager/shop/shopRemove.ms")){
+			action = new MShopRemoveAction();
+			try{
+				forward = action.execute(request, response);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		} 
+		else if(command.equals("/manager/shop/shopModifyForm.ms")){
+			action = new ShopInfoAction();
+			try{
+				forward = action.execute(request, response);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		} 
+		else if(command.equals("/manager/shop/shopModify.ms")){
+			action = new MShopModifyAction();
+			try{
+				forward = action.execute(request, response);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		} 
+		else if(command.equals("/manager/shop/shopSearch.ms")){
+			action = new ShopSearchAction();
+			try{
+				forward = action.execute(request, response);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		} 
+		else if(command.equals("/manager/shop/shopRegistForm.ms")){
+			action = new ShopRegistFormAction();
+			try{
+				forward = action.execute(request, response);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		} 
+		
+		if(forward != null){
+			if(forward.isRedirect()){
+				response.sendRedirect(forward.getUrl());
+			}
+			else{
+				RequestDispatcher dispatcher = request.getRequestDispatcher(forward.getUrl());
+				dispatcher.forward(request, response);
+				
+						
+			}
+		}
+    }
+    
+	*//**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 *//*
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doProcess(request,response);
+	}
+
+	*//**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 *//*
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doProcess(request,response);
+	}
+
+}
+*/

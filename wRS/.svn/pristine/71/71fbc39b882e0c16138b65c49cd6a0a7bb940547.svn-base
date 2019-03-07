@@ -1,0 +1,23 @@
+package roadshop.web.manager.action.shop;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import roadshop.actionforward.ActionForward;
+import roadshop.web.manager.action.ManagerAction;
+
+public class ShopRegistFormAction implements ManagerAction {
+
+	@Override
+	public ActionForward execute(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		ActionForward forward = null;
+		  forward = new ActionForward();
+		  String load="../manager/shop/shopRegist.jsp";
+		  request.setAttribute("load", load);
+		  forward.setUrl("/manager/managerMain.jsp");
+		
+		  return forward;
+	}
+
+}

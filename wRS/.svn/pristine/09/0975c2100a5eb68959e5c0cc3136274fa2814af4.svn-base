@@ -1,0 +1,52 @@
+package roadshop.web.manager.action.item;
+
+import java.util.ArrayList;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import roadshop.actionforward.ActionForward;
+import roadshop.web.item.vo.ItemInfo;
+import roadshop.web.manager.action.ManagerAction;
+import roadshop.web.manager.svc.item.ItemSearchService;
+import roadshop.web.manager.svc.item.PagingService;
+import roadshop.web.manager.vo.PagingInfo;
+
+public class ItemSearchAction implements ManagerAction {
+
+	@Override
+	public ActionForward execute(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		// TODO Auto-generated method stub
+		ActionForward forward =new ActionForward();
+		ArrayList<ItemInfo> isSuccess = new ArrayList<ItemInfo>();
+		
+		String pageNum = request.getParameter("pageNum");
+		String category= request.getParameter("category");
+		String keyword = request.getParameter("keyword");
+		
+		int pageSize = 10;
+		PagingService ps=new PagingService();
+		
+		if(pageNum == null){
+			pageNum = "1";
+		}
+		
+		ItemSearchService iss = new ItemSearchService();
+		PagingInfo pagingInfo = ps.getPagingInfo(pageNum, pageSize, category, keyword);
+		isSuccess=iss.getSearchList(keyword, category, pagingInfo.getStartRow(), pageSize);
+		
+		if(isSuccess.size()>0){
+			request.setAttribute("pagingInfo", pagingInfo);
+			request.setAttribute("itemList", isSuccess);
+			request.setAttribute("load", "../manager/item/item.jsp");
+			forward.setUrl("/manager/managerMain.jsp");
+		}else{
+			request.setAttribute("itemList", null);
+			request.setAttribute("load", "../manager/item/item.jsp");
+			forward.setUrl("/manager/managerMain.jsp");
+		}
+		return forward;
+	}
+
+}

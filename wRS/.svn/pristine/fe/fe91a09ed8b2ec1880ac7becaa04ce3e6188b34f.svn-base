@@ -1,0 +1,381 @@
+package roadshop.web.shop.dao;
+import static roadshop.db.jdbcUtil.*;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+
+import roadshop.web.shop.vo.*;
+
+
+	public class ShopDao {
+		Connection con;
+		
+		public ShopDao(Connection con){
+			this.con=con;
+		}
+
+		public ArrayList<ShopInfo> selectAllShop(String m_id) {
+			
+			// TODO Auto-generated method stub
+			String sql="select * from SHOP where m_id=?";
+			ResultSet rs=null;
+			PreparedStatement pstmt=null;
+			ShopInfo shopInfo;
+			ArrayList<ShopInfo> shopAllList = new ArrayList<ShopInfo>();
+			try{
+				pstmt=con.prepareStatement(sql);
+				pstmt.setString(1,m_id);
+				rs=pstmt.executeQuery();
+				while(rs.next()){
+					int s_num=rs.getInt("s_num");
+					String s_zipcode=rs.getString("s_zipcode");
+					String s_addr1=rs.getString("s_addr1");
+					String s_addr2=rs.getString("s_addr2");
+					String s_brn1=rs.getString("s_brn1");
+					String s_brn2=rs.getString("s_brn2");
+					String s_brn3=rs.getString("s_brn3");
+					String s_brand=rs.getString("s_brand");
+					String s_tel1=rs.getString("s_tel1");
+					String s_tel2=rs.getString("s_tel2");
+					String s_tel3=rs.getString("s_tel3");
+					double s_lat=rs.getDouble("s_lat");
+					double s_lon=rs.getDouble("s_lon");
+					
+					shopInfo=new ShopInfo(m_id,s_num,s_brand, s_zipcode, s_brn1, s_brn2, s_brn3, s_tel1, s_tel2, s_tel3,s_addr1,s_addr2,s_lat,s_lon);
+					shopAllList.add(shopInfo);	
+				}
+			}catch(Exception e){
+				e.printStackTrace();
+			}finally{
+				close(rs);
+				close(pstmt);
+			}
+			return shopAllList;
+		}
+
+		public ShopInfo selectOneShop(int s_num) {
+			String sql="select * from shop where s_num=?";
+			ResultSet rs=null;
+			PreparedStatement pstmt=null;
+			ShopInfo shopinfo=null;
+			try{
+				pstmt=con.prepareStatement(sql);
+				pstmt.setInt(1, s_num);
+				rs=pstmt.executeQuery();
+				while(rs.next()){
+					String m_id =rs.getString("m_id");
+					String s_zipcode=rs.getString("s_zipcode");
+					String s_addr1=rs.getString("s_addr1");
+					String s_addr2=rs.getString("s_addr2");
+					String s_brn1=rs.getString("s_brn1");
+					String s_brn2=rs.getString("s_brn2");
+					String s_brn3=rs.getString("s_brn3");
+					String s_brand=rs.getString("s_brand");
+					String s_tel1=rs.getString("s_tel1");
+					String s_tel2=rs.getString("s_tel2");
+					String s_tel3=rs.getString("s_tel3");
+					double s_lat=rs.getDouble("s_lat");
+					double s_lon=rs.getDouble("s_lon");
+					
+					shopinfo=new ShopInfo(m_id, s_num, s_brand, s_zipcode, s_brn1, s_brn2, s_brn3, s_tel1, s_tel2, s_tel3,s_addr1,s_addr2, s_lat, s_lon);
+				}
+			}catch(Exception e){
+				e.printStackTrace();
+			}finally{
+				close(rs);
+				close(pstmt);
+			}
+			return shopinfo;
+		}
+
+		public boolean UpdateShop(ShopInfo shopinfo) {
+			PreparedStatement pstmt=null;
+			try{
+				pstmt=con.prepareStatement("UPDATE shop SET s_brand=?,s_zipcode=?,"
+						+"s_addr1=?,s_addr2=?,"
+						+"s_brn1=?,s_brn2=?,s_brn3=?,"
+						+"s_tel1=?,s_tel2=?,s_tel3=?"
+						+"WHERE m_id=? and s_num=?");
+				
+				pstmt.setString(1, shopinfo.getS_brand());
+				pstmt.setString(2, shopinfo.getS_zipcode());
+				pstmt.setString(3, shopinfo.getS_addr1());
+				pstmt.setString(4, shopinfo.getS_addr2());
+				pstmt.setString(5, shopinfo.getS_brn1());
+				pstmt.setString(6, shopinfo.getS_brn2());
+				pstmt.setString(7, shopinfo.getS_brn3());
+				pstmt.setString(8, shopinfo.getS_tel1());
+				pstmt.setString(9, shopinfo.getS_tel2());
+				pstmt.setString(10, shopinfo.getS_tel3());
+				pstmt.setString(11, shopinfo.getM_id());
+				pstmt.setInt(12, shopinfo.getS_num());
+				pstmt.executeUpdate();
+			
+				return true;
+			}catch(Exception e){
+				e.printStackTrace();
+				return false;
+			}finally{
+				close(pstmt);
+				
+			}
+			
+		}
+
+		public boolean deleteShop(int s_num) {
+			String sql = "delete shop where s_num=?";
+			// TODO Auto-generated method stub
+			PreparedStatement pstmt=null;
+			try{
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, s_num);
+				pstmt.executeUpdate();
+				return true;
+				
+			}catch(Exception e){
+				e.printStackTrace();
+				return false;
+			}
+		}
+		public boolean insertShop(ShopInfo shopinfo) {
+		String sql="insert into shop(s_num,s_brand,s_zipcode,s_brn1"
+				+",s_brn2,s_brn3,s_tel1,s_tel2,s_tel3,s_addr1,s_addr2,m_id,s_lon,s_lat,s_grade)"
+				+"values(shop_seq.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,2)";
+		
+		PreparedStatement pstmt= null;
+		try{
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, shopinfo.getS_brand());
+			pstmt.setString(2, shopinfo.getS_zipcode());
+			pstmt.setString(3, shopinfo.getS_brn1());
+			pstmt.setString(4, shopinfo.getS_brn2());
+			pstmt.setString(5, shopinfo.getS_brn3());
+			pstmt.setString(6, shopinfo.getS_tel1());
+			pstmt.setString(7, shopinfo.getS_tel2());
+			pstmt.setString(8, shopinfo.getS_tel3());
+			pstmt.setString(9, shopinfo.getS_addr1());
+			pstmt.setString(10, shopinfo.getS_addr2());
+			pstmt.setString(11, shopinfo.getM_id());
+			pstmt.setDouble(12, shopinfo.getS_lon());
+			pstmt.setDouble(13, shopinfo.getS_lat());
+			pstmt.executeUpdate();
+		}catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}finally{
+			close(pstmt);
+		}
+		return true;
+	}
+
+	public boolean mUpdateShop(ShopInfo shopinfo) {
+		String sql = "UPDATE SHOP SET s_brand=?,s_zipcode=?,"
+				+"s_addr1=?,s_addr2=?,"
+				+"s_brn1=?,s_brn2=?,s_brn3=?,"
+				+"s_tel1=?,s_tel2=?,s_tel3=?"
+				+"WHERE s_num=?";
+		PreparedStatement pstmt=null;
+
+		try{
+			pstmt=con.prepareStatement(sql);
+			
+			pstmt.setString(1, shopinfo.getS_brand());
+			pstmt.setString(2, shopinfo.getS_zipcode());
+			pstmt.setString(3, shopinfo.getS_addr1());
+			pstmt.setString(4, shopinfo.getS_addr2());
+			pstmt.setString(5, shopinfo.getS_brn1());
+			pstmt.setString(6, shopinfo.getS_brn2());
+			pstmt.setString(7, shopinfo.getS_brn3());
+			pstmt.setString(8, shopinfo.getS_tel1());
+			pstmt.setString(9, shopinfo.getS_tel2());
+			pstmt.setString(10, shopinfo.getS_tel3());
+			pstmt.setInt(11, shopinfo.getS_num());
+			
+			pstmt.executeUpdate();
+		}catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}finally{
+			close(pstmt);
+		}
+		return true;
+	}
+
+	public ArrayList<ShopInfo> selectAllListShop(int start,int pageSize) {
+		String sql="SELECT list2.* FROM "
+				+ "(SELECT rownum r, list1.* FROM "
+				+ "(SELECT * FROM SHOP ORDER BY s_num) list1) "
+				+ "list2 WHERE r between ? AND ?";
+		ResultSet rs=null;
+		PreparedStatement pstmt=null;
+		ShopInfo shopInfo;
+		ArrayList<ShopInfo> shopAllList = new ArrayList<ShopInfo>();
+		try{
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, start + pageSize-1);
+			rs=pstmt.executeQuery();
+			
+			while(rs.next()){
+				String m_id=rs.getString("m_id");
+				int s_num=rs.getInt("s_num");
+				String s_zipcode=rs.getString("s_zipcode");
+				String s_addr1=rs.getString("s_addr1");
+				String s_addr2=rs.getString("s_addr2");
+				String s_brn1=rs.getString("s_brn1");
+				String s_brn2=rs.getString("s_brn2");
+				String s_brn3=rs.getString("s_brn3");
+				String s_brand=rs.getString("s_brand");
+				String s_tel1=rs.getString("s_tel1");
+				String s_tel2=rs.getString("s_tel2");
+				String s_tel3=rs.getString("s_tel3");
+				double s_lat=rs.getDouble("s_lat");
+				double s_lon=rs.getDouble("s_lon");
+				
+				shopInfo=new ShopInfo(m_id, s_num, s_brand, s_zipcode, s_brn1, 
+									  s_brn2, s_brn3, s_tel1, s_tel2, s_tel3,s_addr1,
+									  s_addr2, s_lat, s_lon);
+				shopAllList.add(shopInfo);	
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			shopAllList=null;
+		}finally{
+			close(rs);
+			close(pstmt);
+		}
+		return shopAllList;
+	}
+
+	public ArrayList<ShopInfo> selectBrandListShop(String s_brand1) {
+	
+		String sql="select * from shop where s_brand=?";
+		ResultSet rs=null;
+		PreparedStatement pstmt=null;
+		ShopInfo shopInfo=null;
+		ArrayList<ShopInfo> brandList = new ArrayList<ShopInfo>();
+		try{
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1,s_brand1);
+			pstmt.executeUpdate();
+			
+			rs=pstmt.executeQuery();
+			while(rs.next()){
+				String m_id=rs.getString("m_id");
+				int s_num=rs.getInt("s_num");
+				String s_zipcode=rs.getString("s_zipcode");
+				String s_addr1=rs.getString("s_addr1");
+				String s_addr2=rs.getString("s_addr2");
+				String s_brn1=rs.getString("s_brn1");
+				String s_brn2=rs.getString("s_brn2");
+				String s_brn3=rs.getString("s_brn3");
+				String s_brand=rs.getString("s_brand");
+				String s_tel1=rs.getString("s_tel1");
+				String s_tel2=rs.getString("s_tel2");
+				String s_tel3=rs.getString("s_tel3");
+				double s_lat=rs.getDouble("s_lat");
+				double s_lon=rs.getDouble("s_lon");
+				
+				shopInfo=new ShopInfo(m_id, s_num, s_brand, s_zipcode, s_brn1, 
+									  s_brn2, s_brn3, s_tel1, s_tel2, s_tel3,s_addr1,
+									  s_addr2, s_lat, s_lon);
+				
+				brandList.add(shopInfo);	
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			brandList=null;
+		}finally{
+			close(rs);
+			close(pstmt);
+		}
+		return brandList;
+	}
+
+	public int selectShopCount(String category,String keyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int x = 0;
+		try{
+			if(category==null&&keyword==null){
+			pstmt = con.prepareStatement("SELECT COUNT(*) FROM SHOP");
+			rs = pstmt.executeQuery();
+			}else{
+				
+			pstmt = con.prepareStatement("SELECT COUNT(*) FROM SHOP WHERE "+category+" like '%"+keyword+"%'");
+			rs = pstmt.executeQuery();
+			}
+			
+			
+			if(rs.next()){
+				x = rs.getInt(1);
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		finally{
+			close(rs);
+			close(pstmt);
+		}
+		return x;
+	}
+
+	public ArrayList<ShopInfo> selectKeyword(String keyword, String category,
+			int startRow, int pageSize) {
+		String sql="SELECT list2.* FROM "
+				+ "(SELECT rownum r, list1.* FROM "
+				+ "(SELECT * FROM SHOP WHERE "+category+" LIKE '%"+keyword+"%' ORDER BY s_num) list1)"
+				+ "list2 WHERE r between ? AND ?";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<ShopInfo> shopList = new ArrayList<ShopInfo>();
+		ShopInfo shopInfo = null;
+		
+		try{
+			pstmt= con.prepareStatement(sql);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, startRow + pageSize-1);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				String m_id=rs.getString("m_id");
+				int s_num=rs.getInt("s_num");
+				String s_zipcode=rs.getString("s_zipcode");
+				String s_addr1=rs.getString("s_addr1");
+				String s_addr2=rs.getString("s_addr2");
+				String s_brn1=rs.getString("s_brn1");
+				String s_brn2=rs.getString("s_brn2");
+				String s_brn3=rs.getString("s_brn3");
+				String s_brand=rs.getString("s_brand");
+				String s_tel1=rs.getString("s_tel1");
+				String s_tel2=rs.getString("s_tel2");
+				String s_tel3=rs.getString("s_tel3");
+				double s_lat=rs.getDouble("s_lat");
+				double s_lon=rs.getDouble("s_lon");
+				
+				shopInfo=new ShopInfo(m_id, s_num, s_brand, s_zipcode, s_brn1, 
+									  s_brn2, s_brn3, s_tel1, s_tel2, s_tel3,s_addr1,
+									  s_addr2, s_lat, s_lon);
+				shopList.add(shopInfo);	
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			close(rs);
+			close(pstmt);
+		}
+		
+		return shopList;
+	}
+
+	
+
+	
+}
+	
+
+

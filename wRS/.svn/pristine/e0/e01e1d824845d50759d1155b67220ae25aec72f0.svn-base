@@ -1,0 +1,70 @@
+package roadshop.web.board.action;
+
+import java.io.PrintWriter;
+import java.sql.Timestamp;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import roadshop.actionforward.ActionForward;
+import roadshop.web.board.svc.BoardUpdateService;
+import roadshop.web.board.svc.BoardWriteService;
+import roadshop.web.board.vo.BoardInfo;
+
+
+public class BoardUpdateAction implements BoardAction {
+
+	@Override
+	public ActionForward execute(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+//		System.out.println("이 곳은 BoardUpdateAction.execute(req,res)입니다.");
+		
+		String pageNum=request.getParameter("pageNum");		
+		String b_num=request.getParameter("b_num");
+
+		System.out.println("b_num = " + b_num);
+		BoardInfo article=new BoardInfo();
+		article.setB_content(request.getParameter("b_content"));
+		article.setB_num(Integer.parseInt(request.getParameter("b_num")));
+		article.setB_writer(request.getParameter("b_writer"));
+		article.setB_subject(request.getParameter("b_subject"));
+		article.setB_image(request.getParameter("b_image"));
+		article.setB_reg_date(new Timestamp(System.currentTimeMillis()));
+		article.setReadcount(Integer.parseInt(request.getParameter("readcount")));
+		article.setRef(Integer.parseInt(request.getParameter("ref")));
+		article.setRe_step(Integer.parseInt(request.getParameter("re_step")));
+		article.setRe_level(Integer.parseInt(request.getParameter("re_level")));
+		article.setI_id(request.getParameter("i_id"));
+		article.setM_id(request.getParameter("m_id"));
+		
+//		System.out.println("Here is BoardUpdateAction========================");
+//		System.out.println("==================================================\n" +
+//					"값을 제대로 받아왔는지 확인하는 부분임!\n");
+//		System.out.println("ReplyVO.num = "+article.getB_num()+", ReplyVO.ref = "+article.getRef()+", ReplyVO.re_step = "+article.getRe_step()
+//					+",\n ReplyVO.re_level = "+article.getRe_level()+", boardInfo.m_id = "+article.getM_id()+", boardInfo.i_id = "+article.getI_id()
+//					+", boardInfo.b_image = "+article.getB_image());
+//		
+		String load = "../boardList.bo";
+
+		
+		boolean isSuccess=false;//업데이트 성공여부를 저장할 변수
+		BoardUpdateService bus=new BoardUpdateService();
+//		System.out.println("isSuccess  = " + isSuccess);
+		isSuccess=bus.modifyArticle(article);
+		
+		ActionForward forward=null;
+		if(isSuccess){
+			request.setAttribute("load",load);
+			request.setAttribute("pageNum", pageNum);
+			forward=new ActionForward();
+			forward.setRedirect(true);			//목록보기 요청은 리다이렉트 방식으로
+			forward.setUrl("../main/boardList.bo");		//디스패쳐로 하면 새로고침 시 insert쿼리가 계속 실행
+		}else{
+			response.setContentType("text/html;charset=euc-kr");
+			PrintWriter out=response.getWriter();
+			out.println("<script language='javascript'>alert('업데이트가 되지 않습니다.\\nㅋㅋㅋ');history.back();</script>");
+		}
+		return forward;
+		
+	}
+}

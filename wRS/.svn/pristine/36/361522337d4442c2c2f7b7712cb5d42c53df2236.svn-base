@@ -1,0 +1,35 @@
+package roadshop.web.manager.svc.member;
+
+import static roadshop.db.jdbcUtil.close;
+import static roadshop.db.jdbcUtil.commit;
+import static roadshop.db.jdbcUtil.con;
+import static roadshop.db.jdbcUtil.rollback;
+
+import java.sql.Connection;
+import java.util.ArrayList;
+
+import roadshop.web.member.dao.MemberDao;
+import roadshop.web.member.vo.MemberInfo;
+
+public class MMemberAllListService {
+
+	Connection con = con();
+	MemberDao memberDao = new MemberDao(con);
+	ArrayList<MemberInfo> check=new ArrayList<MemberInfo>();
+	public ArrayList<MemberInfo> memberGetAllList(int startRow, int pageSize) {
+		// TODO Auto-generated method stub
+		
+		check = memberDao.selectAllMember(startRow, pageSize);
+	
+		if(check!=null){
+			commit(con);
+		}
+		else {
+			rollback(con);
+		}
+		close(con);
+		return check; 
+		
+	}
+	
+}

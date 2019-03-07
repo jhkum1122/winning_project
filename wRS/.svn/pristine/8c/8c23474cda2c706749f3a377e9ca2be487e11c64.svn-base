@@ -1,0 +1,111 @@
+package roadshop.web.user.dao;
+
+import static roadshop.db.jdbcUtil.close;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import roadshop.web.member.vo.MemberInfo;
+
+public class UserDAO {
+	Connection con;
+	PreparedStatement pstmt;
+	ResultSet rs;
+	MemberInfo m;
+
+	public UserDAO(Connection con) {
+		this.con = con;
+	}
+
+	public MemberInfo getUserLogin(String id, String pwd) {
+
+		try {
+
+			String sql = "SELECT * FROM member WHERE m_id=? and m_pwd=?";
+
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, pwd);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				int m_num = rs.getInt(1);
+				String m_id = rs.getString(2);
+				String m_name = rs.getString(3);
+				String m_pwd = rs.getString(4);
+				String m_tel1 = rs.getString(5);
+				String m_tel2 = rs.getString(6);
+				String m_tel3 = rs.getString(7);
+				int m_ssn1 = rs.getInt(8);
+				String m_zipcode = rs.getString(9);
+				String m_addr1 = rs.getString(10);
+				String m_addr2 = rs.getString(11);
+				String m_email1 = rs.getString(12);
+				String m_email2 = rs.getString(13);
+				int m_grade = rs.getInt(14);
+
+				m = new MemberInfo(m_num, m_id, m_pwd, m_name, m_zipcode,
+						m_addr1, m_addr2, m_ssn1, m_email1, m_email2, m_tel1,
+						m_tel2, m_tel3, m_grade);
+
+			}
+
+		} catch (Exception e) {
+			System.out.println("로그인 에러: " + e.toString());
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return m;
+	}
+
+	public String selectMemberId(String name, int ssn1) {
+		String id = null;
+		try {
+
+			String sql = "SELECT * FROM member where m_name=? and m_ssn1=?";
+
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, name);
+			pstmt.setInt(2, ssn1);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				id = rs.getString("m_id");
+			}
+
+		} catch (Exception e) {
+			System.out.println(" 비밀번호찾기 에러: " + e.toString());
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return id;
+	}
+
+	public String selectMemberPwd(String id, int ssn1) {
+		String pwd = null;
+		try {
+
+			String sql = "SELECT * FROM member where m_id=? and m_ssn1=?";
+
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setInt(2, ssn1);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				pwd = rs.getString("m_pwd");
+			}
+
+		} catch (Exception e) {
+			System.out.println(" 비밀번호찾기 에러: " + e.toString());
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return pwd;
+	}
+
+}

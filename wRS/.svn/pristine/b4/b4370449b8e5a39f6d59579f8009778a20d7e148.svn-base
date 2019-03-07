@@ -1,0 +1,34 @@
+package roadshop.web.mypage.svc;
+
+import static roadshop.db.jdbcUtil.close;
+import static roadshop.db.jdbcUtil.commit;
+import static roadshop.db.jdbcUtil.con;
+import static roadshop.db.jdbcUtil.rollback;
+
+import java.sql.Connection;
+
+import roadshop.web.mypage.dao.MypageDao;
+import roadshop.web.shop.vo.ShopInfo;
+
+public class ShopRegiService {
+
+	public boolean Regishop(ShopInfo shopinfo) {
+		// TODO Auto-generated method stub
+		Connection con = con();
+		MypageDao dao = new MypageDao(con);
+		boolean regiState=dao.InsertShop(shopinfo);
+		if(regiState == true){
+			System.out.println("comi");
+			commit(con);
+		}else{
+			System.out.println("roll");
+			rollback(con);
+		}
+		close(con);
+		return regiState;
+		
+		
+	}
+	
+
+}

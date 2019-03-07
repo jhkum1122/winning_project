@@ -1,0 +1,37 @@
+package roadshop.web.shop.action;
+
+import java.util.ArrayList;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import roadshop.web.shop.svc.ShopListService;
+import roadshop.actionforward.*;
+import roadshop.web.shop.vo.ShopInfo;
+
+public class ShopListAction implements ShopAction {
+
+	
+	public ActionForward execute(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+		String m_id=(String)session.getAttribute("id");
+		ShopListService sls = new ShopListService();
+		
+		ArrayList<ShopInfo> shopList = sls.shopList(m_id);
+		
+		ActionForward forward= new ActionForward();
+		String load = "../shopmanager/shopManagementMain.jsp";
+		request.setAttribute("shopList",shopList);
+		request.setAttribute("load",load);
+		forward.setUrl("/main/beforeMain.jsp");
+		
+		
+		return forward;
+		
+	}
+
+}

@@ -1,0 +1,36 @@
+package roadshop.web.board.action;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import roadshop.actionforward.ActionForward;
+import roadshop.web.board.svc.BoardUpdateFormService;
+import roadshop.web.board.vo.BoardInfo;
+
+
+public class BoardUpdateFormAction implements BoardAction {
+
+	@Override
+	public ActionForward execute(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+//		System.out.println("여기는 BoardUpdateFormAction.execute()입니다.!!");
+		
+		int num=Integer.parseInt(request.getParameter("num"));
+		String pageNum=request.getParameter("pageNum");
+		
+		BoardUpdateFormService bufs=new BoardUpdateFormService();
+		BoardInfo article=bufs.getUpdateArticle(num);
+		
+		String load = "../board/updateForm.jsp";
+
+		request.setAttribute("load",load);
+		request.setAttribute("article", article);
+		request.setAttribute("pageNum", pageNum);
+		ActionForward forward=new ActionForward();
+		//forward.setUrl("boardList.bo");
+		//변경된 부분입니다.
+		forward.setUrl("/main/beforeMain.jsp");
+		
+		return forward;
+	}
+}

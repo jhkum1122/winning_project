@@ -1,0 +1,79 @@
+body{
+	margin: 0;
+	
+}
+.header div div.navigation ul li a:hover,.header div div.navigation ul.first li.selected a,
+.body .content div.blog div.paging ul li a:hover,.header div div.navigation ul li.selected a{
+	color:#ef0288;
+}
+.body .sidebar{
+	float: left;
+	margin:0 10px 0 0;
+	background:url(../../image/web/bg-content.png);
+}
+.body .sidebar div.first{
+	background:none;
+}
+.body .sidebar div{
+	width:138px;
+	font-family:arial;
+	font-size:14px;
+	padding: 15px 11px;
+	background:url(../../image/web/border-top.gif) no-repeat center top;
+}
+.body .sidebar div h2{
+	margin:0;
+	font-weight:bold;
+	font-size:15px;
+}
+.body .sidebar div h2 a{
+	text-decoration:none;
+	color:#f6008a;
+	font-weight:normal;
+	font-size:16px;
+}
+.body .sidebar div ul li a{
+	color:#92898a;
+	text-decoration:none;
+}
+.body .sidebar div ul li.selected a{
+	color:#F6008A;
+}
+.body .sidebar div ul li a:hover{
+	color:#f6008a;
+}
+.body .sidebar div ul{
+	margin:0 0 60px;
+	padding:0;
+	list-style:none;
+}
+.body .sidebar div ul ul{
+	margin:0 0 0 15px;
+}
+.body .sidebar div ul li{
+	margin:5px 0 0 0;
+}
+.body .sidebar div ul.archives{
+	margin:0 0 60px 12px;
+}
+.body .sidebar div ul.archives li{}
+.body .sidebar div ul.archives li a{
+	color:#f6008a;
+	font-weight:normal;
+}
+.body .sidebar div ul.archives li span{
+	color:#867669;
+}
+.body .sidebar div ul.archives li ul{}
+.body .sidebar div ul.archives li ul li a{
+	color:#86577B;
+	font-size:12px;
+	font-weight:normal;
+}
+.body .sidebar div ul.archives li ul li a:hover{
+	color:#f6008a;
+}
+.body .sidebar div ul.archives li ul li span{
+	color:#a59b8f;
+	font-size:12px;
+}

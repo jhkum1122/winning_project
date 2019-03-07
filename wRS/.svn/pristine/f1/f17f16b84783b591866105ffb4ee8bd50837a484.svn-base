@@ -1,0 +1,105 @@
+/*package roadshop.web.item.controller;
+
+import java.io.IOException;
+
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import roadshop.actionforward.*;
+import roadshop.web.item.action.*;
+
+*//**
+ * Servlet implementation class ItemFrontController
+ *//*
+@WebServlet("*.it")
+public class ItemFrontController extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    *//**
+     * @see HttpServlet#HttpServlet()
+     *//*
+    public ItemFrontController() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+    
+    protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+    	request.setCharacterEncoding("utf-8");
+		String requestURI = request.getRequestURI();
+		String context = request.getContextPath();
+		String command = requestURI.substring(context.length());
+		ItemAction action = null;
+		ActionForward forward = null;
+		
+		if(command.equals("/product/brandSearch.it")){
+			action = new BrandListAction();
+			try{
+				forward = action.execute(request, response);
+				
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		else if(command.equals("/product/categorySearch.it")){
+			action = new CategoryListAction();
+			try{
+				forward = action.execute(request, response);
+				
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		else if(command.equals("/product/itemAsk.it")){
+			action = new ItemAskAction();
+			try{
+				forward = action.execute(request, response);
+				
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		else if(command.equals("/product/bestItems.it")){
+			action = new BestItemAction();
+			try{
+				forward = action.execute(request, response);
+				
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		
+		
+		
+		if(forward != null){
+			if(forward.isRedirect()){
+				response.sendRedirect(forward.getUrl());
+			}
+			else{
+				RequestDispatcher dispatcher = request.getRequestDispatcher(forward.getUrl());
+				dispatcher.forward(request, response);		
+			}
+		}
+    }	
+	*//**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 *//*
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub4
+		request.setCharacterEncoding("utf-8");
+		doProcess(request, response);
+		
+	}
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
+		doProcess(request, response);
+	}
+}
+*/

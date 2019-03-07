@@ -1,0 +1,29 @@
+package roadshop.web.manager.svc.shop;
+
+import java.sql.Connection;
+import java.util.ArrayList;
+
+import roadshop.web.shop.dao.ShopDao;
+import roadshop.web.shop.vo.ShopInfo;
+import static roadshop.db.jdbcUtil.*;
+
+public class ShopAllListService {
+
+	Connection con = con();
+	ShopDao shopDao = new ShopDao(con);
+	public ArrayList<ShopInfo> shopGetAllList(int startRow, int pageSize) {
+		// TODO Auto-generated method stub
+		ArrayList<ShopInfo> check = new ArrayList<ShopInfo>();
+		check = shopDao.selectAllListShop(startRow,pageSize);
+		
+		if(check!=null){
+			commit(con);
+			
+		}else{
+			rollback(con);
+		}
+			close(con);
+		return check;
+	}
+
+}

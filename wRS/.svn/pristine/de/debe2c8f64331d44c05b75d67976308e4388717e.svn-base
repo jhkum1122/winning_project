@@ -1,0 +1,38 @@
+package roadshop.web.board.action;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import roadshop.actionforward.ActionForward;
+import roadshop.web.board.svc.BoardFileUpdateFormService;
+import roadshop.web.board.vo.BoardInfo;
+
+@Controller
+public class BoardFileUpdateFormAction {
+
+	@RequestMapping("/main/boardFileUpdateForm.bo")
+	public ModelAndView boardFileUpdateForm(@RequestParam(value="pageNum",defaultValue="1") String pageNum,
+			@RequestParam(value="num") int num) throws Exception {
+		System.out.println("여기는 boardFileUpdateForm()입니다.!!");
+		ModelAndView mav = new ModelAndView();
+		BoardFileUpdateFormService bufs=new BoardFileUpdateFormService();
+		BoardInfo article=bufs.getFileUpdateArticle(num);
+		
+		String load = "../board/fileUpdateForm.jsp";
+
+		mav.addObject("load",load);
+		mav.addObject("article", article);
+		mav.addObject("pageNum", pageNum);
+		//forward.setUrl("boardList.bo");
+		//변경된 부분입니다.
+		mav.setViewName("../main/beforeMain.jsp");
+		
+		return mav;
+	}
+
+}

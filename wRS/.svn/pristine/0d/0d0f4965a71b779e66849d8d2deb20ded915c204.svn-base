@@ -1,0 +1,30 @@
+package roadshop.web.item.action;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import roadshop.actionforward.ActionForward;
+import roadshop.web.item.svc.ItemAskService;
+import roadshop.web.item.vo.ItemInfo;
+
+@Controller
+public class ItemAskAction {
+	@Autowired
+	private ItemAskService itemAskService;
+	@RequestMapping("/product/itemAsk.it")
+	public ModelAndView itemAsk(@RequestParam("i_id") String i_id){	
+		ModelAndView mav = new ModelAndView();
+		ItemInfo itemAsk = itemAskService.getItemAsk(i_id);
+		mav.addObject("itemAsk", itemAsk);
+		mav.addObject("load", "../product/itemAsk.jsp");
+		mav.setViewName("../main/beforeMain.jsp");	
+		
+		return mav;
+	}
+}

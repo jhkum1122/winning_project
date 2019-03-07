@@ -1,0 +1,78 @@
+<%@page import="roadshop.web.item.vo.ItemInfo"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%ItemInfo itemInfo = (ItemInfo)request.getAttribute("itemInfo"); %>
+<script>
+window.onload=function(){
+	var cat = '<%=itemInfo.getI_category()%>';
+	
+	var len = document.modifyForm.i_category.options.length;
+	
+	for(var i=0;i<len;i++){
+		if(document.modifyForm.i_category.options[i].value==cat){
+			document.getElementById("i_category").selectedIndex=i;
+		};
+	};
+};
+</script>
+<form name="modifyForm"  method="post"  encType="multipart/form-data" action="itemModify.mi">
+<input type="hidden" name="i_num" value="<%=itemInfo.getI_num()%>">
+<input type="hidden" name="i_count" value="<%=itemInfo.getI_count()%>">
+	<div id="contents">
+		<h2>매장 등록</h2>
+		<table class="tbl_edit00" cellpadding="0" cellspacing="0" border="0">
+			<caption>매장등록</caption>
+			<colgroup>
+				<col width="170px" />
+				<col width="*" />
+			</colgroup>
+			<tbody>
+				<tr>
+					<th scope="row">상품 이름</th>
+					<td><input class="input01" type="text" name="i_name" style=width:300px  value="<%=itemInfo.getI_name() %>"></td>
+				</tr>
+				<tr>
+					<th scope="row">상품 아이디</th>
+					<td><input class="input01" type="text" name="i_id"  value="<%=itemInfo.getI_id() %>" ></td>
+				</tr>
+				<tr>
+					<th scope="row">상품 가격</th>
+					<td><input class="input01" type="text" name="i_price" value="<%=itemInfo.getI_price() %>"></td>
+				</tr>
+				<tr>
+					<th scope="row">상품 브랜드</th>
+					<td><input class="input01" type="text" name="i_brand" value="<%=itemInfo.getI_brand() %>"></td>
+				</tr>
+				<tr>
+					<th scope="row">카테고리</th>
+					<td><select name="i_category" id="i_category">
+						<option>선택하세요</option>
+						<option value="makeup">메이크업</option>
+						<option value="skincare">스킨케어</option>
+						<option value="cleansing">클랜징</option>
+						<option value="bodyandhair">바디헤어</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">세부사항</th>
+					<td><textarea class="textarea_vod01" name="i_detail"><%=itemInfo.getI_detail() %></textarea></td>
+				</tr>
+				<tr>
+					<th scope="row">상품 이미지</th>
+					<td><input class="input01" type="file" name="report" value="<%=itemInfo.getI_image() %>"></td>
+				</tr>
+				
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="2" class="edit_btnarea">
+						<span class="btn_pack large icon"><span class="add"></span><input type="submit" value="수정하기"></span>&nbsp;&nbsp;&nbsp;
+						<span class="btn_pack large icon"><span class="refresh"></span><a href="itemAllList.mi">취소</a></span>
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+</form>
+

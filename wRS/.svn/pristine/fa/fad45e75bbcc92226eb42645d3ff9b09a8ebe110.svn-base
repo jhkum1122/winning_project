@@ -1,0 +1,144 @@
+package roadshop.web.board.action;
+
+import java.io.PrintWriter;
+import java.sql.Timestamp;
+import java.util.Enumeration;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import oracle.net.aso.a;
+
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
+import roadshop.actionforward.ActionForward;
+import roadshop.web.board.svc.BoardFileUploadService;
+import roadshop.web.board.svc.BoardWriteService;
+import roadshop.web.board.vo.BoardInfo;
+import roadshop.web.item.vo.ItemInfo;
+import roadshop.web.manager.svc.item.ItemRegistService;
+
+public class BoardFileWriteProAction implements BoardAction {
+
+	@Override
+	public ActionForward execute(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		
+//		System.out.println("BoardFileWriteProAction.execute()입니다.");
+		
+		BoardInfo article=new BoardInfo();
+		article = (BoardInfo)request.getAttribute("fileWriteForm");
+		String b_subject= null,b_writer= null, b_image= null, b_content= null,i_id =null, m_id=null;
+		String b_reg_date=null;
+		int b_num = 0,readcount=0,ref =1, re_step = 0, re_level=0 ;
+		//article.setB_content(request.getParameter("b_content"));
+		/*
+		//이 곳이 변경된 부분임!!
+		article.setB_content(request.getParameter("b_content"));
+		article.setI_id(request.getParameter("i_id"));
+		article.setM_id(request.getParameter("m_id"));
+		article.setB_image(request.getParameter("b_image"));
+		
+		article.setB_num(Integer.parseInt(request.getParameter("b_num")));
+		article.setRef(Integer.parseInt(request.getParameter("ref")));
+		article.setRe_step(Integer.parseInt(request.getParameter("re_step")));
+		article.setRe_level(Integer.parseInt(request.getParameter("re_level")));
+		
+		article.setB_subject(request.getParameter("b_subject"));
+		System.out.println("request.getParameter('b_num') = "+Integer.parseInt(request.getParameter("b_num")));
+		article.setB_reg_date(new Timestamp(System.currentTimeMillis()));
+		article.setB_writer(request.getParameter("b_writer"));
+		System.out.println("BoardWriteProAction========================");
+		System.out.println("==================================================\n" +
+				"값을 제대로 받아왔는지 확인하는 부분임!\n");
+		System.out.println("ReplyVO.num = "+article.getB_num()+", ReplyVO.ref = "+article.getRef()+", ReplyVO.re_step = "+article.getRe_step()
+				+",\n ReplyVO.re_level = "+article.getRe_level()+", boardInfo.m_id = "+article.getM_id()+", boardInfo.i_id = "+article.getI_id()
+				+", boardInfo.b_image = "+article.getB_image());
+		*/
+		boolean isSuccess=false;
+		
+		String realFolder = ""; 			// 파일이 업로드될 서버상의 물리적인 경로를 저장할 변수 
+		String saveFolder =""; 				//파일이 업로드될 디렉토리 명
+		String encType="utf-8";
+		int maxSize = 5*1024*1024;
+
+		ServletContext context = request.getServletContext();
+		realFolder = context.getRealPath(saveFolder);
+		//"저장하고 싶은 경로 c:\\workspace3\\board\\image"
+		//해당 경로의 서버 상의 물리적인 경로를 얻어오는 부분 ....
+
+		try{
+			
+			MultipartRequest multi = new MultipartRequest(request,realFolder,maxSize,encType,
+					new DefaultFileRenamePolicy());
+			
+			b_writer = multi.getParameter("b_writer");
+			b_subject = multi.getParameter("b_subject");
+			b_image = multi.getParameter("b_image");
+			b_content = multi.getParameter("b_content");
+			i_id = multi.getParameter("i_id");
+			m_id = multi.getParameter("m_id");
+			b_reg_date = multi.getParameter("b_reg_date");
+			b_num = Integer.parseInt(multi.getParameter("b_num"));
+			//readcount = Integer.parseInt(multi.getParameter("readcount"));
+			ref = Integer.parseInt(multi.getParameter("ref"));
+			re_step = Integer.parseInt(multi.getParameter("re_step"));
+			re_level = Integer.parseInt(multi.getParameter("re_level"));
+			Enumeration files = multi.getFileNames();
+			
+			while(files.hasMoreElements()){
+				String fileName = (String)files.nextElement();
+				b_image = (String)multi.getOriginalFileName(fileName);
+			}
+			article = new BoardInfo(b_num, b_writer, b_subject,
+					b_content, b_image, new Timestamp(System.currentTimeMillis()),
+					readcount, ref, re_step, re_level,i_id,
+					m_id);
+//			System.out.println("BoardWriteProAction========================");
+//			System.out.println("==================================================\n" +
+//					"값을 제대로 받아왔는지 확인하는 부분임!\n");
+//			System.out.println("ReplyVO.num = "+article.getB_num()+", ReplyVO.ref = "+article.getRef()+", ReplyVO.re_step = "+article.getRe_step()
+//					+",\nReplyVO.re_level = "+article.getRe_level()+", boardInfo.m_id = "+article.getM_id()+", boardInfo.i_id = "+article.getI_id()
+//					+", boardInfo.b_image = "+article.getB_image());
+//			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		HttpSession session = request.getSession();
+		String id = (String)session.getAttribute("id");
+		
+		String load = "../board/writeForm.jsp";
+		
+		
+		
+		BoardFileUploadService bFS = new BoardFileUploadService();
+		isSuccess=bFS.getBoardFileUpload(article);
+		ActionForward forward = null;
+		
+		if(isSuccess){
+			System.out.println("BoardFileWriteProAction에서 bool값이 true라면!! " +
+					"참!!!" +
+					"결국 해당글 삽입이 잘 되었다는 것임!!");
+			request.setAttribute("bFS", bFS);
+			request.setAttribute("load",load);
+			forward=new ActionForward();
+			forward.setRedirect(true);	//목록보기 요청은 리다이렉트 방식으로
+						//디스패쳐로 하면 새로고침이 insert쿼리가 계속 실행
+			forward.setUrl("boardList.bo");
+			
+		}
+		else{
+			System.out.println("BoardWriteProAction에서 bool값이 false라면!!! 거짓!!!!!" +
+					"결국 해당글 삽입이 안된 것임!!");
+			System.out.println("<script>");
+			System.out.println("alert('등록 실패 입니다')");
+			System.out.println("history.back()");
+			System.out.println("</script>");
+		}
+		return forward;
+	}
+}

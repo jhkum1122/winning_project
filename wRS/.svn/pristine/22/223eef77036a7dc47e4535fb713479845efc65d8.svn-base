@@ -1,0 +1,15 @@
+function SetEmailTail(emailValue){
+	var emailTail = document.getElementById("m_email2");
+	if(emailValue=="notSelected"){
+		emailTail.value="";
+		return;
+	}
+	else if(emailValue=="write"){
+		emailTail.readOnly="";
+		emailTail.value="";
+		emailTail.focus();
+	}else{
+		emailTail.readOnly="true";
+		emailTail.value=emailValue;
+	}
+}

@@ -1,0 +1,29 @@
+package roadshop.web.board.action;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+import roadshop.web.board.vo.BoardInfo;
+@Controller
+public class BoardFileWriteFormAction{
+
+	@RequestMapping("/main/boardFileWriteForm.bo")
+	public ModelAndView boardFileWriteForm(@ModelAttribute("article") BoardInfo boardInfo,
+			@RequestParam(value="num",defaultValue="0") int num) throws Exception {
+		// TODO Auto-generated method stub
+//		System.out.println("이 곳은 BoardFileWriteFormAction.execute()입니다.");
+		ModelAndView mav = new ModelAndView();
+		System.out.println("boardWriteForm() "+"ReplyVO.num = "+boardInfo.getB_num()+", ReplyVO.ref = "+boardInfo.getRef()+", ReplyVO.re_step = "+boardInfo.getRe_step()
+				+", ReplyVO.re_level = "+boardInfo.getRe_level()+", ReplyVO.m_id = "+boardInfo.getM_id() );
+		
+		String load = "../board/fileWriteForm.jsp";
+
+		mav.addObject("load",load);
+		mav.addObject("boardInfo", boardInfo);	//글 i_id,m_id에 대한 정보 설정!!
+		mav.setViewName("../main/beforeMain.jsp");
+		
+		return mav;
+	}
+}

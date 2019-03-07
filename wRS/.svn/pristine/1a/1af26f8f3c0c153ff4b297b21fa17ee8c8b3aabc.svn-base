@@ -1,0 +1,117 @@
+<%@page import="roadshop.web.manager.vo.PagingInfo"%>
+<%@page import="roadshop.web.shop.vo.ShopInfo"%>
+<%@page import="java.util.ArrayList"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%
+	PagingInfo pagingInfo=(PagingInfo)request.getAttribute("pagingInfo");
+	int count=0;
+	int currentPage=0;
+	int pageCount=0;
+	int startPage=0;
+	int endPage=0;
+	int number=0;
+	int pageNum=0;
+	ArrayList<ShopInfo> shopList = (ArrayList<ShopInfo>)request.getAttribute("shopList");
+	if(pagingInfo!=null){
+	 count=pagingInfo.getCount();
+	 currentPage=pagingInfo.getCurrentPage();
+	 pageCount=pagingInfo.getPageCount();
+	 startPage=pagingInfo.getStartPage();
+	 endPage=pagingInfo.getEndPage();
+	 number=pagingInfo.getPagenumber();
+	 pageNum=pagingInfo.getCurrentPage();
+	}
+%>   
+<link rel="StyleSheet" type="text/css" href="<%=request.getContextPath() %>/css/manager/base.css"/>
+<link rel="StyleSheet" type="text/css" href="<%=request.getContextPath() %>/css/manager/common.css"/>
+	<!-- contents -->
+	<div id="contents">
+		<h2>매장관리</h2>
+		
+		<form name="searchForm" action="shopSearch.ms" method="post">
+		<div class="Search_area">
+			<select name="category">
+			<option value="m_id">매장주ID</option>
+			<option value="s_brand">브랜드</option>
+			</select>
+			<input type="text" class="input_search" name="keyword" value="">
+			<span class="btn_pack small"><a onClick="submit_go()">검색하기</a></span>
+		</div>
+		</form>
+		
+		<div class="button_area">
+		<span class="textguide fl">매장 이름을 누르시면 수정하실 수 있습니다.</span>
+		<span class="btn_pack large icon"><span class="add"></span><a href="shopRegistForm.ms">매장 등록</a></span>
+		</div>
+		
+		
+		<table class="tbl_list00" cellpadding="0" cellspacing="0" border="0">
+			<colgroup>
+				<col width="2%" />
+				<col width="5%" />
+				<col width="4%" />
+				<col width="3%" />
+				<col width="5%" />
+				<col width="2%" />
+			</colgroup>
+			<thead>
+				<tr>
+					<th>No.</th>
+					<th>브랜드</th>
+					<th>매장주 ID</th>
+					<th>사업자등록번호</th>
+					<th>전화번호</th>
+					<th>매장 삭제</th>
+				</tr>
+			</thead>
+			<tbody>
+ 			
+			<% if(shopList==null){ %>
+				<tr>
+				<td colspan=6><strong>해당 정보 없음</strong></td>
+				</tr>
+			<%} 
+			else{
+			for(int i =0;i<shopList.size();i++){%>
+				<tr>
+					<td><%=shopList.get(i).getS_num() %></td>
+					<td><%=shopList.get(i).getS_brand() %></td>
+					<td><a href="shopModifyForm.ms?s_num=<%=shopList.get(i).getS_num() %>"><b><%=shopList.get(i).getM_id() %></b></a></td>
+					<td><%=shopList.get(i).getS_brn1() %>-<%=shopList.get(i).getS_brn2() %>-
+						<%=shopList.get(i).getS_brn3() %></td>
+					<td><%=shopList.get(i).getS_tel1() %>-<%=shopList.get(i).getS_tel2() %>-
+						<%=shopList.get(i).getS_tel3() %>
+					</td>
+					
+					<td><a href="shopRemove.ms?s_num=<%=shopList.get(i).getS_num() %>" onClick="return confirm('삭제하시겠습니까?')" ><img src="<%=request.getContextPath() %>/image/manager/btn_delete.gif" alt="삭제버튼"/></a></td>
+				</tr>
+				<%}}%>		
+			</tbody>
+		</table>
+		<div class="paginate_regular">
+			<div class="pagination">
+			<%
+if(pagingInfo!=null){
+	if(count > 0){
+		
+		if(startPage > 10) {	
+			%>
+			<a href="shopAllList.ms?pageNum=<%=startPage - 10 %>">이전</a>
+			<%
+		}
+		for(int i = startPage; i <= endPage; i++){
+			%>
+			<a href="shopAllList.ms?pageNum=<%=i %>">[<%=i %>]</a>
+			<%
+		}
+		if(endPage < pageCount){	
+			%>
+			<a href="shopAllList.ms?pageNum=<%=startPage + 10 %>">다음</a>
+			<%
+		}
+	}
+}
+%></div>
+</div>
+</div>

@@ -1,0 +1,23 @@
+package roadshop.web.manager.svc.item;
+
+import java.sql.Connection;
+import java.util.ArrayList;
+
+import roadshop.web.item.dao.ItemDAO;
+import roadshop.web.item.vo.ItemInfo;
+import static roadshop.db.jdbcUtil.*;
+
+public class ItemSearchService {
+	Connection con = con();
+	ItemDAO itemDAO = new ItemDAO(con);
+	ArrayList<ItemInfo> check = null;
+	
+	public ArrayList<ItemInfo> getSearchList(String keyword,String category,int startrow,int pageSize) {
+		// TODO Auto-generated method stub
+		check = itemDAO.selectItemSearchList(keyword,category,startrow,pageSize);
+	
+		close(con);
+		return check;
+	}
+
+}

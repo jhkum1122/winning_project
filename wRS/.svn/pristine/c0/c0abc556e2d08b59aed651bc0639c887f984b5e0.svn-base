@@ -1,0 +1,165 @@
+package roadshop.web.item.vo;
+
+import org.springframework.web.multipart.MultipartFile;
+
+
+public class ItemInfo {
+	private String i_id;
+	private String i_name;
+	private int i_price;
+	private String i_brand;
+	private String i_detail;
+	private String i_image;
+	private int i_stock;
+	private int i_count;
+	private int i_num;
+	private String i_category;
+	private MultipartFile report;
+
+	public ItemInfo() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+	public ItemInfo(String i_id, String i_name, int i_price, String i_brand,
+			String i_image, String i_category) {
+		super();
+		this.i_id = i_id;
+		this.i_name = i_name;
+		this.i_price = i_price;
+		this.i_brand = i_brand;
+		this.i_image = i_image;
+		this.i_category = i_category;
+	}
+
+
+	public ItemInfo(String i_id, int i_count, String i_name, int i_price,
+			String i_brand, String i_detail, String i_image) {
+		super();
+		this.i_id = i_id;
+		this.i_count = i_count;
+		this.i_name = i_name;
+		this.i_price = i_price;
+		this.i_brand = i_brand;
+		this.i_detail = i_detail;
+		this.i_image = i_image;
+	}
+	public ItemInfo(String i_id, String i_name, int i_price, String i_brand, String i_image){
+		this.i_id=i_id;
+		this.i_name=i_name;
+		this.i_price=i_price;
+		this.i_brand=i_brand;
+		this.i_image=i_image;
+	}
+
+	public ItemInfo(String i_id, String i_name, int i_price,
+			String i_brand, String i_detail, String i_image, int i_count,String i_category) {
+		// TODO Auto-generated constructor stub
+		this.i_id = i_id;
+		this.i_name = i_name;
+		this.i_price = i_price;
+		this.i_brand = i_brand;
+		this.i_detail = i_detail;
+		this.i_image = i_image;
+		this.i_count = i_count;
+		this.i_category = i_category;
+	}
+	public ItemInfo(String i_id, String i_name, int i_price,
+			String i_brand, String i_detail, String i_image, int i_count, int i_num,String i_category) {
+		this.i_id = i_id;
+		this.i_name = i_name;
+		this.i_price = i_price;
+		this.i_brand = i_brand;
+		this.i_detail = i_detail;
+		this.i_image = i_image;
+		this.i_count = i_count;
+		this.i_num=i_num;
+		this.i_category = i_category;
+	}
+
+
+	public ItemInfo(String i_id, String i_name, int i_price, String i_brand,
+			String i_detail, String i_image, int i_stock, int i_count,
+			int i_num, String i_category, MultipartFile report) {
+		super();
+		this.i_id = i_id;
+		this.i_name = i_name;
+		this.i_price = i_price;
+		this.i_brand = i_brand;
+		this.i_detail = i_detail;
+		this.i_image = i_image;
+		this.i_stock = i_stock;
+		this.i_count = i_count;
+		this.i_num = i_num;
+		this.i_category = i_category;
+		this.report = report;
+	}
+
+
+	public String getI_id() {
+		return i_id;
+	}
+	public void setI_id(String i_id) {
+		this.i_id = i_id;
+	}
+	public String getI_name() {
+		return i_name;
+	}
+	public void setI_name(String i_name) {
+		this.i_name = i_name;
+	}
+	public int getI_price() {
+		return i_price;
+	}
+	public void setI_price(int i_price) {
+		this.i_price = i_price;
+	}
+	public String getI_brand() {
+		return i_brand;
+	}
+	public void setI_brand(String i_brand) {
+		this.i_brand = i_brand;
+	}
+	public String getI_detail() {
+		return i_detail;
+	}
+	public void setI_detail(String i_detail) {
+		this.i_detail = i_detail;
+	}
+	public int getI_stock() {
+		return i_stock;
+	}
+	public void setI_stock(int i_stock) {
+		this.i_stock = i_stock;
+	}
+	public int getI_count() {
+		return i_count;
+	}
+	public void setI_count(int i_count) {
+		this.i_count = i_count;
+	}
+	public int getI_num() {
+		return i_num;
+	}
+	public void setI_num(int i_num) {
+		this.i_num = i_num;
+	}
+	public String getI_category() {
+		return i_category;
+	}
+	public void setI_category(String i_category) {
+		this.i_category = i_category;
+	}
+	public void setI_image(String i_image) {
+		this.i_image = i_image;
+	}
+	public String getI_image() {
+		return i_image;
+	}
+	public MultipartFile getReport() {
+		return report;
+	}
+	public void setReport(MultipartFile report) {
+		this.report = report;
+	}	
+}

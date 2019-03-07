@@ -1,0 +1,25 @@
+package roadshop.web.item.svc;
+
+import static roadshop.db.jdbcUtil.con;
+import static roadshop.db.jdbcUtil.close;
+
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import roadshop.web.item.dao.ItemDAO;
+import roadshop.web.item.vo.ItemInfo;
+
+public class BestItemService {
+
+	public HashMap<String, ArrayList<ItemInfo>> getbestItem() {
+		// TODO Auto-generated method stub
+		Connection con = con();
+		ItemDAO itemDAO = new ItemDAO(con);
+		HashMap<String, ArrayList<ItemInfo>> bestItem = itemDAO.selectBestItem();
+		close(con);
+		
+		return bestItem;
+	}
+
+}

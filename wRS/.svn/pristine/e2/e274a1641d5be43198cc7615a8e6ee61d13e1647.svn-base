@@ -1,0 +1,93 @@
+<%@page import="roadshop.web.member.vo.MemberInfo"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%MemberInfo memberInfo = (MemberInfo)request.getAttribute("memberInfo"); %>
+<script>
+function zip() {
+	var url = "<%=request.getContextPath()%>/member/search-zipcode.jsp";
+	window.open(url, '_blank',
+			'width=450,height=450,left=100,top=100,resizable=no');
+}
+window.onload = function select(value){
+		value.selected;
+};
+</script>
+<form name="memberModify" method="post" action="memberModify.mm">
+<input type="hidden" name="m_num" value="<%=memberInfo.getM_num() %>">
+	<div id="contents">
+		<h2>회원 등록</h2>
+		<table class="tbl_edit00" cellpadding="0" cellspacing="0" border="0">
+			<caption>회원등록</caption>
+			<colgroup>
+				<col width="170px" />
+				<col width="*" />
+			</colgroup>
+			<tbody>
+				<tr>
+					<th scope="row">회원 등급</th>
+					<td><input class="input01" type="text" name="m_grade" value="<%=memberInfo.getM_grade() %>"></td>
+				</tr>
+				<tr>
+					<th scope="row">회원 아이디</th>
+					<td><input class="input01" type="text" name="m_id" value="<%=memberInfo.getM_id() %>"></td>
+				</tr>
+				<tr>
+					<th scope="row">회원 이름</th>
+					<td><input class="input01" type="text" name="m_name" value="<%=memberInfo.getM_name() %>"></td>
+				</tr>
+				<tr>
+					<th scope="row">패스 워드</th>
+					<td><input class="input01" type="text" name="m_pwd" value="<%=memberInfo.getM_pwd() %>"></td>
+				</tr>
+				<tr>
+					<th scope="row">전화 번호</th>
+					<td><input class="input01" type="text" name="m_tel1" value="<%=memberInfo.getM_tel1() %>">
+					   -<input class="input01" type="text" name="m_tel2" value="<%=memberInfo.getM_tel2() %>">
+					   -<input class="input01" type="text" name="m_tel3" value="<%=memberInfo.getM_tel3() %>">
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">생년 월일</th>
+					<td><input class="input01" type="text" name="m_ssn1" value="<%=memberInfo.getM_ssn1()%>"> &nbsp;&nbsp;예)19851225</td>
+				</tr>
+				<tr>
+					<th scope="row">우편 번호</th>
+					<td><input class="input01" type="text" name="m_zipcode" value="<%=memberInfo.getM_zipcode()%>">&nbsp;&nbsp;&nbsp;
+														<a href="javascript:zip()"> <img src="<%=request.getContextPath() %>/image/member/member_btn02.jpg" 
+														width="92" height="29"/></a></td>
+				</tr>
+				<tr>
+					<th scope="row">회원 주소</th>
+					<td>주소<input class="input01" type="text" name="m_addr1" value="<%=memberInfo.getM_addr1()%>">&nbsp;
+					      상세주소<input class="input01" type="text" name="m_addr2" value="<%=memberInfo.getM_addr2()%>"></td>
+				</tr>
+				<tr>
+					<th scope="row">회원 이메일</th>
+					<td><input class="input01" type="text" name="m_email1" value="<%=memberInfo.getM_email1()%>">@
+					<select class="select01" name="m_email2" onChange="select('<%=memberInfo.getM_email2()%>')">
+							<option>선택</option>
+							<option value="naver.com">naver.com</option>
+							<option value="paran.com">paran.com</option>
+							<option value="google.com">google.com</option>
+							<option value="hotmail.com">hotmail.com</option>
+							<option value="nate.com">nate.com</option>
+						    <option value="daum.net">daum.net</option>
+							<option value="hanmail.net">hanmail.net</option>
+					</select>
+					<!-- <input class="select02" name="m_email2">
+					<input id="call" type="button" name="call" value="직접입력"> -->
+					</td>
+				</tr>
+				
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="2" class="edit_btnarea">
+						<span class="btn_pack large icon"><span class="add"></span><input type="submit" value="수정하기"></span>&nbsp;&nbsp;&nbsp;
+						<span class="btn_pack large icon"><span class="refresh"></span><a href="memberAllList.mm">취소</a></span>
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+</form>

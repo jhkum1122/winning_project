@@ -1,0 +1,69 @@
+<%@page import="roadshop.web.item.vo.PagingInfo"%>
+<%@page import="roadshop.web.item.vo.ItemInfo"%>
+<%@page import="java.util.ArrayList"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%
+PagingInfo pagingInfo = (PagingInfo)request.getAttribute("pagingInfo");
+int count=0;
+int currentPage=0;
+int pageCount=0;
+int startPage=0;
+int endPage=0;
+int number=0;
+int pageNum=0;
+
+ArrayList<ItemInfo> brandList = (ArrayList<ItemInfo>)request.getAttribute("brandList");
+
+if(pagingInfo!=null){
+	 count=pagingInfo.getCount();
+	 currentPage=pagingInfo.getCurrentPage();
+	 pageCount=pagingInfo.getPageCount();
+	 startPage=pagingInfo.getStartPage();
+	 endPage=pagingInfo.getEndPage();
+	 number=pagingInfo.getPagenumber();
+	 pageNum=pagingInfo.getCurrentPage();
+	}
+
+ItemInfo itemInfo = new ItemInfo();
+%>
+<div>
+<table id=listtable cellpadding=0 cellspacing=0 border=0 align=center>
+				<%for(int i=0; i<brandList.size();i++){
+					itemInfo = brandList.get(i);%>
+				<tr>
+					<td rowspan=2><a href="itemAsk.it?i_id=<%=itemInfo.getI_id() %>"><img src="<%=request.getContextPath() %>/image/item/<%=itemInfo.getI_image()%>" width="200" height="150"/></a></td>
+					<td>브랜드 : <%=itemInfo.getI_brand() %></td>
+					
+				</tr>
+				<tr>
+					<td>상품명 : <a href="itemAsk.it?i_id=<%=itemInfo.getI_id() %>"><%=itemInfo.getI_name() %></a></td>
+					<%-- <td>가격 : <%=itemInfo.getI_price() %></td>
+					<td>재고 : <%if(itemInfo.getI_stock() != 1){%>유
+								<%}else{ %> 무<%} %></td> --%>
+				</tr>
+				<tr><td colspan=3 height="10"></td></tr>
+				<%}%>
+			</table>
+<% 
+if(pagingInfo!=null){
+	if(count > 0){
+		
+		if(startPage > 10) {	
+			%>
+			<a href="brandSearch.it?brand=<%=itemInfo.getI_brand() %>&pageNum=<%=startPage - 10 %>">이전</a>
+			<%
+		}
+		for(int i = startPage; i <= endPage; i++){
+			%>
+			<a href="brandSearch.it?brand=<%=itemInfo.getI_brand() %>&pageNum=<%=i %>">[<%=i %>]</a>
+			<%
+		}
+		if(endPage < pageCount){	
+			%>
+			<a href="brandSearch.it?brand=<%=itemInfo.getI_brand() %>&pageNum=<%=startPage + 10 %>">다음</a>
+			<%
+		}
+	}
+}%>	
+</div>

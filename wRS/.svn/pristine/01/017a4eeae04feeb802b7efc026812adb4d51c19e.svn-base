@@ -1,0 +1,46 @@
+package roadshop.web.mypage.action;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+@Controller
+public class MypageViewAction{
+	@RequestMapping("/mypage/mypage.my")
+	public ModelAndView mypage(){
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("load", "/mypage/mypage.jsp");
+		mav.setViewName("/main/beforeMain.jsp");
+		return mav;
+	}
+}
+
+
+
+
+
+
+/*public class MypageViewAction implements MypageAction {
+
+	@Override
+	public ActionForward execute(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+		String m_id=(String)session.getAttribute("id");
+	
+		
+		
+		ActionForward forward= new ActionForward();
+		String load = "../mypage/mypage.jsp";
+		request.setAttribute("load",load);
+		
+		forward.setUrl("/main/beforeMain.jsp");
+		
+		return forward;
+		
+
+	}
+
+}*/

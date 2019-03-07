@@ -1,0 +1,130 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>어딨니 로드샵?!</title>
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/web/style.css" type="text/css" />
+<script src="http://code.jquery.com/jquery-1.7.js"></script>
+<script language='JavaScript'
+	src='<%=request.getContextPath()%>/js/main/subMenu.js'></script>
+<script language='JavaScript'
+	src='<%=request.getContextPath()%>/js/main/login.js'></script>
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+</head>
+
+<%
+	String load = (String) request.getAttribute("load");
+	if (load == null) {
+		load = "index.jsp";
+	}
+	String mem_id = (String)session.getAttribute("id");
+	
+	String log="";
+	if(mem_id == null) log ="/user/loginform.us>LOGIN";
+	else log ="/mypage/mypage.my>MYPAGE";
+
+	String mem="";
+	if(mem_id == null) mem ="/main/memberRule.mem>JOIN";
+	else mem = "/user/userLogout.us>LOGOUT";
+%>
+
+<!-- header 부분 -->
+
+<div class="header">
+	<div>
+		<a href="<%=request.getContextPath()%>/main/beforeMain.jsp" id="logo"><img
+			src="../image/logo_large.png" alt="logo" /></a>
+		<div class="navigation">
+			<ul class="first">
+				<li><a href="<%=request.getContextPath()%>/main/beforeMain.jsp">HOME</a></li>
+				<li><a href=<%=request.getContextPath()%><%=log %></a></li>
+				<li><a href=<%=request.getContextPath()%><%=mem %></a></li>
+				<li><a href="">고객센터</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="menuBar">
+	<div id="navigation">
+		<div id="firstMenuBar">
+			<ul>
+				<li id="subMenu"><a>Brand</a>
+					<ul id="hide">
+						<li><a
+							href="<%=request.getContextPath()%>/product/brandSearch.it?brand=missha">미샤</a></li>
+						<li><a
+							href="<%=request.getContextPath()%>/product/brandSearch.it?brand=naturerepublic">네이처리퍼블릭</a></li>
+						<li><a
+							href="<%=request.getContextPath()%>/product/brandSearch.it?brand=etude">에뛰드</a></li>
+						<li><a
+							href="<%=request.getContextPath()%>/product/brandSearch.it?brand=tonymoly">토니모리</a></li>
+						<li><a
+							href="<%=request.getContextPath()%>/product/brandSearch.it?brand=thefaceshop">더페이스샵</a></li>
+					</ul></li>
+			</ul>
+		</div>
+		<div>
+			<ul>
+				<li id="subMenu"><a>Category</a>
+					<ul id="hide">
+						<li><a
+							href="<%=request.getContextPath()%>/product/categorySearch.it?category=skincare">스킨케어</a></li>
+						<li><a
+							href="<%=request.getContextPath()%>/product/categorySearch.it?category=cleansing">클렌징</a></li>
+						<li><a
+							href="<%=request.getContextPath()%>/product/categorySearch.it?category=makeup">메이크업</a></li>
+						<li><a
+							href="<%=request.getContextPath()%>/product/categorySearch.it?category=bodyandhair">바디앤헤어</a></li>
+					</ul></li>
+			</ul>
+		</div>
+		<div>
+			<a href="<%=request.getContextPath()%>/main/beforeMain.jsp">Event</a>
+		</div>
+		<div>
+			<a href="<%=request.getContextPath()%>/main/boardList.bo">Review</a>
+		</div>
+	</div>
+</div>
+<!-- 헤더 끝 부분 -->
+<body>
+	<div class="body">
+		<!-- 로그인창 빼자 답안나온다  
+		<div class="center1">
+		<div id="divLogin">
+		 <form id="loginForm" class="loginForm">
+					<table width=195 border=0 cellspacing=3 cellpadding=0 align=center>
+							<tr>
+								<td height=2></td>
+							</tr>
+							<tr>
+								<td><input id="u_id" type='text' name="u_id" value="d" style="font-size:12px; float:left; background:#FFFFFF; height:17px; width:105px; border:1px solid #c8c6c6;" style="ime-mode:disabled;" value="" maxlength="12" tabindex=1/></td>
+								<td rowspan="3" align=center><input id="loginSub" type="button" value="로그인"></td>
+							</tr>
+							<tr><td height=1></td></tr>
+							<tr>
+								<td><input id="u_pwd" type='password' name="u_pwd"  value="" style="font-size:12px; float:left; background:#FFFFFF; height:17px; width:105px; border:1px solid #c8c6c6;" maxlength="17" tabindex=2/></td>
+							</tr>
+							<tr><td height="2spx"></td></tr>
+							<tr><td colspan="2" align=center>
+								<a href="" class="gray"><img src="../image/web/login_btn02.jpg"></a>
+								<a href="memberRule.mem"><img src="../image/web/login_btn03.jpg" style="cursor:pointer;" alt="회원가입"></a>
+								</td>
+							</tr>
+					</table>
+			 </form> 
+			</div>
+		</div> -->
+
+		<div class="center2">
+			<jsp:include page="<%=load%>"></jsp:include>
+
+		</div>
+		<div class="center3"></div>
+	</div>
+
+</body>
+</html>

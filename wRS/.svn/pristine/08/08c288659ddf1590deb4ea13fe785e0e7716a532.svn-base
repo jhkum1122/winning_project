@@ -1,0 +1,36 @@
+package roadshop.web.manager.action.member;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import roadshop.actionforward.ActionForward;
+import roadshop.web.manager.action.ManagerAction;
+import roadshop.web.manager.svc.member.MMemberRemoveService;
+
+public class MMemberRemoveAction implements ManagerAction{
+
+	public ActionForward execute(HttpServletRequest request,HttpServletResponse response){
+		ActionForward forward = null;
+		String m_id;
+		
+		boolean isSuccess;
+		
+		m_id=request.getParameter("m_id");
+		
+		MMemberRemoveService mmrs = new MMemberRemoveService();
+		isSuccess = mmrs.memberGetRemove(m_id);
+		
+		if(isSuccess){
+			forward = new ActionForward();
+			forward.setUrl("/manager/member/memberAllList.mm");
+		}
+		else{
+			System.out.println("<script>");
+			System.out.println("alert('등록 실패 입니다')");
+			System.out.println("history.back()");
+			System.out.println("</script>");
+		}
+		return forward;
+		
+	}
+}

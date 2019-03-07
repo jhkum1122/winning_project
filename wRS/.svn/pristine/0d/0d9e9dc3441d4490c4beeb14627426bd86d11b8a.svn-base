@@ -1,0 +1,95 @@
+<%@page import="roadshop.web.board.vo.BoardInfo"%>
+<%@ page contentType="text/html; charset=euc-kr" %>
+<%@ include file="/view/color.jsp"%>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<script language="JavaScript" src="<%=request.getContextPath() %>/board/script.js"></script>
+<title>°Ô½ÃÆÇ</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<% 
+	//actionForward¿¡¼­ ³Ñ¾î¿Â jspÆäÀÌÁö ÀÓ!!
+	//request´Â BoardWriteFormAction.execute(request,response)¿¡¼­ ¿Â °ÍÀÓ!!
+	BoardInfo boardInfo = (BoardInfo)request.getAttribute("boardInfo");
+	//°¢ °¢ BoardWriteFormAction.execute(request,response)¿¡¼­ request.setAttribute·Î Á¤ÀÇÇÑ °ÍÀ» ¾òÀº ºÎºÐÀÓ!
+	
+	int num=boardInfo.getB_num();
+	//ReplyVO¸¦ ÀÇ¹ÌÇÔ!!
+	int ref=boardInfo.getRef();
+	int re_step=boardInfo.getRe_step();
+	int re_level=boardInfo.getRe_level();
+	
+	//ÀÌÂÊÀº ½ÃÇè¹öÀüÀÓ!!m_id!!
+	String i_id = boardInfo.getI_id();
+	String m_id = boardInfo.getM_id();
+	
+%>
+   
+<body>
+<center><b>±Û¾²±â</b>
+<br>
+<form method="post" name="writeform" action="boardWritePro.bo" onsubmit="return writeSave()">
+	<input type="hidden" name="b_num" value="<%=num%>">
+	<input type="hidden" name="ref" value="<%=ref%>">
+	<input type="hidden" name="re_step" value="<%=re_step%>">
+	<input type="hidden" name="re_level" value="<%=re_level%>">
+	
+
+	<table width="400" border="1" cellspacing="0" cellpadding="0"
+	  bgcolor="<%=bodyback_c%>" >
+	  <tr bgcolor="#0099CC">
+		   <td colspan="2" align="right" bgcolor="f567b6">
+  		<input type="button" value="¸ñ·Ïº¸±â" OnClick="window.location='boardList.bo'" align="center">	    </td>
+	  </tr>
+	  <tr bgcolor="<%=bodyback_c%>">
+		    <td  width="70"  bgcolor="f567b6" ><center>ÀÌ ¸§</center></td>
+	    <td  width="330" bgcolor="#FFFFFF"><input type="text" size="10" maxlength="10" name="b_writer"></td>
+	  </tr>
+	  <tr bgcolor="<%=bodyback_c%>">
+		    <td  width="70"  bgcolor="f567b6" align="center" >Á¦ ¸ñ</td>
+		    <td  width="330" bgcolor="#FFFFFF">
+			    <%if(num==0){
+			    	System.out.println(num+"if(b_num==0)");
+			    %>
+			       <input type="text" size="40" maxlength="50" name="b_subject"/>
+				<%}else{
+					System.out.println(num+"else(b_num !=0)");
+				%>
+				   <input type="text" size="40" maxlength="50" name="b_subject" 
+				   value="[´äº¯]"/>
+		<%}%>		</td>
+	  </tr>
+	  <tr>
+	    <td  width="70"  bgcolor="f567b6" align="center">¸â¹öid</td>
+	    <td  width="330" bgcolor="#FFFFFF">
+        <input type="text" size="40" maxlength="30" name="m_id" value="" ></td>
+	  </tr>
+	  <tr>
+	    <td  width="70"  bgcolor="f567b6" align="center">¾ÆÀÌÅÛid</td>
+	    <td  width="330" bgcolor="#FFFFFF">
+        <input type="text" size="40" maxlength="30" name="i_id" ></td>
+	  </tr>
+	  
+	  <tr>
+	    <td  bgcolor="f567b6" align="center" >°Ô½ÃÆÇÀÌ¹ÌÁö</td>
+	    <td bgcolor="#FFFFFF" ><input type="text" size="40" maxlength="30" name="b_image" ></td>
+      </tr>
+	  <tr>
+		    <td  width="70"  bgcolor="f567b6" align="center" >³» ¿ë</td>
+		    <td  width="330" bgcolor="#FFFFFF" >
+        <textarea name="b_content" rows="13" cols="40"></textarea> </td>
+	  </tr>
+		<tr bgcolor="#0099CC">      
+			 <td colspan=2 align="center" bgcolor="f567b6"> 
+			   	<input type="submit" value="±Û¾²±â" align="center">  
+			  	<input type="reset" value="´Ù½ÃÀÛ¼º" align="center">
+  		  <input type="button" value="¸ñ·Ïº¸±â" OnClick="window.location='boardList.bo'" align="center">	  	  </td>
+	  	</tr>
+	</table>    
+</form>  
+</center>    
+</body>
+</html>      

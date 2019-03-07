@@ -1,0 +1,28 @@
+package roadshop.web.user.svc;
+
+import static roadshop.db.jdbcUtil.*;
+
+
+import java.sql.Connection;
+
+
+import roadshop.web.user.dao.UserDAO;
+
+public class IdAskService {
+	public String getId(String name, int ssn1) {
+		// TODO Auto-generated method stub
+
+	Connection con = con();
+		
+		UserDAO userDAO = new UserDAO(con); 
+	
+		String  searchId= userDAO.selectMemberId(name, ssn1);//아이디,비번을 매개변수로 전달
+
+		   close(con);
+
+		  
+
+		   return searchId;
+	}
+
+}

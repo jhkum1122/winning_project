@@ -1,0 +1,43 @@
+package roadshop.web.shop.action;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import roadshop.actionforward.ActionForward;
+import roadshop.web.shop.svc.ShopCancelService;
+import roadshop.web.shop.svc.ShopModifyService;
+
+@Controller
+public class ShopCancelAction{
+@Autowired
+ShopCancelService scs;
+@RequestMapping("/mypage/shopCancel.sh")
+	public ModelAndView mShopCancelAction(HttpServletRequest request,
+			@RequestParam("s_num")int s_num) throws Exception {
+		// TODO Auto-generated method stub
+		ModelAndView mav =new ModelAndView();
+		boolean isSuccess=false;
+		isSuccess=scs.deleteShop(s_num);
+		
+		if(isSuccess == true){
+			
+			mav.setViewName("/mypage/shopList.sh");
+		}
+		
+		else{
+			System.out.println("<script>");
+			System.out.println("alert('삭제 실패 입니다')");
+			System.out.println("history.back()");
+			System.out.println("</script>");
+		}
+		
+		return mav;
+	}
+
+}

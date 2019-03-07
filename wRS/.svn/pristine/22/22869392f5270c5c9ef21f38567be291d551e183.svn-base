@@ -1,0 +1,105 @@
+<%@ page language="java" contentType="text/html; charset=iso-8859-1"
+    pageEncoding="UTF-8"%>
+<%@page import="roadshop.web.board.vo.BoardInfo"%>
+<%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
+<%@ include file="/view/color.jsp"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<script language="JavaScript" src="<%=request.getContextPath() %>/board/script.js"></script>
+<title>파일업로드게시판</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"></head>
+
+<% 
+	//request는 BoardFileWriteFormAction.execute(request,response)에서 온 것임!!
+	BoardInfo boardInfo = (BoardInfo)request.getAttribute("boardInfo");
+	System.out.println("bbbbbbbbbbbbbbbbbbbbbbbbbbb"+boardInfo.getB_num());
+	System.out.println("rrrrrrrrrrrrrrrrrrrrrrrrrr"+boardInfo.getRef());
+	System.out.println("sssssssssssssssssssssssss"+boardInfo.getRe_step());
+	//각 각 BoardWriteFormAction.execute(request,response)에서 request.setAttribute로 정의한 것을 얻은 부분임!
+	//이 곳은 BoardFileWriteFormAction에서 setAttribute한 부분을 갖다가 씀!!
+	int num=boardInfo.getB_num();
+	int ref=boardInfo.getRef();
+	int re_step=boardInfo.getRe_step();
+	int re_level=boardInfo.getRe_level();
+	
+	//이쪽은 시험버전임!!m_id!!
+	String i_id = boardInfo.getI_id();
+	String m_id = boardInfo.getM_id();
+	System.out.println("bbbbbbbbbbbbbbbbbbbbbbbbbbb"+boardInfo.getB_num());
+	System.out.println("rrrrrrrrrrrrrrrrrrrrrrrrrr"+boardInfo.getRef());
+	System.out.println("sssssssssssssssssssssssss"+boardInfo.getRe_step());
+	System.out.println("mmmmmmmmmmmmmmmmmmmmmm"+boardInfo.getM_id());
+	System.out.println("iiiiiiiiiiiiiiiiiiiiiii"+boardInfo.getI_id());
+	System.out.println("fileWriteForm까지는 값이 잘 받아짐!!");
+
+%>
+   
+<body>
+<center><b>글쓰기</b>
+<br>
+<form method="post" enctype="multipart/form-data" name="fileWriteForm" action="boardFileWritePro.bo" onsubmit="return writeSave()">
+	<input type="hidden" name="b_num" value="<%=num%>">
+	<input type="hidden" name="ref" value="<%=ref%>">
+	<input type="hidden" name="re_step" value="<%=re_step%>">
+	<input type="hidden" name="re_level" value="<%=re_level%>">
+	
+	<table width="400" border="1" cellspacing="0" cellpadding="0"
+	   align="center">
+	  	<tr bgcolor="#0099CC">
+		   <td colspan="2" align="right" bgcolor="f567b6">
+  			<input type="button" value="목록보기" OnClick="window.location='boardList.bo'" align="center">	    </td>
+	  	</tr>
+	  	<tr>
+		    <td  width="70"  bgcolor="f567b6" align="center">이 름</td>
+		    <td  width="330" bgcolor="#FFFFFF"><input name="b_writer" type="text" size="10" maxlength="10"></td>
+	  	</tr>
+	  	<tr>
+		    <td  width="70"  bgcolor="f567b6" align="center" >제 목</td>
+		    <td  width="330" bgcolor="#FFFFFF">
+			    
+			    <%if(num==0){
+			    	System.out.println(num+"if(b_num==0)");
+			    %>
+			       <input type="text" size="40" maxlength="50" name="b_subject"/>
+			      <%}else{
+					System.out.println(num+"else(b_num !=0)");
+				%>
+				   <input type="text" size="40" maxlength="50" name="b_subject" 
+				   value="[답변]"/>
+			      <%}%>
+			</td>
+	  	</tr>
+	  	<tr>
+	    	<td  width="70"  bgcolor="f567b6" align="center">멤버id</td>
+	    	<td  width="330" bgcolor="#FFFFFF">
+        	<input name="m_id" type="text" size="40" maxlength="30" ></td>
+	  	</tr>
+	  	<tr>
+	    	<td  width="70"  bgcolor="f567b6" align="center">아이템id</td>
+	    	<td  width="330" bgcolor="#FFFFFF">
+        	<input name="i_id" type="text" size="40" maxlength="30" ></td>
+	  	</tr>
+	  
+	  	<tr bgcolor="f567b6">
+	   		<td align="center" >게시판이미지</td>
+	    	<td bgcolor="#FFFFFF"><input name="b_image" type="file"></td>
+      	</tr>
+	  	<tr>
+		    <td  width="70"  bgcolor="f567b6" align="center" >내 용</td>
+		    <td  width="330" bgcolor="#FFFFFF" > 
+				<textarea name="b_content" rows="13" cols="40"></textarea>
+		    </td>
+	  	</tr>
+		<tr bgcolor="#0099CC">      
+			 <td colspan=2 align="center" bgcolor="f567b6"> 
+			   	<input type="submit" value="글쓰기" align="center">  
+			  	<input type="reset" value="다시작성" align="center">
+  		  		<input type="button" value="목록보기" OnClick="window.location='boardList.bo'" align="center">	  	 
+  		  	</td>
+	  	</tr>
+	</table>
+</form>
+</center>
+</body>
+</html>      

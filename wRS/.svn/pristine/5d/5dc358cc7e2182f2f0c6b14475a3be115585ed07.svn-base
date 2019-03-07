@@ -1,0 +1,81 @@
+package roadshop.web.member.vo;
+
+public class ZipcodeInfo {
+
+	private int z_id;
+	private String z_zipcode; 
+	private String z_sido;
+	private String z_gugun;
+	private String z_dong; 
+	private String z_ri;  
+	private String z_bunji;
+
+	public ZipcodeInfo(int z_id, String z_zipcode, String z_sido,
+			String z_gugun, String z_dong, String z_ri, String z_bunji) {
+		super();
+		this.z_id = z_id;
+		this.z_zipcode = z_zipcode;
+		this.z_sido = z_sido;
+		this.z_gugun = z_gugun;
+		this.z_dong = z_dong;
+		this.z_ri = z_ri;
+		this.z_bunji = z_bunji;
+	}
+
+	public int getZ_id() {
+		return z_id;
+	}
+
+	public void setZ_id(int z_id) {
+		this.z_id = z_id;
+	}
+
+	public String getZ_zipcode() {
+		return z_zipcode;
+	}
+
+	public void setZ_zipcode(String z_zipcode) {
+		this.z_zipcode = z_zipcode;
+	}
+
+	public String getZ_sido() {
+		return z_sido;
+	}
+
+	public void setZ_sido(String z_sido) {
+		this.z_sido = z_sido;
+	}
+
+	public String getZ_gugun() {
+		return z_gugun;
+	}
+
+	public void setZ_gugun(String z_gugun) {
+		this.z_gugun = z_gugun;
+	}
+
+	public String getZ_dong() {
+		return z_dong;
+	}
+
+	public void setZ_dong(String z_dong) {
+		this.z_dong = z_dong;
+	}
+
+	public String getZ_ri() {
+		return z_ri;
+	}
+
+	public void setZ_ri(String z_ri) {
+		this.z_ri = z_ri;
+	}
+
+	public String getZ_bunji() {
+		return z_bunji;
+	}
+
+	public void setZ_bunji(String z_bunji) {
+		this.z_bunji = z_bunji;
+	}
+
+}

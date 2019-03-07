@@ -1,0 +1,69 @@
+package roadshop.db;
+
+import java.sql.*;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
+public class jdbcUtil {
+
+	public static Connection con() {
+		Connection con = null;
+		try {
+			Context initCtx = new InitialContext();
+			Context envCtx = (Context) initCtx.lookup("java:comp/env");
+			DataSource ds = (DataSource) envCtx.lookup("jdbc/WhereRoadShop");
+			con = ds.getConnection();
+			con.setAutoCommit(false);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return con;
+	}
+
+	public static void close(Connection con) {
+		try {
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public static void close(Statement stmt) {
+		try {
+			stmt.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public static void close(ResultSet rs) {
+		try {
+			rs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public static void commit(Connection con) {
+		try {
+			con.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void rollback(Connection con) {
+		try {
+			con.rollback();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+}

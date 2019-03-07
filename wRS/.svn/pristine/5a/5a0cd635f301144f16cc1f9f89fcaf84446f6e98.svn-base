@@ -1,0 +1,217 @@
+<!--
+	이 곳은 글목록을 보여주는 것을 담당한다!!
+	페이지 pageInfo를 받아옴!
+	현재 페이지!, 조회수!!, 작성자!!,작성일!!조회수를 나타냄
+	
+	밑에 페이지가 몇게 인지 나타냄!!
+	작성일:SimpleDateFormat를 이용해서 를 나타냄@!!
+  -->
+<%@page import="java.util.ArrayList"%>
+<%@page import="org.w3c.dom.Document"%>
+<%@page import="roadshop.web.board.vo.*"%>
+<%@page import="roadshop.web.board.dao.BoardDAO"%>
+<%@page import="java.util.List"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<%
+	//한 페이지 당 출력될 레코드 개수
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+%>
+<%
+	//page정보와 모든 article정보를 갖고 옴!!
+	PagingInfo pagingInfo=(PagingInfo)request.getAttribute("pagingInfo");
+	List<BoardInfo> articleList=(List<BoardInfo>)request.getAttribute("articleList");
+	
+	//keyWord수정판
+	String keyword = (String)request.getAttribute("keyword");
+	List<BoardInfo> selectedList= (ArrayList)request.getAttribute("selectedList");
+	int searchNumber=0;
+	/* PagingInfo selectedListPaging=(PagingInfo)request.getAttribute("selectedListPaging");
+	int selectedCount=0;
+	int selectedCurrentPage=0;
+	int selectedPageCount=0;
+	int selectedStartPage=0;
+	int selectedEndPage=0;
+	int selectedNumber=0;
+	int selectedPageNum=0; */
+	int count=pagingInfo.getCount();
+	int currentPage=pagingInfo.getCurrentPage();
+	int pageCount=pagingInfo.getPageCount();
+	int startPage=pagingInfo.getStartPage();
+	int endPage=pagingInfo.getEndPage();
+	int number=pagingInfo.getB_number();
+	int pageNum=pagingInfo.getCurrentPage();
+%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=euc-kr">
+<title>Insert title here</title>
+<link href="style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<center>
+<table width = "700" align="center" border="1" bgcolor="#FFFFFF">
+<tr>
+	<td  bgcolor="f567b6">
+	<center>
+	<form name="searchForm" action="searchKeyword.bo" method="post">
+		<div class="Search_area">
+			<select name="category">
+				<option value="b_writer">작성자</option>
+				<option value="b_subject">제목</option>
+				<option value="b_content">내용</option>
+			</select>
+			<input type="text" class="input_search" name="keyword" value="">
+			<input type="submit" value="검색하기"> 
+			<br>
+			<input type="button" value="파일올리기" OnClick="window.location='boardFileWriteForm.bo'">	
+			<input type="button" value="글쓰기" OnClick="window.location='boardWriteForm.bo'" >
+		</div>
+	</form>
+	</center>
+			
+			
+		<%
+		if(selectedList!=null){ 
+			searchNumber = selectedList.size();
+		%>	
+		<table width = "700" border="1" align="center" bgcolor="#FFFFFF">
+		<tr><center><h4>검색글결과</h4></center></tr>
+		<tr>
+		  <td width="40"  bgcolor="f567b6"><center>번호
+		  </center></td>
+		  <td width="350"  bgcolor="f567b6"><center>제목
+		  </center></td>
+		  <td width="75"  bgcolor="f567b6"><center>작성자</center></td>
+		  <td width="145"  bgcolor="f567b6"><center>작성일</center></td>
+			<td width="40"  bgcolor="f567b6"><center>조회수
+		  </center></td>
+		</tr>
+			<% 
+				for(int i =0;i<selectedList.size();i++){%>
+				<tr  bgcolor="#e0ffff">
+				  <td width="40" bgcolor="#FFFFFF"><center><%=searchNumber-- %></center></td>
+					<td width="350" bgcolor="#FFFFFF"><center><a href="boardContent.bo?num=<%=selectedList.get(i).getB_num() %>&pageNum=<%=pageNum %>">
+					<%=selectedList.get(i).getB_subject() %>
+				  </a></center></td>
+					<td width="75" bgcolor="#FFFFFF"><center><%=selectedList.get(i).getB_writer() %></center></td>
+					<td width="145" bgcolor="#FFFFFF"><center><%=selectedList.get(i).getB_reg_date()%></center></td>
+					<td width="40" bgcolor="#FFFFFF"><center><%=selectedList.get(i).getReadcount()%></center></td>
+				</tr><%}
+			}%>		
+	  </table>
+	</center>	</td>
+</tr>
+</table>
+
+<%
+	if(count == 0){
+%>
+	<table width = "700" align="center" border="1">
+		<tr>
+			<td  bgcolor="#FFFFFF">
+			게시판에 저장된 글이 없습니다.
+			</td>
+		</tr>
+	</table>
+<%
+	}
+	else
+	{
+%>
+	<table width = "700" align="center" border="1">
+		<tr bgcolor="f567b6">
+		  <td width="40"><center>번호</center></td>
+		  <td width="350"><center>제목</center></td>
+		  <td width="75"><center>작성자</center></td>
+		  <td width="145"><center>작성일</center></td>
+		  <td width="40"><center>조회수</center></td>
+	  </tr>
+		<%
+			for(int i = 0; i < articleList.size(); i++){
+		%>
+				<tr bgcolor="#FFFFFF">
+					<td>
+						<center>
+						<%=number-- %>
+				  </center>				  </td>
+					
+					<td>
+					<%
+						int wid = 0;
+						//답글 레벨에 따른 들여쓰기 너비 값을 저장할 변수
+						if(articleList.get(i).getRe_level() > 0){
+							wid = 5 * (articleList.get(i).getRe_level());
+							%>
+							<img src="<%=request.getContextPath() %>/board/images/level.gif" width="<%=wid %>"/>
+							<img src="<%=request.getContextPath() %>/board/images/re.gif"/>
+							<%
+						}
+					%>
+					<a href="boardContent.bo?num=<%=articleList.get(i).getB_num() %>&pageNum=<%=pageNum %>">
+					<%=articleList.get(i).getB_subject() %>
+					</a>
+					
+					<% 
+						if(articleList.get(i).getReadcount() >= 10){
+					%>
+							<img src="<%=request.getContextPath() %>/board/images/hot.gif"/>
+			  	  <%
+						}
+					%>				  </td>
+					
+					
+					<td>
+					<center>
+					<a href="mailto:<%=articleList.get(i).getB_writer() %>">
+					<%=articleList.get(i).getB_writer() %></a>
+				  </center>				  </td>
+					<td>
+					<center>
+					<%=sdf.format(articleList.get(i).getB_reg_date()) %>
+				  </center>				  </td>
+					<td>
+					<center>
+					<%=articleList.get(i).getReadcount() %>				  
+				  </center>				  </td>
+					
+				</tr>
+		<%
+			}
+		%>
+</table>
+<%
+	}
+%>
+
+<%
+	if(count > 0){
+		//글이 하나라도 존재할 때만 페이징 처리함
+		%>
+		<center>		
+		<%
+		if(startPage > 10) {	//첫 번째 페이지 그룹이 아니면...
+			%>
+			<center><a href="boardList.bo?pageNum=<%=startPage - 10 %>">이전</a></center>
+			<%
+		}
+		for(int i = startPage; i <= endPage; i++){
+			%>
+			<a href="boardList.bo?pageNum=<%=i %>">[<%=i %>]</a>
+			<%
+		}
+		if(endPage < pageCount){	//마지막 그룹이 아니면...
+			%>
+			<center><a href="boardList.bo?pageNum=<%=startPage + 10 %>">다음</a></center>
+			<%
+		}
+		%>
+		</center>
+		<%
+	}
+%>
+</center>
+</body>
+</html>

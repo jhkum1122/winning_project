@@ -1,0 +1,331 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<script type="text/javascript"
+	src="<%=request.getContextPath()%>/js/member/ajaxRegist.js"></script>
+
+
+<style type="text/css">
+body {
+	font-family: '맑은 고딕';
+	font-size: 14px
+}
+
+#font2 {
+	font-family: '맑은 고딕';
+	font-size: 13px
+}
+</style>
+<script>
+	function check() {
+		var m_id = document.memberRegist.m_id.value;
+		var url = "memberIdSearch.mem?m_id=" + m_id;
+		window.open(url, '_blank',
+				'width=350,height=250,left=100,top=100,resizable=no');
+
+	}
+
+	function zip() {
+		var url = "<%=request.getContextPath()%>/member/search-zipcode.jsp";
+		window.open(url, '_blank',
+				'width=450,height=450,left=100,top=100,resizable=no');
+	}
+</script>
+<script language='JavaScript' src='<%=request.getContextPath()%>/js/member/memberRegist.js'></script>
+
+
+<form name="memberRegist" action="memberRegist.mem" method="post"
+	onsubmit="return regist();">
+
+	<table width="802" border="0" cellspacing="0" cellpadding="0" align="right">
+
+		<tr>
+			<td height="1" align="left"><img
+				src="<%=request.getContextPath()%>/image/member/member_stitle01.jpg" width="79" height="26"></td>
+		</tr>
+
+		<tr>
+			<td height="10"></td>
+		</tr>
+		<tr>
+			<td height="1" bgcolor="#ac7549"></td>
+		</tr>
+
+		<tr>
+			<td height="50" class="line1">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td width="30" align="center" valign="middle" class="line4">&nbsp;</td>
+						<td width="130" align="left" valign="middle" class="line4"><span
+							class="text2"><b>아이디</b></span></td>
+						<td width="17" align="center" valign="middle">&nbsp;</td>
+						<td align="left" valign="middle" class="line4">
+							<table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+								<tr>
+									<td width="172"><input name="m_id" type="text"
+										class="member_input" id="m_id" style="width: 150px" /></td>
+									<input type="hidden" name="chkUserid" value="N">
+									<td width="80"><a href="javascript:check()"> <img
+											src="<%=request.getContextPath()%>/image/member/member_btn01.jpg" width="67" height="29">
+									</a></td>
+									<td><div id="font2">6~12자 영문,숫자,특수문자( _ )( - )만 사용가능</div></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<td height="1" bgcolor="#BDBDBD"></td>
+		<tr>
+			<td height="50" class="line1">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td width="30" align="center" valign="middle" class="line4">&nbsp;</td>
+						<td width="130" align="left" valign="middle" class="line4"><span
+							class="text2"><b>이름</b></span></td>
+						<td width="17" align="center" valign="middle">&nbsp;</td>
+						<td align="left" valign="middle" class="line4">
+							<table width="100%" border="0" cellspacing="0" cellpadding="0">
+								<tr>
+									<td><input name="m_name" type="text" class="member_input"
+										id="m_name" style="width: 150px" value=""></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<td height="1" bgcolor="#BDBDBD"></td>
+		<tr>
+			<td height="50" class="line1">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td width="30" align="center" valign="middle" class="line4">&nbsp;</td>
+						<td width="130" align="left" valign="middle" class="line4"><span
+							class="text2"><b>비밀번호</b></span></td>
+						<td width="17" align="center" valign="middle">&nbsp;</td>
+						<td align="left" valign="middle" class="line4">
+							<table width="100%" border="0" cellspacing="0" cellpadding="0">
+								<tr>
+									<td width="172"><input name="m_pwd" type="password"
+										class="member_input" id="m_pwd" style="width: 150px"
+										maxlength="15"></td>
+									<td></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<td height="1" bgcolor="#BDBDBD"></td>
+		<tr>
+			<td height="50" class="line1">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td width="30" align="center" valign="middle" class="line4">&nbsp;</td>
+						<td width="130" align="left" valign="middle" class="line4"><span
+							class="text2"><b>비밀번호확인</b></span></td>
+						<td width="17" align="center" valign="middle">&nbsp;</td>
+						<td align="left" valign="middle" class="line4">
+							<table width="100%" border="0" cellspacing="0" cellpadding="0">
+								<tr>
+									<td width="172"><input name="m_pwd1" type="password"
+										class="member_input" id="m_pwd1" style="width: 150px"
+										maxlength="15"></td>
+									<td><div id="font2">비밀번호를 다시 한번 입력하여 주십시요.</div></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<td height="1" bgcolor="#BDBDBD"></td>
+
+		<tr>
+			<td height="50" class="line1">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td width="30" align="center" valign="middle" class="line4">&nbsp;</td>
+						<td width="130" align="left" valign="middle" class="line4"><span
+							class="text2"><b>생년월일</b></span></td>
+						<td width="17" align="center" valign="middle">&nbsp;</td>
+						<td align="left" valign="middle" class="line4">
+							<table width="100%" border="0" cellspacing="0" cellpadding="0">
+								<tr>
+									<td width="162">
+										<!-- <select name="brthyy" id="brthyy"
+																	onChange="setDate1(this.form, this.form.brthyy.value, this.form.brthmm.value, this.form.brthdd.value)"></select>
+																	<select name="brthmm" id="brthmm"
+																	onChange="setDate1(this.form, this.form.brthyy.value, this.form.brthmm.value, this.form.brthdd.value)"></select>
+																	<select name="brthdd" id="brthdd"></select> <input
+																	type="hidden" name="BRTH_YHM" id="BRTH_YHM" value=""> -->
+										<input name="m_ssn1" type="text" class="member_input"
+										id="m_ssn1" style="width: 150px" maxlength="8" />
+									</td>
+									<td><div id="font2">숫자만 입력해주세요 숫자만 입력해주세요
+											ex)YYYYMMDD</div></td>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<td height="1" bgcolor="#BDBDBD"></td>
+		<tr>
+			<td class="line1">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td width="30" align="center" valign="middle" class="line4">&nbsp;</td>
+						<td width="130" align="left" valign="middle" class="line4"><span
+							class="text2"><b>주소</b></span></td>
+						<td width="17" align="center" valign="middle">&nbsp;</td>
+						<td height="122" align="left" valign="middle" class="line4">
+							<table width="100%" border="0" cellspacing="0" cellpadding="0">
+								<tr>
+									<td>
+										<table width="100%" border="0" cellspacing="0" cellpadding="0">
+											<tr>
+												<td width="52"><input name="m_zipcode" type="text"
+													class="member_input" id="m_zipcode" style="width: 60px"
+													maxlength="7" readOnly></td>
+												<td><a href="javascript:zip()"> <img
+														src="<%=request.getContextPath()%>/image/member/member_btn02.jpg" width="92"
+														height="29" style="cursor: pointer;" /></a></td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+								<tr>
+									<td height="5"></td>
+								</tr>
+								<tr>
+									<td><input name="m_addr1" type="text" class="member_input"
+										id="m_addr1" style="width: 520px" readOnly></td>
+								</tr>
+								<tr>
+									<td height="5"></td>
+								</tr>
+								<tr>
+									<td><input name="m_addr2" type="text" class="member_input"
+										id="m_addr2" style="width: 520px"></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<td height="1" bgcolor="#BDBDBD"></td>
+		<tr>
+			<td height="50" class="line1">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td width="30" align="center" valign="middle" class="line4">&nbsp;</td>
+						<td width="130" align="left" valign="middle" class="line4"><span
+							class="text2"><b>휴대폰번호</b></span></td>
+						<td width="17" align="center" valign="middle">&nbsp;</td>
+						<td align="left" valign="middle" class="line4">
+							<table width="100%" border="0" cellspacing="0" cellpadding="0">
+								<tr>
+									<td width="75"><select name="m_tel1" id="m_tel1"
+										style="width: 75px; height: 29px;">
+
+											<option value="010">010</option>
+
+											<option value="011">011</option>
+
+											<option value="016">016</option>
+
+											<option value="018">017</option>
+
+											<option value="041">018</option>
+
+
+
+									</select></td>
+									<td width="15" align="center">-</td>
+									<td width="96"><input name="m_tel2" type="text"
+										class="member_input" id="m_tel2" style="width: 80px"
+										maxlength="4"></td>
+									<td width="15" align="center">-</td>
+									<td><input name="m_tel3" type="text" class="member_input"
+										id="m_tel3" style="width: 80px" maxlength="4"></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<td height="1" bgcolor="#BDBDBD"></td>
+
+		<tr>
+			<td height="50" class="line1">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+					<tr>
+						<td width="30" align="center" valign="middle" class="line4">&nbsp;</td>
+						<td width="130" align="left" valign="middle" class="line4"><span
+							class="text2"><b>이메일주소</b></span></td>
+						<td width="17" align="center" valign="middle">&nbsp;</td>
+						<td align="left" valign="middle" class="line4">
+							<table width="100%" border="0" cellspacing="0" cellpadding="0">
+								<tr>
+									<td width="165"><input name="m_email1" type="text"
+										class="member_input" id="m_email1" style="width: 150px"></td>
+									<td width="20" align="center">@</td>
+									<td width="130"><input name="m_email2" type="text"
+										class="member_input" id="m_email2" style="width: 110px"></td>
+									<td width="120"><select id="m_email3" name="m_email3"
+										onchange="document.getElementById('m_email2').value=this.value">
+											<option>직접입력</option>
+											<option value="chol.com">chol.com</option>
+											<option value="dreamwiz.com">dreamwiz.com</option>
+											<option value="empal.com">empal.com</option>
+											<option value="freechal.com">freechal.com</option>
+											<option value="gmail.com">gmail.com</option>
+											<option value="hanafos.com">hanafos.com</option>
+											<option value="hanmail.net">hanmail.com</option>
+											<option value="hanmir.com">hanmir.com</option>
+											<option value="hitel.com">hitel.com</option>
+											<option value="hotmail.com">hotmail.com</option>
+											<option value="korea.com">korea.com</option>
+											<option value="lycos.co.kr">lycos.co.kr</option>
+											<option value="nate.com">nate.com</option>
+											<option value="naver.com">naver.com</option>
+											<option value="netian.com">netian.com</option>
+											<option value="paran.com">paran.com</option>
+											<option value="yahoo.com">yahoo.com</option>
+											<option value="yahoo.co.kr">yahoo.co.kr</option>
+									</select></td>
+									<td width="25" align="center"></td>
+									<td></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<td height="1" bgcolor="#ac7549"></td>
+		</tr>
+
+		<td height="15"></td>
+		</tr>
+		<tr>
+
+			<td align="center"><input type="reset" value="취소" /> <input
+				type="submit" value='가입'></td>
+		</tr>
+		<tr>
+			<td height="80">&nbsp;</td>
+
+		</tr>
+	</table>
+</form>
+</td>
+</tr>
