@@ -29,7 +29,7 @@
 			name = "jdbc/orcl"
 			driverClassName = "oracle.jdbc.driver.OracleDriver"
 			type = "javax.sql.DataSource"
-			url = "jdbc:oracle:thin:@127.0.0.1:1521:orcl"
+			url = "jdbc:oracle:thin:@172.30.1.16:1521:orcl"
 			username ="scott"
 			password ="scott"
 			loginTimeout="10"
