@@ -1,7 +1,6 @@
 <%@page import="roadshop.web.board.vo.*"%>
 <%@page import="roadshop.web.board.dao.BoardDAO"%>
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ include file="/view/color.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -39,7 +38,7 @@
 				<input type="hidden" name="re_step" value="<%=re_step%>"/>
 				<input type="hidden" name="re_level" value="<%=re_level%>"/>
 				
-		<table width="400" border="1" bgcolor="<%=bodyback_c%>">
+		<table width="400" border="1">
 		   	<tr>
 				<td align="right" colspan="2" bgcolor="f567b6">
 	  		  <input type="button" value="목록보기" OnClick="window.location='boardList.bo'" >		   	  </td>
