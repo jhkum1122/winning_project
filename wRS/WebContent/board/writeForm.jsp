@@ -1,6 +1,5 @@
 ﻿<%@ page import="roadshop.web.board.vo.BoardInfo"%>
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ include file="/view/color.jsp"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -42,18 +41,17 @@
 	<input type="hidden" name="re_level" value="<%=re_level%>">
 	
 
-	<table width="400" border="1" cellspacing="0" cellpadding="0"
-	  bgcolor="<%=bodyback_c%>" >
+	<table width="400" border="1" cellspacing="0" cellpadding="0">
 	  <tr bgcolor="#0099CC">
 		   <td colspan="2" align="right" bgcolor="f567b6">
   				<input type="button" value="목록보기" OnClick="window.location='boardList.bo'">
   			</td>
 	  </tr>
-	  <tr bgcolor="<%=bodyback_c%>">
+	  <tr>
 		    <td  width="70"  bgcolor="f567b6" ><center>이 름</center></td>
 	    <td  width="330" bgcolor="#FFFFFF"><input type="text" size="10" maxlength="10" name="b_writer"></td>
 	  </tr>
-	  <tr bgcolor="<%=bodyback_c%>">
+	  <tr>
 		    <td  width="70"  bgcolor="f567b6" align="center" >제 목</td>
 		    <td  width="330" bgcolor="#FFFFFF">
 			    <%if(num==0){
