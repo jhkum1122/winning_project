@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
-        <%@ include file="/view/color.jsp"%>
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -14,7 +13,7 @@ background-image:url('../images/bg-body-top.jpg');
 }
 </style>
 
-<body background="<%=bodyback_c%>">
-	<a href="index.jsp" target="rightFrame">�Խ��� ȭ��</a><br>
+<body>
+	<a href="index.jsp" target="rightFrame">°Ô½ÃÆÇ È­¸é</a><br>
 </body>
 </html>
