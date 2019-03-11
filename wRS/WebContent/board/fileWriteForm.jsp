@@ -1,7 +1,6 @@
 ﻿<%@page import="roadshop.web.board.vo.BoardInfo"%>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
-<%@ include file="/view/color.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
